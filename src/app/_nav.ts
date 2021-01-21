@@ -22,7 +22,7 @@ export const navItems: INavData[] = [
 children:[
   {
     name: 'Titulos',
-    url: '/dashboard',
+    url: 'contacto/titulo/listaTitulo',
     icon: 'icon-speedometer',
     
   },

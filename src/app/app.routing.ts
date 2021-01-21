@@ -20,13 +20,6 @@ export const routes: Routes = [
     component: P404Component
   },
   {
-    path: 'NuevoUsuario',
-    component: LoginComponent,
-    data: {
-      title: 'Componente'
-    }
-  },
-  {
     path: '500',
     component: P500Component,
     data: {
