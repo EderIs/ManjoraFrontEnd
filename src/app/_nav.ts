@@ -8,7 +8,7 @@ export const navItems: INavData[] = [
 },
 {
   name: 'Contactos',
-  url: '/dashboard',
+  url: '/contacto',
   icon: 'icon-speedometer',
 }, 
   {

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // Import Containers
@@ -17,9 +17,13 @@ export const routes: Routes = [
   },
   {
     path: '404',
-    component: P404Component,
+    component: P404Component
+  },
+  {
+    path: 'NuevoUsuario',
+    component: LoginComponent,
     data: {
-      title: 'Page 404'
+      title: 'Componente'
     }
   },
   {
@@ -55,13 +59,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/base/base.module').then(m => m.BaseModule)
       },
       {
-        path: 'buttons',
-        loadChildren: () => import('./views/buttons/buttons.module').then(m => m.ButtonsModule)
+        path: 'contacto',
+        loadChildren: () => import('./views/contacto/contacto.module').then(m => m.ContactoModule)
       },
-      {
-        path: 'charts',
-        loadChildren: () => import('./views/chartjs/chartjs.module').then(m => m.ChartJSModule)
-      },
+      
       {
         path: 'dashboard',
         loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
