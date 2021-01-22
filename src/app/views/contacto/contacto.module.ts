@@ -18,11 +18,12 @@ import {NuevoEditarPaisComponent} from './pais/nuevoeditar-pais.component';
 
 // Theme Routing
 import {ContactoRoutingModule} from './contacto-routing.module'
-
+import{ FormsModule} from '@angular/forms';
 @NgModule({
   imports: [
     CommonModule,
-    ContactoRoutingModule    
+    ContactoRoutingModule,
+    FormsModule    
   ],
   declarations: [
     listaContactoComponent,
