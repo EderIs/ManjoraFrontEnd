@@ -33,7 +33,6 @@ const routes: Routes = [
         }
       },
       {
-
         path: 'titulo/listaTitulo',
         component: listaTituloComponent,
         data: {
@@ -47,7 +46,6 @@ const routes: Routes = [
           title:'Titulos / Agregar'
         }
       }
-
     ]
   }
 ];
