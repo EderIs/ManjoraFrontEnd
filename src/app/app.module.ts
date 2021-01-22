@@ -35,6 +35,9 @@ import {
   AppSidebarModule,
 } from '@coreui/angular';
 
+import{ HttpClientModule} from '@angular/common/http';
+import{ FormsModule} from '@angular/forms';
+
 // Import routing module
 import { AppRoutingModule } from './app.routing';
 
@@ -59,6 +62,8 @@ import { ChartsModule } from 'ng2-charts';
     ChartsModule,
     IconModule,
     IconSetModule.forRoot(),
+    HttpClientModule,
+    FormsModule
   ],
   declarations: [
     AppComponent,
