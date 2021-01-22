@@ -25,9 +25,11 @@
                 <td>{{contacto.calleSecundaria}}</td>
                 <td><button class="btn btn-outline-primary" routerLink="/detalle/{{contacto.id}}"><i class="far fa-eye"></i> Ver</button></td>
                 <td><button class="btn btn-outline-warning" routerLink="/nuevo/{{contacto.id}}"><i class="far fa-edit"></i> Editar</button></td>
-                <td><button class="btn btn-outline-danger" (click)="borrar(producto.id)"><i class="far fa-trash-alt"></i> Eliminar</button></td> 
+                <td><button class="btn btn-outline-danger" ><i class="far fa-trash-alt"></i> Eliminar</button></td> 
             </tr>
             </tbody>
         </table>
     </div>
 </div>
+
+<!--(click)="borrar(producto.id)" -->

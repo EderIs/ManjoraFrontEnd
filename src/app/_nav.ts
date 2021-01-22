@@ -28,7 +28,7 @@ children:[
   },
   {
     name: 'Paises',
-    url: '/dashboard',
+    url: 'contacto/pais/listarPais',
     icon: 'icon-speedometer',
     
   },
