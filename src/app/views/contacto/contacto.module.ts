@@ -11,9 +11,9 @@ import {listaBancoComponent} from './banco/lista-banco.component';
 import {NuevoEditarBancoComponent} from './banco/nuevoeditar-banco.component';
 import {listaCuentasBComponent} from './cuentasB/lista-cuentaB.component';
 import {NuevoEditarCuentaBComponent} from './cuentasB/nuevoeditar-cuentaB.component';
-import {listaEstadoComponent} from './estado/lista-estado.component';
+import {ListaEstadoComponent} from './estado/lista-estado.component';
 import {NuevoEditarEstadoComponent} from './estado/nuevoeditar-estado.component';
-import {listaPaisComponent} from './pais/lista-pais.component';
+import {ListaPaisComponent} from './pais/lista-pais.component';
 import {NuevoEditarPaisComponent} from './pais/nuevoeditar-pais.component';
 
 // Theme Routing
@@ -33,9 +33,9 @@ import {ContactoRoutingModule} from './contacto-routing.module'
    NuevoEditarBancoComponent,
    listaCuentasBComponent,
    NuevoEditarCuentaBComponent,
-   listaEstadoComponent,
+   ListaEstadoComponent,
    NuevoEditarEstadoComponent,
-   listaPaisComponent,
+   ListaPaisComponent,
    NuevoEditarPaisComponent,
   ]
 })
