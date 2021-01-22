@@ -6,7 +6,7 @@ import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
   templateUrl: 'lista-estado.component.html'
 })
 
-export class listaEstadoComponent implements OnInit{
+export class ListaEstadoComponent implements OnInit{
   
   ngOnInit(): void {
     
