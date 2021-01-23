@@ -12,16 +12,12 @@ import {NgForm} from '@angular/forms';
 export class NuevoEditarPaisComponent implements OnInit{
 
 
-nombrePais: String = "";
+nombrePais: string = "";
 
  constructor(
   private paisService : PaisService,
   private router: Router,
-  ) {
-
-   
-
-   }
+  ) {}
 
 
   ngOnInit(): void {
@@ -30,27 +26,17 @@ nombrePais: String = "";
 
   onCreate(): void{
 
-//const pais = new Pais(this.nombrePais);
-
-alert(this.nombrePais);
-  /*
+const pais = new Pais(this.nombrePais);
+  
 this.paisService.save(pais).subscribe(data=>{
-
 {
 alert('Se guardo correctamente pais');
-this.router.navigate(['/titulo/listaTitulo']);
-
-}err =>{
+this.router.navigate(['/contacto/pais/listarPais']);
+}
+err =>{
 
 alert('No se guardo el pais');
-
 }
-
-
 })
-*/
-
 }
-
-
 }
