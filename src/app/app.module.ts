@@ -36,7 +36,7 @@ import {
 } from '@coreui/angular';
 
 import{ HttpClientModule} from '@angular/common/http';
-import{ FormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // Import routing module
 import { AppRoutingModule } from './app.routing';
@@ -63,7 +63,7 @@ import { ChartsModule } from 'ng2-charts';
     IconModule,
     IconSetModule.forRoot(),
     HttpClientModule,
-    FormsModule
+    ReactiveFormsModule
   ],
   declarations: [
     AppComponent,

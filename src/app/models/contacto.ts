@@ -1,4 +1,3 @@
-import { Byte } from "@angular/compiler/src/util";
 import{Estado}from './estado';
 import{Titulo}from './titulo';
 import{Usuario}from './usuario';
@@ -7,7 +6,7 @@ export class Contacto {
     id?: number;
     nombreContacto: string;
     tipoContacto: boolean;
-    fotografia: Byte;
+    fotografia: string;
     contacto: Contacto;
     calle: string;
     calleSecundaria: string;
@@ -29,7 +28,7 @@ export class Contacto {
     constructor(
         nombreContacto: string,
         tipoContacto: boolean,
-        fotografia: Byte,
+        fotografia: string,
         contacto: Contacto,
         calle: string,
         calleSecundaria: string,
@@ -51,7 +50,7 @@ export class Contacto {
         this.nombreContacto = nombreContacto;
         this.tipoContacto = tipoContacto;
         this.fotografia = fotografia;
-        this.contacto = contacto;
+        this.contacto= contacto;
         this.calle = calle;
         this.calleSecundaria = calleSecundaria;
         this.ciudad = ciudad;
