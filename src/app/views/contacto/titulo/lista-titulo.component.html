@@ -1,8 +1,27 @@
-<p>Aqui va el listado de titulos</p>
+<h2>Titulos</h2>
 
-<li>
-<a routerLink="/contacto/titulo/agregarTitulo">que paso bro</a>
+<button class="btn btn-success" routerLink="/contacto/titulo/agregarTitulo">Agregar</button>
 
-</li>
-
+<table class="table">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Titulo</th>
+        <th scope="col">Abreviatura</th>
+        <th scope="col">Detalles</th>
+        <th scope="col">Editar</th>
+        <th scope="col">Eliminar</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let titu of titulos">
+        <td>{{titu.id}}</td>
+        <td>{{titu.titulo}}</td>
+        <td>{{titu.abreviatura}}</td>
+        <td><button class="btn btn-outline-primary" routerLink="/detalle/{{titu.id}}"><i class="far fa-eye"></i> Ver</button></td>
+        <td><button class="btn btn-outline-warning" routerLink="/contacto/titulo/agregarTitulo/{{titu.id}}"><i class="far fa-edit"></i> Editar</button></td>
+        <td><button class="btn btn-outline-danger" (click)="borrar(titu.id)"><i class="far fa-trash-alt"></i> Eliminar</button></td> 
+    </tr>
+    </tbody>
+</table>
 

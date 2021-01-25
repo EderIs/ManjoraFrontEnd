@@ -1,1 +1,46 @@
-<p>Aqui se inserta el codigo</p>
+<div class="app-body">
+    <main class="main d-flex align-items-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 mx-auto">
+            <div class="card mx-4">
+              <div class="card-body p-4">
+                <form (ngSubmit)= "onCreate()" >
+                  <h1>Titulos</h1>
+                  <p class="text-muted">Crear Titulo</p>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    </div>
+                    <input type="text" id="titulo" *ngIf="id!=null" name="titulo" [(ngModel)]="titu.titulo" class="form-control" placeholder="Titulo" 
+                    required>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    </div>
+                    <input type="text" id="titulo" *ngIf="id==null" name="titulo" [(ngModel)]="titulo" class="form-control" placeholder="Titulo" 
+                    required>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    </div>
+                    <input type="text" id="abreviatura" *ngIf="id!=null" name="abreviatura" [(ngModel)]="titu.abreviatura" class="form-control" placeholder="Abreviatura" 
+                    required>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    </div>
+                    <input type="text" id="abreviatura" *ngIf="id==null" name="abreviatura" [(ngModel)]="abreviatura" class="form-control" placeholder="Abreviatura" 
+                    required>
+                  </div>
+                  <input type="submit" class="btn btn-block btn-success" value="Guardar" /> 
+                 
+            </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
