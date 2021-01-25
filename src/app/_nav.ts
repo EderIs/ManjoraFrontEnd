@@ -27,6 +27,10 @@ children:[
     
   },
   {
+    title: true,
+    name: 'Localización',
+  },
+  {
     name: 'Paises',
     url: 'contacto/pais/listarPais',
     icon: 'icon-speedometer',
@@ -37,6 +41,10 @@ children:[
     url: '/dashboard',
     icon: 'icon-speedometer',
     
+  },
+  {
+    title: true,
+    name: 'Cuentas Bancarias',
   },
   {
     name: 'Cuentas Bancarias',

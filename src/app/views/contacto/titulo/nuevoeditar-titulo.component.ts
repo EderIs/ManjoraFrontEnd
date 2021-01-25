@@ -30,7 +30,7 @@ export class NuevoEditarTituloComponent implements OnInit{
         },
         err => {
           console.log(err);
-          this.router.navigate(['/contacto/titulo/listaTitulo']);
+         
         }
       );
     }
@@ -41,7 +41,10 @@ export class NuevoEditarTituloComponent implements OnInit{
     if(this.id!=null){
       this.tituloService.update(this.id, this.titu).subscribe(
         data => {
-          this.titu = data;},
+          this.titu = data;
+          alert('Se inserto correctamente');
+          this.router.navigate(['/contacto/titulo/listaTitulo']);
+        },
           err => {
             console.log(err);
             });
@@ -51,15 +54,13 @@ export class NuevoEditarTituloComponent implements OnInit{
       const titut = new Titulo(this.titulo, this.abreviatura);
     this.tituloService.save(titut).subscribe(
       response => {
-        console.log(response);
+       alert('Se inserto correctamente');
+       this.router.navigate(['/contacto/titulo/listaTitulo']);
       },
       error =>{
         console.log(error);
       }
     );
     }
-    
-    
-    this.router.navigate(['/contacto/titulo/listaTitulo']);
     }
 }

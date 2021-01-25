@@ -1,28 +1,23 @@
-<div class="app-body">
-    <main class="main d-flex align-items-center">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 mx-auto">
-            <div class="card mx-4">
-              <div class="card-body p-4">
-                <form (ngSubmit)= "onCreate()" >
-                  <h1>Paises</h1>
-                  <p class="text-muted">Crear Pais</p>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fa fa-flag"></i></span>
-                    </div>
-                    <input type="text" name="nombrePais" [(ngModel)]="nombrePais" class="form-control" placeholder="Pais" 
-                    required>
-                  </div>
-                  <input type="submit" class="btn btn-block btn-success" value="Registrar Pais" /> 
-                 
-            </form>
-              </div>
+
+<div class="card">
+    <div class="card-header">
+        <strong>Agregar</strong> Pais
+    </div>
+    <div class="card-body">
+        <form (ngSubmit)="onCreate()" novalidate #f="ngForm" >
+
+            <div class="form-group">
+                <label for="nombreContacto">Pais</label>
+                <input type="text" name="nombrePais" [(ngModel)]="nombrePais" class="form-control" placeholder="Pais" 
+                required>
             </div>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
-  
+
+             <div class="card-footer">
+                <button type="submit" class="btn btn-sm btn-primary" [disabled]="!f.valid" > Agregar</button>
+                <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+            </div>
+
+    </form>
+</div>
+
+</div>
