@@ -7,12 +7,17 @@ export class Estado {
     pais: Pais;
 
 
-     constructor(nombreEstado: string,codigo: number, pais: Pais){
-         this.nombreEstado=nombreEstado;
-         this.codigo=codigo;
-         this.pais=pais;
-        
-     }
+    constructor(estado : string []){
+        this.id= parseInt(estado[0]);
+        this.nombreEstado= estado[1];
+        this.codigo= parseInt(estado[2]);
+    }
+
+    public getEstado(nombreEstado: string, codigo:number, pais:Pais){
+        this.nombreEstado = nombreEstado;
+        this.codigo = codigo;
+        this.pais = pais
+    }
 
      public getPais():Pais{
         return this.pais;

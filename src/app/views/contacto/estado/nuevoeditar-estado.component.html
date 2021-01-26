@@ -5,7 +5,7 @@
           <div class="col-md-6 mx-auto">
             <div class="card mx-4">
               <div class="card-body p-4">
-                <form (ngSubmit)= "onCreate()">
+                <form (ngSubmit)= "onCreate()" >
                   <h1>Estados</h1>
                   <p class="text-muted">Crear Estado</p>
 
@@ -15,6 +15,7 @@
                     <input type="text" id="nombreEstado" name="nombreEstado" [(ngModel)]="estado.nombreEstado" class="form-control" placeholder="Nombre del Estado" 
                     required>
                   </div>
+                  
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                     </div>
@@ -24,7 +25,7 @@
                   
                   <div class="form-group select-wrapper">
                     <label>Seleccione un País</label>
-                    <select class="form-control" [(ngModel)]="pais1" [ngModelOptions]="{standalone: true}">
+                    <select class="form-control" [(ngModel)]="this.pais1" [ngModelOptions]="{standalone: true}">
                       <option *ngFor="let pais of paises" value={{pais.id}} >{{pais.nombrePais}}</option>
                     </select>
                   </div>

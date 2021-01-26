@@ -37,7 +37,7 @@ export class NuevoEditarEstadoComponent implements OnInit{
       );
     }
     else{
-      this.estado = new Estado(' ', 0, null);
+      this.estado = new Estado(this.pais);
     }
   }
 
@@ -54,11 +54,13 @@ export class NuevoEditarEstadoComponent implements OnInit{
 
   onCreate(): void {
     this.pais.push(this.pais1.toString()," ");
+    
     if(this.id!=null){
+      this.estado.setPais(new Pais(this.pais));
       this.estadoService.update(this.id, this.estado).subscribe(
         data => {
           this.estado = data;
-          alert(data);
+          console.log(this.estado);
           this.router.navigate(['/contacto/estado/listarEstado']);
         },
           err => {
@@ -67,13 +69,14 @@ export class NuevoEditarEstadoComponent implements OnInit{
        
     }
     else{
-    this.estado.setPais(new Pais(this.pais));
+      this.estado.setPais(new Pais(this.pais));
     this.estadoService.save(this.estado).subscribe(
       response => {
        alert('Se inserto correctamente');
        this.router.navigate(['/contacto/estado/listarEstado']);
       },
       error =>{
+        console.log(this.estado.nombreEstado);
         console.log(error);
       }
     );
