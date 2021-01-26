@@ -31,20 +31,12 @@ constructor(nombre:string,codigoIdenBancaria:string,calle:string,calleSecundaria
         this.correoElectronico=correoElectronico;
         this.activo=activo;
 }
-
-constructor2():void {
-    this.nombre='';
-    this.codigoIdenBancaria='';
-    this.calle='';
-    this.calleSecundaria='';
-    this.ciudad='';
-    this.pais=null;
-    this.codigoPostal=0;
-    this.telefono='';
-    this.correoElectronico='';
-    this.activo=false;
-    
+public getPais():Pais{
+return this.pais;
 }
+public setPais(pais:Pais):void{
 
+this.pais=pais;
+}
 
 }

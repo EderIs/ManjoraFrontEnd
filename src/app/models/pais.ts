@@ -1,10 +1,12 @@
-export class Pais {
+
+export class Pais{
     id?: number;
     nombrePais: string;
 
 
-    constructor(nombrePais: string){
-        this.nombrePais=nombrePais;
+    constructor(pais : string []){
+        this.id= parseInt(pais[0]);
+        this.nombrePais= pais[1];
     }
 }
 

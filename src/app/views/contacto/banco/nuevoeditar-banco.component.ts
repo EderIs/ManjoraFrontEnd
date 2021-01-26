@@ -15,7 +15,8 @@ export class NuevoEditarBancoComponent implements OnInit{
   banco :Banco = null;
   private id :number =this.activatedRouter.snapshot.params.id;
   paises : Pais[] =[];
-  pais1 :number=0;
+  pais :string [] =[];
+  pais1 : number = 0; 
 
 constructor(private bancoService : BancoService
   ,private activatedRouter:ActivatedRoute,private route: Router
@@ -41,12 +42,14 @@ console.log('error en: '+ err.err.message);
   }
 
 onCreate():void{
+this.pais.push(this.pais1.toString()," ");
 
-  // this.banco.pais = new Pais(this.pais1);
+
+this.banco.setPais(new Pais(this.pais));
 
 this.bancoService.save(this.banco).subscribe(model=>{
 
-alert('inserto');
+console.log(JSON.stringify(this.banco));
 
 this.route.navigate(['contacto/banco/listarBanco']);
 

@@ -14,12 +14,14 @@ export class NuevoEditarPaisComponent implements OnInit{
 nombrePais: string = "";
 id : number= this.activatedRouter.snapshot.params.id;
 pais : Pais=null;
+pais1 :string []=[];
 
 
  constructor(
   private paisService : PaisService,
   private router: Router,
-  private activatedRouter: ActivatedRoute
+  private activatedRouter: ActivatedRoute,
+  
   ) {}
 
 
@@ -52,7 +54,9 @@ console.log('Ocurrio un error en '+err.err.message);
 })
 }else{
 
-  const pais = new Pais(this.nombrePais);
+
+  this.pais1.push("0",this.nombrePais);
+  const pais = new Pais(this.pais1);
   
   this.paisService.save(pais).subscribe(data=>{
   {

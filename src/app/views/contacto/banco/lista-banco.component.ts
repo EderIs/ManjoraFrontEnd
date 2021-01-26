@@ -27,7 +27,6 @@ cargarBancos(){
 this.bancos = model;
 
   },err=>{
-console.log('Error al consultar '+err.err.mensaje);
 
   });
   

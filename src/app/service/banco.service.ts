@@ -24,7 +24,7 @@ export class BancoService {
   }
 
   public save(banco: Banco): Observable<any> {
-    return this.HttpClient.post<any>(this.bancoURL + 'create', banco);
+    return this.HttpClient.post<any>(this.bancoURL + 'create',banco);
   }
 
   public update(id: number, banco: Banco): Observable<any> {
