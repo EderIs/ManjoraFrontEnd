@@ -8,7 +8,10 @@
 
             <div class="form-group">
                 <label for="nombreContacto">Pais</label>
-                <input type="text" name="nombrePais" [(ngModel)]="nombrePais" class="form-control" placeholder="Pais" 
+                <input type="text" *ngIf="this.pais != null" name="pais.nombrePais" [(ngModel)]="pais.nombrePais" class="form-control" placeholder="Pais" 
+                required>
+
+                <input type="text" *ngIf="this.pais == null" name="nombrePais" [(ngModel)]="nombrePais" class="form-control" placeholder="Pais" 
                 required>
             </div>
 

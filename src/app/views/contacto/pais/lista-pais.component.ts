@@ -26,5 +26,25 @@ paises : Pais[]= [];
       }
     )
   }
+delete(id:number){
+
+if(id > 0){
+
+  this.paisService.delete(id).subscribe(model=>{
+alert('Se elimino el registro');
+this.cargarPais();
+
+  },err=>{
+
+console.log(err.err.message);
+
+  })
+
+}else{
+alert('no hay numero');
+}
+
+
+}
 
 }

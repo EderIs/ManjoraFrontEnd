@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import  {Pais} from '../../../models/pais'
 import  {PaisService} from '../../../service/pais.service'
-import {NgForm} from '@angular/forms';
 
 
 @Component({
@@ -13,30 +12,60 @@ export class NuevoEditarPaisComponent implements OnInit{
 
 
 nombrePais: string = "";
+id : number= this.activatedRouter.snapshot.params.id;
+pais : Pais=null;
+
 
  constructor(
   private paisService : PaisService,
   private router: Router,
+  private activatedRouter: ActivatedRoute
   ) {}
 
 
   ngOnInit(): void {
     
+if(this.id!=null){
+
+this.paisService.detail(this.id).subscribe(model=>{
+this.pais=model;
+},
+err=>{
+
+console.log('el error esta aqui'+ err.err.message);
+}
+)
+}
   }
 
-  onCreate(): void{
+onCreate(): void{
 
-const pais = new Pais(this.nombrePais);
-  
-this.paisService.save(pais).subscribe(data=>{
-{
-alert('Se guardo correctamente pais');
+  if(this.pais != null ){
+this.paisService.update(this.pais.id,this.pais).subscribe(model=>{
+
+alert('Se actualizo correctaente, el pais');
 this.router.navigate(['/contacto/pais/listarPais']);
-}
-err =>{
 
-alert('No se guardo el pais');
-}
+},err=>{
+console.log('Ocurrio un error en '+err.err.message);
+
 })
+}else{
+
+  const pais = new Pais(this.nombrePais);
+  
+  this.paisService.save(pais).subscribe(data=>{
+  {
+  alert('Se guardo correctamente pais');
+  this.router.navigate(['/contacto/pais/listarPais']);
+  }
+  err =>{
+  
+  alert('No se guardo el pais');
+  }
+  })
+  }
+
 }
+
 }

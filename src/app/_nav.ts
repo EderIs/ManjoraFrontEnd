@@ -54,7 +54,7 @@ children:[
   },
   {
     name: 'Bancos',
-    url: '/dashboard',
+    url: 'contacto/banco/listarBanco',
     icon: 'icon-speedometer',
     
   }

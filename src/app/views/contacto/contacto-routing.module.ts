@@ -76,6 +76,13 @@ const routes: Routes = [
         }
       },
       {
+        path:'banco/editarBanco/:id',
+        component:NuevoEditarBancoComponent,
+        data:{
+          title:'Bancos / Agregar'
+        }
+      },
+      {
         path:'cuentasB/listarCuentaB',
         component: listaCuentasBComponent,
         data:{
@@ -115,6 +122,12 @@ const routes: Routes = [
         component: NuevoEditarPaisComponent,
         data:{
           title:'Pais / Agregar'
+        }
+      },{
+        path:'pais/editarPais/:id',
+        component: NuevoEditarPaisComponent,
+        data:{
+          title:'Pais / Editar'
         }
       }
     ]
