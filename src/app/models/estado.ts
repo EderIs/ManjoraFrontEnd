@@ -3,18 +3,23 @@ import{Pais}from './pais';
 export class Estado {
     id?: number;
     nombreEstado: string;
-    codigo:number;
+    codigo: number;
     pais: Pais;
 
 
-    // constructor(nombreEstado: string,codigo: number, pais: Pais,id:number){
-    //     this.nombreEstado=nombreEstado;
-    //     this.codigo=codigo;
-    //     this.pais=pais;
+     constructor(nombreEstado: string,codigo: number, pais: Pais){
+         this.nombreEstado=nombreEstado;
+         this.codigo=codigo;
+         this.pais=pais;
         
-    // }
-    constructor(id:number){
+     }
 
+     public getPais():Pais{
+        return this.pais;
+        }
 
-    }
+        public setPais(pais:Pais):void{
+        this.pais=pais;
+        }
+     
 }

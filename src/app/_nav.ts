@@ -38,7 +38,7 @@ children:[
   },
   {
     name: 'Estados',
-    url: '/dashboard',
+    url: 'contacto/estado/listarEstado',
     icon: 'icon-speedometer',
     
   },

@@ -1,1 +1,29 @@
-<p>listar estados</p>
+<h2>Titulos</h2>
+
+<button class="btn btn-success" routerLink="/contacto/estado/agregarEstado">Agregar</button>
+
+<table class="table">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Codigo</th>
+        <th scope="col">idPais</th>
+        <th scope="col">Detalles</th>
+        <th scope="col">Editar</th>
+        <th scope="col">Eliminar</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let estado of estados">
+        <td>{{estado.id}}</td>
+        <td>{{estado.nombreEstado}}</td>
+        <td>{{estado.codigo}}</td>
+        <td>{{estado.pais.id}}</td>
+        <td><button class="btn btn-outline-primary" routerLink="/detalle/{{estado.id}}"><i class="far fa-eye"></i> Ver</button></td>
+        <td><button class="btn btn-outline-warning" routerLink="/contacto/estado/agregarEstado/{{estado.id}}"><i class="far fa-edit"></i> Editar</button></td>
+        <td><button class="btn btn-outline-danger" (click)="borrar(estado.id)"><i class="far fa-trash-alt"></i> Eliminar</button></td> 
+    </tr>
+    </tbody>
+</table>
+

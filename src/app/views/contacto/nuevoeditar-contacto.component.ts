@@ -18,6 +18,7 @@ import { Pais } from '../../models/pais';
 
 export class nuevoEditarContactoComponent implements OnInit{
   
+    estado: Estado = null;
     nombreContacto: string ='';
     tipoContacto: boolean = null;
     fotografia:string='';
@@ -25,7 +26,6 @@ export class nuevoEditarContactoComponent implements OnInit{
     calle: string ='';
     calleSecundaria: string ='';
     ciudad: string ='';
-    estado: [id:0];
     codigoPostal: number =null;
     nif: string;
     puestoTrabajo: string ='';
@@ -51,7 +51,6 @@ export class nuevoEditarContactoComponent implements OnInit{
   }
 
   onCreate(): void {
-     const estado = new Estado(1);
      const contacto = new Contacto(
       this.nombreContacto,
       this.tipoContacto,
@@ -60,7 +59,7 @@ export class nuevoEditarContactoComponent implements OnInit{
       this.calle,
       this.calleSecundaria,
       this.ciudad,
-      estado,
+      this.estado,
       this.codigoPostal,
       this.nif,
       this.puestoTrabajo,
