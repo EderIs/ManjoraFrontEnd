@@ -29,6 +29,7 @@ export class NuevoEditarEstadoComponent implements OnInit{
       this.estadoService.detail(this.id).subscribe(
         data => {
           this.estado = data;
+          this.pais1 = data.pais.id;
         },
         err => {
           console.log(err);

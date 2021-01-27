@@ -12,14 +12,14 @@
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                     </div>
-                    <input type="text" id="nombreEstado" name="nombreEstado" [(ngModel)]="estado.nombreEstado" class="form-control" placeholder="Nombre del Estado" 
+                    <input type="text" id="nombreEstado" name="nombreEstado" [(ngModel)]="this.estado.nombreEstado" class="form-control" placeholder="Nombre del Estado" 
                     required>
                   </div>
                   
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                     </div>
-                    <input type="text" id="codigo" name="codigo" [(ngModel)]="estado.codigo" class="form-control" placeholder="0" 
+                    <input type="number" id="codigo" name="codigo" [(ngModel)]="this.estado.codigo" class="form-control" placeholder="0" 
                     required>
                   </div>
                   
@@ -27,7 +27,7 @@
                     <label>Seleccione un País...</label>
                     <select class="form-control" [(ngModel)]="this.pais1" [ngModelOptions]="{standalone: true}">
                       <option  *ngIf="this.estado.pais==null" value=0 >Seleccione un Pais...</option>
-                      <option *ngIf="this.estado.pais!=null" hidden="true" value=0 >{{estado.pais.nombrePais}}</option>
+                      <option *ngIf="this.estado.pais!=null" hidden="true" value={{this.estado.pais.id}} >{{this.estado.pais.nombrePais}}</option>
                       <option *ngFor="let pais of paises" value={{this.pais.id}}  >{{pais.nombrePais}}</option>
                     </select>
                   </div>

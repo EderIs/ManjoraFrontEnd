@@ -13,7 +13,7 @@ export class Estado {
         this.codigo= parseInt(estado[2]);
     }
 
-    public setEstado(nombreEstado: string, codigo:number, pais:Pais){
+    public setEstado(nombreEstado: string, codigo:number, pais: Pais){
         this.nombreEstado = nombreEstado;
         this.codigo = codigo;
         this.pais = pais
