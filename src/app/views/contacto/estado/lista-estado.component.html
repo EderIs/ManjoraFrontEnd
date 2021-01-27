@@ -19,7 +19,7 @@
         <td>{{estado.id}}</td>
         <td>{{estado.nombreEstado}}</td>
         <td>{{estado.codigo}}</td>
-        <td>{{estado.pais.id}}</td>
+        <td>{{estado.pais.nombrePais}}</td>
         <td><button class="btn btn-outline-primary" routerLink="/detalle/{{estado.id}}"><i class="far fa-eye"></i> Ver</button></td>
         <td><button class="btn btn-outline-warning" routerLink="/contacto/estado/agregarEstado/{{estado.id}}"><i class="far fa-edit"></i> Editar</button></td>
         <td><button class="btn btn-outline-danger" (click)="borrar(estado.id)"><i class="far fa-trash-alt"></i> Eliminar</button></td> 
