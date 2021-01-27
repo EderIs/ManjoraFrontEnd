@@ -8,5 +8,9 @@ export class Pais{
         this.id= parseInt(pais[0]);
         this.nombrePais= pais[1];
     }
+
+    public getPais(nombrePais: string){
+        this.nombrePais = nombrePais;
+    }
 }
 

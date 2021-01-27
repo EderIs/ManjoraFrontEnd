@@ -111,6 +111,13 @@ const routes: Routes = [
         }
       },
       {
+        path:'estado/agregarEstado/:id',
+        component: NuevoEditarEstadoComponent,
+        data:{
+          title:'Estado / Agregar'
+        }
+      },
+      {
         path:'pais/listarPais',
         component: ListaPaisComponent,
         data:{
