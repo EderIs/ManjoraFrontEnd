@@ -35,7 +35,7 @@ public getPais():Pais{
 return this.pais;
 }
 public setPais(pais:Pais):void{
-
+    
 this.pais=pais;
 }
 

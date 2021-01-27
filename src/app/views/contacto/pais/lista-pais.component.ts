@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import  {PaisService} from '../../../service/pais.service';
 import  {Pais} from '../../../models/pais';
 @Component({
@@ -36,7 +34,8 @@ this.cargarPais();
 
   },err=>{
 
-console.log(err.err.message);
+alert("No se pudo eliminar Pais");
+console.log(err.error.mensaje);
 
   })
 

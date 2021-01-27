@@ -10,7 +10,7 @@ import {BancoService} from '../../../service/banco.service';
 export class listaBancoComponent implements OnInit{
   
 
-bancos:Banco[]=[];
+bancos : Banco[]=[];
 
 constructor(private bancoService : BancoService){}
 
@@ -26,8 +26,10 @@ cargarBancos(){
 
 this.bancos = model;
 
-  },err=>{
+console.log(model)
 
+  },err=>{
+    console.log(err.err.mensaje);
   });
   
 }
@@ -40,8 +42,8 @@ if(id > 0){
     alert('Se elimino correctaente el banco');
     this.cargarBancos();
   },err=>{
-
-    console.log(err.err.message);
+    
+    alert("No se pudo eliminar");
 
   })
 
@@ -50,5 +52,4 @@ alert('Error al eliminar el Bamco');
 
 }
 }
-
 }

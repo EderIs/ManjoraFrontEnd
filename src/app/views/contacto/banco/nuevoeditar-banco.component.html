@@ -3,52 +3,52 @@
         <strong>Agregar</strong> Bancos
     </div>
     <div class="card-body">
-        <form (ngSubmit)="onCreate()" novalidate #f="ngForm" >
+        <form (ngSubmit)="onCreate()" novalidate #f="ngForm"  >
 
             <div class="form-group">
-                <label for="nombreContacto">Pais</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.nombrePais" [(ngModel)]="this.banco.nombre" class="form-control" placeholder="Pais" 
+                <label for="nombreContacto">Nombre Banco:</label>
+                <input type="text" *ngIf="this.banco != null"  name="banco.nombre" [(ngModel)]="this.banco.nombre" class="form-control" placeholder="Pais" 
                 required>
-                <label for="nombreContacto">Pais</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.nombrePais" [(ngModel)]="banco.calle" class="form-control" placeholder="Pais" 
-                required>
-            </div>
-            <div class="form-group">
-                <label for="nombreContacto">Pais</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.nombrePais" [(ngModel)]="banco.calleSecundaria" class="form-control" placeholder="Pais" 
-                required>
-                <label for="nombreContacto">Pais</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.nombrePais" [(ngModel)]="banco.ciudad" class="form-control" placeholder="Pais" 
+                <label for="nombreContacto">Calle</label>
+                <input type="text" *ngIf="this.banco != null" name="banco.calle" [(ngModel)]="banco.calle" class="form-control" placeholder="Pais" 
                 required>
             </div>
             <div class="form-group">
-                <label for="nombreContacto">Pais</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.nombrePais" [(ngModel)]="banco.codigoIdenBancaria" class="form-control" placeholder="Pais" 
+                <label for="nombreContacto">Calle secundaria</label>
+                <input type="text" *ngIf="this.banco != null" name="banco.calleSecundaria" [(ngModel)]="banco.calleSecundaria" class="form-control" placeholder="Pais" 
                 required>
-                <label for="nombreContacto">Pais</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.nombrePais" [(ngModel)]="banco.codigoPostal" class="form-control" placeholder="Pais" 
+                <label for="nombreContacto">Ciudad</label>
+                <input type="text" *ngIf="this.banco != null" name="banco.ciudad" [(ngModel)]="banco.ciudad" class="form-control" placeholder="Pais" 
                 required>
             </div>
             <div class="form-group">
-                <label for="nombreContacto">Pais</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.nombrePais" [(ngModel)]="banco.correoElectronico" class="form-control" placeholder="Pais" 
+                <label for="nombreContacto">Codigo Bancario</label>
+                <input type="text" *ngIf="this.banco != null" name="banco.codigoIdenBancaria" [(ngModel)]="banco.codigoIdenBancaria" class="form-control" placeholder="Pais" 
                 required>
-                <label for="nombreContacto">Pais</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.nombrePais" [(ngModel)]="banco.telefono" class="form-control" placeholder="Pais" 
+                <label for="nombreContacto">Codigo Postal</label>
+                <input type="text" *ngIf="this.banco != null" name="banco.codigoPostal" [(ngModel)]="banco.codigoPostal" class="form-control" placeholder="Pais" 
+                required>
+            </div>
+            <div class="form-group">
+                <label for="nombreContacto">Correo</label>
+                <input type="text" *ngIf="this.banco != null" name="banco.correoElectronico" [(ngModel)]="banco.correoElectronico" class="form-control" placeholder="Pais" 
+                required>
+                <label for="nombreContacto">Telefono</label>
+                <input type="text" *ngIf="this.banco != null" name="banco.telefono" [(ngModel)]="banco.telefono" class="form-control" placeholder="Pais" 
                 required>
 
             </div>
             <div class="form-group select-wrapper">
                 <label>Seleccione un pais</label>
-                <select  class="form-control" [(ngModel)]="this.pais1" [ngModelOptions]="{standalone: true}">
-                  <option *ngFor="let pais of paises" value={{pais.id}} >{{pais.nombrePais}}</option>
+                <select id="ddlPais" class="form-control" [(ngModel)]="this.pais1"  [ngModelOptions]="{standalone: true}"> 
+                    <option  value="" >--Selecciona un Pais--</option>  
+                    <option *ngFor="let pais of paises"  value={{pais.id}} >{{pais.nombrePais}}</option>    
                 </select>
               </div>
              <div class="card-footer">
                 <button type="submit" class="btn btn-sm btn-primary"  > Agregar</button>
                 <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
             </div>
-
     </form>
 </div>
 
