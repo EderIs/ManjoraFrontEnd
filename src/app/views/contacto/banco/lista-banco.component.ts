@@ -11,6 +11,9 @@ export class listaBancoComponent implements OnInit{
   
 
 bancos : Banco[]=[];
+busqueda:string="";
+
+
 
 constructor(private bancoService : BancoService){}
 
@@ -52,4 +55,28 @@ alert('Error al eliminar el Bamco');
 
 }
 }
+
+onSearch(){
+
+  if(this.busqueda != " "){
+
+this.bancoService.listaByNombre(this.busqueda).subscribe(model=>{
+
+this.bancos=model;
+
+},err=>{
+
+  alert('No existen bancos');
+})
+
+
+  }else{
+
+alert('No se realizo la busqueda correctamente');
+
+  }
+
+
+}
+
 }

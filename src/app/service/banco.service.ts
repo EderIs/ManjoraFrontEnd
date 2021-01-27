@@ -14,6 +14,9 @@ export class BancoService {
   public lista(): Observable <Banco[]> {
     return this.HttpClient.get<Banco[]>(this.bancoURL + 'list');
   }
+  public listaByNombre(nombre:string):Observable<Banco[]>{
+  return this.HttpClient.get<Banco[]>(this.bancoURL+`list/${nombre}`);
+  }
 
   public detail(id: number): Observable <Banco> {
     return this.HttpClient.get<Banco>(this.bancoURL + `detail/${id}`);
