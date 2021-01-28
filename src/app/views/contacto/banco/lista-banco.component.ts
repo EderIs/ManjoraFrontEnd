@@ -11,7 +11,7 @@ export class listaBancoComponent implements OnInit{
   
 
 bancos : Banco[]=[];
-busqueda:string="";
+  busqueda:string="";
 
 
 

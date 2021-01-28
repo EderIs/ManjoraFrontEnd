@@ -12,6 +12,8 @@ import { ContactoService } from '../../service/contacto.service';
 export class listaContactoComponent implements OnInit{
   
   contactos: Contacto[] = [];
+  busqueda:string="";
+  
   constructor(private contactoService: ContactoService) { }
   
 
@@ -28,6 +30,41 @@ export class listaContactoComponent implements OnInit{
         console.log(err);
       }
     )
+  }
+
+  borrar(id: number) {
+    this.contactoService.delete(id).subscribe(
+      data => {
+       console.log(data);
+        this.cargarContactos();
+      },
+      err => {
+        console.log(err)
+      }
+    );
+  }
+
+  onSearch(){
+
+    if(this.busqueda != " "){
+  
+  this.contactoService.listaByNombre(this.busqueda).subscribe(model=>{
+  
+  this.contactos=model;
+  
+  },err=>{
+  
+    alert('No existen contactos');
+  })
+  
+  
+    }else{
+  
+  alert('No se realizo la busqueda correctamente');
+  
+    }
+  
+  
   }
 
 }

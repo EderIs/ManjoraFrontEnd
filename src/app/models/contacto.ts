@@ -2,6 +2,7 @@ import{Estado}from './estado';
 import{Titulo}from './titulo';
 import{Usuario}from './usuario';
 
+
 export class Contacto {
     id?: number;
     nombreContacto: string;
@@ -69,7 +70,21 @@ export class Contacto {
         this.referenciaInterna = referenciaInterna;
 
     }
+    public getEstado():Estado{
+        return this.estado;
+        }
+        public setEstado(estado:Estado):void{
+        
+        this.estado=estado;
+        }
 
+        public getTitulo():Titulo{
+            return this.titulo;
+            }
+            public setTitulo(titulo:Titulo):void{
+            
+            this.titulo=titulo;
+            }
 
 
 }
