@@ -1,35 +1,37 @@
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand">Estados</a>
+    <form class="form-inline" (ngSubmit)="onSearch()">
+      <input class="form-control mr-sm-2" type="search" name="busqueda" [(ngModel)]="busqueda" placeholder="Buscar" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+    </form>
+  </nav>
 
+<button class="btn btn-outline-success" routerLink="/contacto/estado/agregarEstado">Agregar</button>
 
-<p>Usuario</p>
-<button class="btn btn-outline-primary" routerLink="/usuario/agregarNuevo"><i class="far fa-eye"></i> Agregar nuevo</button>
+<table class="table table-responsive-sm table-hover table-outline mb-0">
+    <thead class="thead-light">
+    <tr>
+        <th class="text-center"><i class="fa fa-flag"></i></th>
+        <th class="text-center" scope="col">#</th>
+        <th class="text-center" scope="col">Nombre</th>
+        <th class="text-center" scope="col">Código</th>
+        <th class="text-center" scope="col">País</th>
+        <!--<th class="text-center" scope="col">Detalles</th>-->
+        <th class="text-center" scope="col">Editar</th>
+        <th class="text-center" scope="col">Eliminar</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let estado of estados">
+        <td class="text-center"><input type="checkbox"/></td>
+        <td class="text-center">{{estado.id}}</td>
+        <td class="text-center">{{estado.nombreEstado}}</td>
+        <td class="text-center">{{estado.codigo}}</td>
+        <td class="text-center">{{estado.pais.nombrePais}}</td>
+        <!--<td class="text-center"><button class="btn btn-outline-primary" routerLink="/detalle/{{estado.id}}"><i class="far fa-eye"></i> Ver</button></td>-->
+        <td class="text-center"><button class="btn btn-outline-primary" routerLink="/contacto/estado/agregarEstado/{{estado.id}}"><i class="far fa-edit"></i> Editar</button></td>
+        <td class="text-center"><button class="btn btn-outline-danger" (click)="borrar(estado.id)"><i class="far fa-trash-alt"></i> Eliminar</button></td> 
+    </tr>
+    </tbody>
+</table>
 
-<div class="row">
-    <div class="col-lg-12">
-        <table class="table">
-            <thead class="table-dark">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nombre Contacto</th>
-                <th scope="col">Calle</th>
-                <th scope="col">Calle Secundaria</th>
-                <th scope="col">Detalles</th>
-                <th scope="col">Editar</th>
-                <th scope="col">Eliminar</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let contacto of contactos">
-                <td>{{contacto.id}}</td>
-                <td>{{contacto.nombreContacto}}</td>
-                <td>{{contacto.calle}}</td>
-                <td>{{contacto.calleSecundaria}}</td>
-                <td><button class="btn btn-outline-primary" routerLink="/detalle/{{contacto.id}}"><i class="far fa-eye"></i> Ver</button></td>
-                <td><button class="btn btn-outline-warning" routerLink="/nuevo/{{contacto.id}}"><i class="far fa-edit"></i> Editar</button></td>
-                <td><button class="btn btn-outline-danger" ><i class="far fa-trash-alt"></i> Eliminar</button></td> 
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!--(click)="borrar(producto.id)" -->

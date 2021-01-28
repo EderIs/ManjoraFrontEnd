@@ -11,6 +11,7 @@ import { EstadoService } from '../../../service/estado.service';
 export class ListaEstadoComponent implements OnInit{
   estados: Estado[] = [];
   estado: Estado = null;
+  busqueda: string="";
   
   constructor(
     private estadoService: EstadoService
@@ -31,17 +32,16 @@ export class ListaEstadoComponent implements OnInit{
     );
   }
 
-  buscarEstadoNombre(event: Event): void {
-   const filtro = (event.target as HTMLInputElement).value;
-   this.estadoService.detailName(filtro).subscribe(
-    data => {
-      this.estados = null;
-      this.estados[0] = data;
-    },
-    err => {
-      console.log(err);
+  onSearch(){
+    if(this.busqueda != " "){
+      this.estadoService.listaByNombre(this.busqueda).subscribe(model=>{
+      this.estados=model;
+      },err=>{
+        alert('No existen estados');
+      })
+    }else{
+      alert('No se realizo la busqueda correctamente');
     }
-   );
   }
 
 
