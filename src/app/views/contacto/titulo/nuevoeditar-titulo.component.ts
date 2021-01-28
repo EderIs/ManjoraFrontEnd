@@ -10,6 +10,7 @@ import { Titulo } from '../../../models/titulo';
 })
 
 export class NuevoEditarTituloComponent implements OnInit{
+  titul: string []= [];
     titulo: string = "";
     abreviatura: string = "";
     titu: Titulo = null;
@@ -39,6 +40,7 @@ export class NuevoEditarTituloComponent implements OnInit{
 
   onCreate(): void {
     if(this.id!=null){
+      console.log(JSON.stringify(this.titu));
       this.tituloService.update(this.id, this.titu).subscribe(
         data => {
           this.titu = data;
@@ -51,7 +53,8 @@ export class NuevoEditarTituloComponent implements OnInit{
        
     }
     else{
-      const titut = new Titulo(this.titulo, this.abreviatura);
+      this.titul.push(" ",this.titulo,this.abreviatura);
+     const titut = new Titulo(this.titul);
     this.tituloService.save(titut).subscribe(
       response => {
        alert('Se inserto correctamente');
@@ -60,7 +63,7 @@ export class NuevoEditarTituloComponent implements OnInit{
       error =>{
         console.log(error);
       }
-    );
+    ); 
     }
-    }
+    } 
 }

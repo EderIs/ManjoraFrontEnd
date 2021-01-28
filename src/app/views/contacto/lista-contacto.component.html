@@ -1,7 +1,37 @@
 
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand">Contactos</a>
+    <form class="form-inline" (ngSubmit)="onSearch()">
+      <input class="form-control mr-sm-2" type="search" name="busqueda" [(ngModel)]="busqueda" placeholder="Buscar" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+    </form>
+  </nav>
+  <input type="button" class="btn btn-outline-primary" routerLink="/contacto/agregarNuevo"  value="Agregar">
+  <br>
+    <table class="table table-responsive-sm table-hover table-outline mb-0">
+        <thead class="thead-light">
+          <tr>
+            <th class="text-center"><i class="fa fa-flag"></i></th>        
+            <th class="text-center">Nombre del Contacto</th>
+            <th class="text-center">Telefono</th>
+            <th class="text-center">Correo Electonico</th>
+            <th class="text-center">Editar</th> 
+            <th class="text-center">Eliminar</th>              
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let contacto of contactos">
+                <td class="text-center"><input type="checkbox"/></td>
+                <td>{{contacto.nombreContacto}}</td>
+                <td>{{contacto.telefono}}</td>
+                <td>{{contacto.correoElectronico}}</td>
+                <td class="text-center"><input type="button" class="btn btn-outline-primary" value="Editar" routerLink="/contacto/agregarNuevo/{{contacto.id}}"></td>
+                <td class="text-center"><input type="button" class="btn btn-outline-danger" value="Eliminar" (click)="borrar(contacto.id)"></td> 
+            </tr>
+        </tbody>
+      </table>
 
-
-<button class="btn btn-outline-primary" routerLink="/contacto/agregarNuevo"><i class="far fa-eye"></i> Agregar nuevo</button>
+<!-- <button class="btn btn-outline-primary" routerLink="/contacto/agregarNuevo"><i class="far fa-eye"></i> Agregar nuevo</button>
 
 <div class="row">
     <div class="col-lg-12">
@@ -12,6 +42,9 @@
                 <th scope="col">Nombre Contacto</th>
                 <th scope="col">Calle</th>
                 <th scope="col">Calle Secundaria</th>
+                <th scope="col">Ciudad</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Titulo</th>
                 <th scope="col">Detalles</th>
                 <th scope="col">Editar</th>
                 <th scope="col">Eliminar</th>
@@ -23,13 +56,16 @@
                 <td>{{contacto.nombreContacto}}</td>
                 <td>{{contacto.calle}}</td>
                 <td>{{contacto.calleSecundaria}}</td>
+                <td>{{contacto.ciudad}}</td>
+                <td>{{contacto.estado.nombreEstado}}</td>
+                <td>{{contacto.titulo.titulo}}</td>
                 <td><button class="btn btn-outline-primary" routerLink="/detalle/{{contacto.id}}"><i class="far fa-eye"></i> Ver</button></td>
-                <td><button class="btn btn-outline-warning" routerLink="/nuevo/{{contacto.id}}"><i class="far fa-edit"></i> Editar</button></td>
-                <td><button class="btn btn-outline-danger" ><i class="far fa-trash-alt"></i> Eliminar</button></td> 
+                <td><button class="btn btn-outline-warning" routerLink="/contacto/agregarNuevo/{{contacto.id}}"><i class="far fa-edit"></i> Editar</button></td>
+                <td><button class="btn btn-outline-danger" (click)="borrar(contacto.id)"><i class="far fa-trash-alt"></i> Eliminar</button></td> 
             </tr>
             </tbody>
         </table>
     </div>
-</div>
+</div> -->
 
 <!--(click)="borrar(producto.id)" -->

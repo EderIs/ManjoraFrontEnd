@@ -14,6 +14,9 @@ export class ContactoService {
   public lista(): Observable <Contacto[]> {
     return this.HttpClient.get<Contacto[]>(this.contactoURL + 'list');
   }
+  public listaByNombre(nombre:string):Observable<Contacto[]>{
+    return this.HttpClient.get<Contacto[]>(this.contactoURL+`list/${nombre}`);
+    }
 
   public detail(id: number): Observable <Contacto> {
     return this.HttpClient.get<Contacto>(this.contactoURL + `detail/${id}`);

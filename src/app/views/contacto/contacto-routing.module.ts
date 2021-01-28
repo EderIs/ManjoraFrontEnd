@@ -41,6 +41,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'agregarNuevo/:id',
+        component: nuevoEditarContactoComponent,
+        data: {
+          title: 'Editar'
+        }
+      },
+      {
         path: 'titulo/listaTitulo',
         component: listaTituloComponent,
         data: {

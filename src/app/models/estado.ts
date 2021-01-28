@@ -7,11 +7,6 @@ export class Estado {
     pais: Pais;
 
 
-    constructor(estado : string []){
-        this.id= parseInt(estado[0]);
-        this.nombreEstado= estado[1];
-        this.codigo= parseInt(estado[2]);
-    }
 
     public setEstado(nombreEstado: string, codigo:number, pais: Pais){
         this.nombreEstado = nombreEstado;
@@ -27,4 +22,11 @@ export class Estado {
     this.pais=pais;
     }
      
+
+        constructor(estado : string []){
+            this.id= parseInt(estado[0]);
+            this.nombreEstado= estado[1];
+            this.codigo= parseInt(estado[2]);
+        }
+
 }
