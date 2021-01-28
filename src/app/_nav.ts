@@ -3,17 +3,13 @@ import { INavData } from '@coreui/angular';
 export const navItems: INavData[] = [
   
   {
-    title: true,
-    name: 'Contactos',
-},
-{
-  name: 'Contactos',
-  url: '/contacto',
-  icon: 'icon-speedometer',
-}, 
+    name:'Contactos',
+    url: '/contacto',
+    icon: 'icon-speedometer'
+  },
   {
     name: 'Configuracion',
-    url: '/dashboard',
+    url: '/Dashboard',
     icon: 'icon-speedometer',
     badge: {
       variant: 'info',
@@ -57,30 +53,52 @@ children:[
     url: 'contacto/banco/listarBanco',
     icon: 'icon-speedometer',
     
-  }
+  },
 ]
     },
     {
-      title: true,
-      name: 'Empleados',
-  },
-    {
-      name: 'Empleados',
-      url: '/dashboard',
+      name:'Empleados',
+      url: '/empleado',
       icon: 'icon-speedometer'
     },
+    {
+      name: 'Configuracion',
+      url: '/Dashboard',
+      icon: 'icon-speedometer',
+      badge: {
+        variant: 'info',
+        text: 'NEW'
+      },
+  children:[
     {
       name: 'Departamentos',
-      url: '/dashboard',
+      url: 'empleado/departamento/listarDepartamento',
       icon: 'icon-speedometer'
     },
+    {
+      name: 'Puestos',
+      url: 'empleado/puesto/listarPuesto',
+      icon: 'icon-speedometer'
+    },
+    {
+      name: 'Horas Laborales',
+      url: 'empleado/horasLaborales/listarHorasL',
+      icon: 'icon-speedometer'
+    },
+    {
+      name: 'Horario Trabajo',
+      url: 'empleado/horarioTrabajo/listarHorarioT',
+      icon: 'icon-speedometer'
+    },
+  ]
+      },
     {
       title: true,
       name: 'Usuarios',
   },
     {
       name:'Usuarios',
-      url: '/dashboard',
+      url: 'usuario',
       icon: 'icon-speedometer'
     }  
 ];

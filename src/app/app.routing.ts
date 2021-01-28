@@ -55,6 +55,16 @@ export const routes: Routes = [
         path: 'contacto',
         loadChildren: () => import('./views/contacto/contacto.module').then(m => m.ContactoModule)
       },
+
+      {
+        path: 'empleado',
+        loadChildren: () => import('./views/empleado/empleado.module').then(m => m.EmpleadoModule)
+      },
+
+      {
+        path: 'usuario',
+        loadChildren: () => import('./views/usuario/usuario.module').then(m => m.UsuarioModule)
+      },
       
       {
         path: 'dashboard',

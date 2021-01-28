@@ -20,7 +20,7 @@ export class EstadoService {
   }
 
   public detailName(nombreEstado: string): Observable <Estado> {
-    return this.HttpClient.get<Estado>(this.estadoURL + `detail/${nombreEstado}`);
+    return this.HttpClient.get<Estado>(this.estadoURL + `detailname/${nombreEstado}`);
   }
 
   public save(estado: Estado): Observable<any> {

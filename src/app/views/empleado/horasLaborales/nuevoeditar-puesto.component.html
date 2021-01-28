@@ -1,0 +1,26 @@
+
+<div class="card">
+    <div class="card-header">
+        <strong>Agregar</strong> Pais
+    </div>
+    <div class="card-body">
+        <form (ngSubmit)="onCreate()" novalidate #f="ngForm" >
+
+            <div class="form-group">
+                <label for="nombreContacto">Pais</label>
+                <input type="text" *ngIf="this.pais != null" name="pais.nombrePais" [(ngModel)]="pais.nombrePais" class="form-control" placeholder="Pais" 
+                required>
+
+                <input type="text" *ngIf="this.pais == null" name="nombrePais" [(ngModel)]="nombrePais" class="form-control" placeholder="Pais" 
+                required>
+            </div>
+
+             <div class="card-footer">
+                <button type="submit" class="btn btn-sm btn-primary" [disabled]="!f.valid" > Agregar</button>
+                <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+            </div>
+
+    </form>
+</div>
+
+</div>

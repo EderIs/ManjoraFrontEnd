@@ -10,6 +10,8 @@ import { EstadoService } from '../../../service/estado.service';
 
 export class ListaEstadoComponent implements OnInit{
   estados: Estado[] = [];
+  estado: Estado = null;
+  
   constructor(
     private estadoService: EstadoService
     ) { }
@@ -28,6 +30,20 @@ export class ListaEstadoComponent implements OnInit{
       }
     );
   }
+
+  buscarEstadoNombre(event: Event): void {
+   const filtro = (event.target as HTMLInputElement).value;
+   this.estadoService.detailName(filtro).subscribe(
+    data => {
+      this.estados = null;
+      this.estados[0] = data;
+    },
+    err => {
+      console.log(err);
+    }
+   );
+  }
+
 
   borrar(id: number) {
     this.estadoService.delete(id).subscribe(
