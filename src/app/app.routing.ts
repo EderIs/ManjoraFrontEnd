@@ -67,6 +67,10 @@ export const routes: Routes = [
       },
       
       {
+        path:'ajuste',
+        loadChildren:() => import('./views/ajuste/ajuste.module').then(m => m.AjusteModule)
+      },
+      {
         path: 'dashboard',
         loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
       },

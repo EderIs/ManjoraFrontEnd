@@ -94,11 +94,11 @@ children:[
       },
     {
       title: true,
-      name: 'Usuarios',
+      name: 'Ajustes',
   },
     {
-      name:'Usuarios',
-      url: 'usuario',
+      name:'Ajustes',
+      url: '/ajuste',
       icon: 'icon-speedometer'
     }  
 ];

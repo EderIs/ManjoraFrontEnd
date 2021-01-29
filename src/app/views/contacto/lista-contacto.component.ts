@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { Contacto } from '../../models/contacto';
 import { ContactoService } from '../../service/contacto.service';
 
