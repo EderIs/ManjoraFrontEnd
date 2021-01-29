@@ -82,12 +82,12 @@ children:[
     },
     {
       name: 'Horas Laborales',
-      url: 'empleado/horasLaborales/listarHorasL',
+      url: 'empleado/horasL/listarHorasL',
       icon: 'icon-speedometer'
     },
     {
       name: 'Horario Trabajo',
-      url: 'empleado/horarioTrabajo/listarHorarioT',
+      url: 'empleado/horarioT/listarHorarioT',
       icon: 'icon-speedometer'
     },
   ]

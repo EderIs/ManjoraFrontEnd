@@ -16,6 +16,10 @@ export class HorarioTrapService {
     return this.HttpClient.get<HorarioTrabajo[]>(this.horarioTrabURL + 'list');
   }
 
+  public listaByNombre(nombreHorarioTrab:string):Observable<HorarioTrabajo[]>{
+    return this.HttpClient.get<HorarioTrabajo[]>(this.horarioTrabURL+`list/${nombreHorarioTrab}`);
+    }
+
   public detail(id: number): Observable <HorarioTrabajo> {
     return this.HttpClient.get<HorarioTrabajo>(this.horarioTrabURL + `detail/${id}`);
   }

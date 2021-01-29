@@ -10,7 +10,6 @@ import { EstadoService } from '../../../service/estado.service';
 
 export class ListaEstadoComponent implements OnInit{
   estados: Estado[] = [];
-  estado: Estado = null;
   busqueda: string="";
   
   constructor(

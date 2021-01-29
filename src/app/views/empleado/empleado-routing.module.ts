@@ -8,6 +8,10 @@ import { NuevoEditarEmpleadoComponent } from './nuevoeditar-empleado.component';
 import { ListaDepartamentoComponent } from './departamento/lista-departamento.component';
 import { NuevoEditarPuestoComponent } from './puesto/nuevoeditar-puesto.component';
 import { NuevoEditarDepartamentoComponent } from './departamento/nuevoeditar-departamento.component';
+import { ListaHorarioTrabajoComponent } from './horarioT/lista-horarioTrabajo.component';
+import { ListaHorasLComponent } from './horasL/lista-horasL.component';
+import { NuevoEditarHorasLComponent } from './horasL/nuevoeditar-horasL.component';
+import { NuevoEditarHorarioTrabajoComponent } from './horarioT/nuevoeditar-horarioTrabajo.component';
 
 const routes: Routes = [
   
@@ -86,45 +90,45 @@ const routes: Routes = [
         }
       },
       {
-        path: 'horasLaborales/listarHorasL',
-        component: NuevoEditarPuestoComponent,
+        path: 'horasL/listarHorasL',
+        component: ListaHorasLComponent,
         data: {
           title: 'Horas Laborales'
         }
       },
       {
-        path: 'horasLaborales/agregarHorasL',
-        component: NuevoEditarPuestoComponent,
+        path: 'horasL/agregarHorasL',
+        component: NuevoEditarHorasLComponent,
         data: {
-          title: 'Puestos / Agregar'
+          title: 'Horas Laborales / Agregar'
         }
       },
       {
-        path: 'horasLaborales/agregarHorasL/:id',
-        component: NuevoEditarPuestoComponent,
+        path: 'horasL/agregarHorasL/:id',
+        component: NuevoEditarHorasLComponent,
         data: {
-          title: 'Puestos / Agregar'
+          title: 'Horas Laborales / Editar'
         }
       },
       {
-        path: 'horarioTrabajo/listarHorarioT',
-        component: NuevoEditarPuestoComponent,
+        path: 'horarioT/listarHorarioT',
+        component: ListaHorarioTrabajoComponent,
         data: {
-          title: 'Horas Laborales'
+          title: 'Horario de Trabajo'
         }
       },
       {
-        path: 'horarioTrabajo/agregarHorarioT',
-        component: NuevoEditarPuestoComponent,
+        path: 'horarioT/agregarHorarioT',
+        component: NuevoEditarHorarioTrabajoComponent,
         data: {
-          title: 'Puestos / Agregar'
+          title: 'Horario / Agregar'
         }
       },
       {
         path: 'horarioT/agregarHorarioT/:id',
-        component: NuevoEditarPuestoComponent,
+        component: NuevoEditarHorarioTrabajoComponent,
         data: {
-          title: 'Puestos / Agregar'
+          title: 'Horario / Editar'
         }
       },
     ]
