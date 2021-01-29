@@ -9,6 +9,10 @@ import { ListaDepartamentoComponent } from './departamento/lista-departamento.co
 import { NuevoEditarDepartamentoComponent } from './departamento/nuevoeditar-departamento.component';
 import { ListaPuestoComponent } from './puesto/lista-puesto.component';
 import { NuevoEditarPuestoComponent } from './puesto/nuevoeditar-puesto.component';
+import { ListaHorasLComponent } from './horasL/lista-horasL.component';
+import { NuevoEditarHorasLComponent } from './horasL/nuevoeditar-horasL.component';
+import { ListaHorarioTrabajoComponent } from './horarioT/lista-horarioTrabajo.component';
+import { NuevoEditarHorarioTrabajoComponent } from './horarioT/nuevoeditar-horarioTrabajo.component';
 
 // Theme Routing
 import {EmpleadoRoutingModule} from './empleado-routing.module'
@@ -25,7 +29,11 @@ import{ FormsModule} from '@angular/forms';
     ListaDepartamentoComponent,
     NuevoEditarDepartamentoComponent,
     ListaPuestoComponent,
-    NuevoEditarPuestoComponent
+    NuevoEditarPuestoComponent,
+    ListaHorasLComponent,
+    NuevoEditarHorasLComponent,
+    ListaHorarioTrabajoComponent,
+    NuevoEditarHorarioTrabajoComponent
   ]
 })
 export class EmpleadoModule { }

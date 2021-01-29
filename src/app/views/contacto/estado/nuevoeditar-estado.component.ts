@@ -63,7 +63,6 @@ export class NuevoEditarEstadoComponent implements OnInit{
           this.estado = data;
         },
           err => {
-            console.log(this.estado.pais.nombrePais);
             console.log(err);
             });
     }
@@ -74,7 +73,6 @@ export class NuevoEditarEstadoComponent implements OnInit{
        alert('Se inserto correctamente');
       },
       error =>{
-        console.log(this.estado.nombreEstado);
         console.log(error);
       }
     );

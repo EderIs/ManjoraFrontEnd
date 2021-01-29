@@ -5,10 +5,10 @@ import  {PaisService} from '../../../service/pais.service'
 
 
 @Component({
-  templateUrl: 'nuevoeditar-puesto.component.html'
+  templateUrl: 'nuevoeditar-horarioTrabajo.component.html'
 })
 
-export class NuevoEditarPuestoComponent implements OnInit{
+export class NuevoEditarHorarioTrabajoComponent implements OnInit{
 
 
 nombrePais: string = "";

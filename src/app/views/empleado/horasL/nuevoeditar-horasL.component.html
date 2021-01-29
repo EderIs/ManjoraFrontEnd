@@ -1,0 +1,32 @@
+<div class="card">
+    <div class="card-header">
+        <strong>Agregar</strong> Horas Laborales
+    </div>
+    <div class="card-body">
+        <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="nombreContacto">Nombre Hora</label>
+                    <input type="text" *ngIf="this.horaL != null" name="horaL.nombreHoraL" [(ngModel)]="horaL.nombreHoraL" class="form-control" placeholder="Nombre" 
+                    required>
+    
+                    <input type="text" *ngIf="this.horaL == null" name="nombreHoraL" [(ngModel)]="nombreHoraL" class="form-control" placeholder="Pais" 
+                    required>
+                </div>
+                <div class="form-group">
+                    <label for="nombreContacto">Promedio Horas</label>
+                    <input type="number" *ngIf="this.horaL != null" name="horaL.promedioHoraDia" [(ngModel)]="horaL.promedioHoraDia" class="form-control" placeholder="Pais" 
+                    required>
+    
+                    <input type="number" *ngIf="this.horaL == null" name="promedioHoraDia" [(ngModel)]="promedioHoraDia" class="form-control" placeholder="Pais" 
+                    required>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-sm btn-primary"> Guardar</button>
+                <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+</div>

@@ -15,6 +15,10 @@ export class HorarioLabService {
     return this.HttpClient.get< HoraLaboral[]>(this. horaLabURL + 'list');
   }
 
+  public listaByNombre(nombreHoraL:string):Observable<HoraLaboral[]>{
+    return this.HttpClient.get<HoraLaboral[]>(this.horaLabURL+`list/${nombreHoraL}`);
+    }
+
   public detail(id: number): Observable < HoraLaboral> {
     return this.HttpClient.get< HoraLaboral>(this. horaLabURL + `detail/${id}`);
   }
