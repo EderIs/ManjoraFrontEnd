@@ -7,13 +7,16 @@ import { Puesto } from '../models/puesto';
   providedIn: 'root'
 })
 export class PuestoService {
-  puestoURL = 'http://localhost:8080/puesto/'
+  puestoURL = 'http://localhost:8090/puesto/'
 
   constructor(private HttpClient: HttpClient) { }
 
   public lista(): Observable <Puesto[]> {
     return this.HttpClient.get<Puesto[]>(this.puestoURL + 'list');
   }
+  public listaByNombre(nombre:string):Observable<Puesto[]>{
+    return this.HttpClient.get<Puesto[]>(this.puestoURL+`list/${nombre}`);
+    }
 
   public detail(id: number): Observable <Puesto> {
     return this.HttpClient.get<Puesto>(this.puestoURL + `detail/${id}`);

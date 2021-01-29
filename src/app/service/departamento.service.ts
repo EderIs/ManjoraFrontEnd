@@ -8,7 +8,7 @@ import { Departamento } from '../models/departamento';
   providedIn: 'root'
 })
 export class DepartamentoService {
-    departamentoURL = 'http://localhost:8080/departamento/'
+    departamentoURL = 'http://localhost:8090/departamento/'
   
     constructor(private HttpClient: HttpClient) { }
   

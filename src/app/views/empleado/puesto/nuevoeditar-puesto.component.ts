@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
+import { Banco } from '../../../models/banco';
+import { Departamento } from '../../../models/departamento';
 import  {Pais} from '../../../models/pais'
+import { Puesto } from '../../../models/puesto';
+import { BancoService } from '../../../service/banco.service';
+import { DepartamentoService } from '../../../service/departamento.service';
 import  {PaisService} from '../../../service/pais.service'
+import { PuestoService } from '../../../service/puesto.service';
 
 
 @Component({
@@ -9,67 +15,87 @@ import  {PaisService} from '../../../service/pais.service'
 })
 
 export class NuevoEditarPuestoComponent implements OnInit{
+  puesto: Puesto = null;
+  private id: number = this.activatedRouter.snapshot.params.id;
+  departamentos: Departamento[] = [];
+  departamento: string[] = [];
+  departamento1: number = 0;
+  res: string;
+  departamentoE: string[] = [];
 
-
-nombrePais: string = "";
-id : number= this.activatedRouter.snapshot.params.id;
-pais : Pais=null;
-pais1 :string []=[];
-
-
- constructor(
-  private paisService : PaisService,
-  private router: Router,
-  private activatedRouter: ActivatedRoute,
-  
-  ) {}
-
+  constructor(private puestoService: PuestoService
+    , private activatedRouter: ActivatedRoute, private route: Router
+    , private departamentoService: DepartamentoService, private rende2: Renderer2) { }
 
   ngOnInit(): void {
-    
-if(this.id!=null){
 
-this.paisService.detail(this.id).subscribe(model=>{
-this.pais=model;
-},
-err=>{
+    if (this.id > 0) {
+      this.puestoService.detail(this.id).subscribe(model => {
 
-console.log('el error esta aqui'+ err.err.message);
-}
-)
-}
+        this.puesto = model;
+
+        this.cargarDepartamento();
+
+        this.departamento1 = this.puesto.departamento.id;
+        
+
+      }, err => {
+
+        console.log('error en: ' + err.mensaje);
+
+      })
+    } else {
+      this.puesto = new Puesto('',null, '', );
+      this.cargarDepartamento();
+      this.departamento1 = 0;
+    }
   }
 
-onCreate(): void{
+  onCreate(): void {
+    if (this.puesto.id > 0) {
 
-  if(this.pais != null ){
-this.paisService.update(this.pais.id,this.pais).subscribe(model=>{
+      this.departamentoE.push(this.departamento1.toString(), " ");
 
-alert('Se actualizo correctaente, el pais');
-this.router.navigate(['/contacto/pais/listarPais']);
+      this.puestoService.update(this.puesto.id, new Puesto(this.puesto.nombrePuesto,new Departamento(this.departamentoE),
+        this.puesto.descripcionTrabajo)).subscribe(model => {
 
-},err=>{
-console.log('Ocurrio un error en '+err.err.message);
-
-})
-}else{
+          alert('se actualizo el puesto corretamente');
+          this.route.navigate(['empleado/puesto/listarPuesto']);
+        });
 
 
-  this.pais1.push("0",this.nombrePais);
-  const pais = new Pais(this.pais1);
-  
-  this.paisService.save(pais).subscribe(data=>{
-  {
-  alert('Se guardo correctamente pais');
-  this.router.navigate(['/contacto/pais/listarPais']);
+    } else {
+      this.departamento.push(this.departamento1.toString(), " ");
+
+      this.puesto.setDepartamento(new Departamento(this.departamento));
+
+      this.puestoService.save(this.puesto).subscribe(model => {
+
+        this.route.navigate(['empleado/puesto/listarPuesto']);
+
+
+      }, err => {
+        console.log(err.err.mensaje);
+
+      })
+    }
   }
-  err =>{
-  
-  alert('No se guardo el pais');
-  }
-  })
+  onDetails() {
+
   }
 
-}
+  cargarDepartamento(): void {
+    this.departamentoService.lista().subscribe(model => {
+
+      this.departamentos = model;
+
+    }, err => {
+
+      console.log(err.err.mensaje);
+    })
+
+  }
+  changePais(e): void {
+  }
 
 }

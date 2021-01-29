@@ -1,46 +1,78 @@
 import { Component, OnInit } from '@angular/core';
-import  {PaisService} from '../../../service/pais.service';
-import  {Pais} from '../../../models/pais';
+import { BancoService } from '../../../service/banco.service';
+import { Puesto } from '../../../models/puesto';
+import { PuestoService } from '../../../service/puesto.service';
 @Component({
   templateUrl: 'lista-puesto.component.html'
 })
 
 export class ListaPuestoComponent implements OnInit{
   
-paises : Pais[]= [];
 
-  constructor(private paisService : PaisService){}
+puestos : Puesto[]=[];
+busqueda:string="";
 
-  ngOnInit(): void {
-      this.cargarPais();    
-  }
-  cargarPais(): void{
-    this.paisService.lista().subscribe(
-      data => {
-        this.paises = data;
-      },
-      err =>{
-        console.log(err);
-      }
-    )
-  }
+
+
+constructor(private puestoService : PuestoService){}
+
+ngOnInit(): void {
+ 
+  this.cargarPuestos();
+
+}
+
+cargarPuestos(){
+
+this.puestoService.lista().subscribe(model=>{
+
+this.puestos = model;
+
+console.log(model)
+
+},err=>{
+  console.log(err.err.mensaje);
+});
+
+}
+
 delete(id:number){
-
 if(id > 0){
 
-  this.paisService.delete(id).subscribe(model=>{
-alert('Se elimino el registro');
-this.cargarPais();
+this.puestoService.delete(id).subscribe(model=>{
 
-  },err=>{
+  alert('Se elimino correctaente el puesto');
+  this.cargarPuestos();
+},err=>{
+  
+  alert("No se pudo eliminar");
 
-alert("No se pudo eliminar Pais");
-console.log(err.error.mensaje);
-
-  })
+})
 
 }else{
-alert('no hay numero');
+alert('Error al eliminar el puesto');
+
+}
+}
+
+onSearch(){
+
+if(this.busqueda != " "){
+
+this.puestoService.listaByNombre(this.busqueda).subscribe(model=>{
+
+this.puestos=model;
+
+},err=>{
+
+alert('No existen puestos');
+})
+
+
+}else{
+
+alert('No se realizo la busqueda correctamente');
+
 }
 
 
