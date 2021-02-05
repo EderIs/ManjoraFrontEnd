@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
-import  {Pais} from '../../../models/pais'
+import { Departamento } from '../../../models/departamento';
+import { Empleado } from '../../../models/empleado';
+
+import { DepartamentoService } from '../../../service/departamento.service';
+import { EmpleadoService } from '../../../service/empleado.service';
+import { EstadoService } from '../../../service/estado.service';
 import  {PaisService} from '../../../service/pais.service'
 
 
@@ -10,66 +15,73 @@ import  {PaisService} from '../../../service/pais.service'
 
 export class NuevoEditarDepartamentoComponent implements OnInit{
 
+  empleados: Empleado[] = [];
+  departamento: Departamento;
+  empleado : string [] =[];
+  empleado1 : number = 0; 
+  id: number = this.activatedRoute.snapshot.params.id;
 
-nombrePais: string = "";
-id : number= this.activatedRouter.snapshot.params.id;
-pais : Pais=null;
-pais1 :string []=[];
-
-
- constructor(
-  private paisService : PaisService,
-  private router: Router,
-  private activatedRouter: ActivatedRoute,
+  constructor(
+    private empleadoService: EmpleadoService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private departamentoService: DepartamentoService
+    ) { }
   
-  ) {}
-
-
   ngOnInit(): void {
-    
-if(this.id!=null){
-
-this.paisService.detail(this.id).subscribe(model=>{
-this.pais=model;
-},
-err=>{
-
-console.log('el error esta aqui'+ err.err.message);
-}
-)
-}
+    this.cargarEmpleados();
+    if (this.id != null){
+      this.departamentoService.detail(this.id).subscribe(
+        data => {
+          this.departamento = data;
+          this.empleado1 = data.empleado.id;
+        },
+        err => {
+          console.log(err);
+         
+        }
+      );
+      this.departamento = new Departamento(this.empleado);
+    }
+    else{
+      this.departamento = new Departamento(this.empleado);
+    }
   }
 
-onCreate(): void{
-
-  if(this.pais != null ){
-this.paisService.update(this.pais.id,this.pais).subscribe(model=>{
-
-alert('Se actualizo correctaente, el pais');
-this.router.navigate(['/contacto/pais/listarPais']);
-
-},err=>{
-console.log('Ocurrio un error en '+err.err.message);
-
-})
-}else{
-
-
-  this.pais1.push("0",this.nombrePais);
-  const pais = new Pais(this.pais1);
-  
-  this.paisService.save(pais).subscribe(data=>{
-  {
-  alert('Se guardo correctamente pais');
-  this.router.navigate(['/contacto/pais/listarPais']);
-  }
-  err =>{
-  
-  alert('No se guardo el pais');
-  }
-  })
+  cargarEmpleados(): void {
+    this.empleadoService.lista().subscribe(
+      data => {
+        this.empleados = data;
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
-}
-
+  onCreate(): void {
+   // this.empleado.push(this.empleado1.toString()," ");
+    if(this.id!=null){
+     // this.departamento.empleado.id = this.empleado1;
+      this.departamentoService.update(this.id, this.departamento).subscribe(
+        data => {
+          this.departamento = data;
+        },
+          err => {
+            console.log(err);
+            });
+    }
+    else{
+   // this.departamento.setEmpleado(new Empleado(this.empleado));
+    this.departamentoService.save(this.departamento).subscribe(
+      response => {
+       alert('Se inserto correctamente');
+      },
+      error =>{
+        console.log(error);
+      }
+    );
+    }
+    this.router.navigate(['/empleado/departamento/listarDepartamento']);
+  }
 }

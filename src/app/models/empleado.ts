@@ -32,7 +32,7 @@ export class Empleado {
     nota: String;
     estado: boolean;
 
-    constructor(fotografia: ByteLengthChunk, nombreEmpleado: String, idCategoria: number, direccionTrabajo: Contacto, idPuesto: Puesto,
+    public getEmpleado(fotografia: ByteLengthChunk, nombreEmpleado: String, idCategoria: number, direccionTrabajo: Contacto, idPuesto: Puesto,
         tituloTrabajo: String, idResponsable: Empleado, idMonitor: Empleado, horasLaborales: HoraLaboral, direccionPrivada: String,
         contactoEmergencia: String, telefonoEmergencia: String, kmCasaTrabajo: number, Sexo: String,
         estadoCivil: String, numeroHijos: number, fechaNacimiento: Date, lugarNacimiento: String, nivelCertificado: String,
@@ -61,5 +61,11 @@ export class Empleado {
         this.idUsuario = idUsuario;
         this.nota = nota;
         this.estado = estado;
+    }
+
+
+    constructor(empleado : string []){
+        this.id= parseInt(empleado[0]);
+        this.nombreEmpleado = empleado[1];
     }
 }

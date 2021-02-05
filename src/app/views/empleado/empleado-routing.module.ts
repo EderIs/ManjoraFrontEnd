@@ -130,7 +130,7 @@ const routes: Routes = [
         data: {
           title: 'Horario / Editar'
         }
-      },
+      }, 
     ]
   }
 ];

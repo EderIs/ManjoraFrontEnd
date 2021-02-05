@@ -7,7 +7,7 @@ import { Empleado } from '../models/empleado';
   providedIn: 'root'
 })
 export class EmpleadoService {
-  empleadoURL = 'http://localhost:8080/empleado/'
+  empleadoURL = 'http://localhost:8090/empleado/'
 
   constructor(private HttpClient: HttpClient) { }
 
