@@ -9,14 +9,15 @@ import { HorarioLabService } from '../../../service/horario-lab.service';
 })
 
 export class NuevoEditarHorasLComponent implements OnInit{
-  id : number = this.activatedRouter.snapshot.params.id;
-  horaL : HoraLaboral = null;
-  horasL :string [] = [];
-  nombreHoraL: string = ''; 
-  promedioHoraDia : number = 0;
+nombreHoraL: string = "";
+promedioHoraDia: number = null;
+id : number= this.activatedRouter.snapshot.params.id;
+horaL : HoraLaboral=null;
+horasL :string []=[];
 
-  constructor(
-  private horarioService : HorarioLabService,
+
+ constructor(
+  private horaLService : HorarioLabService,
   private router: Router,
   private activatedRouter: ActivatedRoute,
   
@@ -24,45 +25,50 @@ export class NuevoEditarHorasLComponent implements OnInit{
 
 
   ngOnInit(): void {
-    if(this.id!=null){
-      this.horarioService.detail(this.id).subscribe(model=>{
-        this.horaL = model;
-      },
-      err=>{
+    
+if(this.id!=null){
 
-        console.log('el error esta aqui'+ err.err.message);
-      }
-      )
-      this.horaL = new HoraLaboral(this.horasL);
-    }
-    else{
-      this.horaL = new HoraLaboral(this.horasL);
-    }
+this.horaLService.detail(this.id).subscribe(model=>{
+this.horaL=model;
+},
+err=>{
+
+console.log('el error esta aqui'+ err.err.message);
+}
+)
+}
   }
 
 onCreate(): void{
-    if(this.id != null ){
-      this.horarioService.update(this.horaL.id,this.horaL).subscribe(model=>{
-        alert('Se actualizo correctaente, el pais');
-        this.router.navigate(['/empleado/horasL/listarHorasL']);
-      },err=>{
-        console.log('Ocurrio un error en '+err.err.message);
-      })
-    }else{
-      this.horasL.push("0", this.nombreHoraL, this.promedioHoraDia.toString() );
-      const hora1 = new HoraLaboral(this.horasL);
-      this.horarioService.save(this.horaL).subscribe(data=>{
-      {
-        alert('Se guardo correctamente pais');
-        this.router.navigate(['/empleado/horasL/listarHorasL']);
-        console.log(this.horaL)
-      }
-      err =>{
-      
-       alert('No se guardo el pais');
-      }
-      })
-    }
+
+  if(this.horaL != null ){
+this.horaLService.update(this.horaL.id,this.horaL).subscribe(model=>{
+
+alert('Se actualizo correctaente, la hora');
+this.router.navigate(['/empleado/horasL/listarHorasL']);
+
+},err=>{
+console.log('Ocurrio un error en '+err.err.message);
+console.log(this.horaL);
+})
+}else{
+
+
+  this.horasL.push("0", this.nombreHoraL, this.promedioHoraDia.toString());
+  const horaL = new HoraLaboral(this.horasL);
+  console.log(horaL);
+  this.horaLService.save(horaL).subscribe(data=>{
+  {
+  alert('Se guardo correctamente hora laboral');
+  console.log(data);
+  this.router.navigate(['/empleado/horasL/listarHorasL']);
+  }
+  err =>{
+    console.log(horaL.nombreHoraL, horaL.promedioHoraDia);
+  alert('No se guardo el pais');
+  }
+  })
+  }
 
 }
 

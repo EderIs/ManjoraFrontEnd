@@ -15,6 +15,10 @@ export class EmpleadoService {
     return this.HttpClient.get<Empleado[]>(this.empleadoURL + 'list');
   }
 
+  public listaByNombre(nombreEmpleado:string):Observable<Empleado[]>{
+    return this.HttpClient.get<Empleado[]>(this.empleadoURL+`list/${nombreEmpleado}`);
+  }
+
   public detail(id: number): Observable <Empleado> {
     return this.HttpClient.get<Empleado>(this.empleadoURL + `detail/${id}`);
   }

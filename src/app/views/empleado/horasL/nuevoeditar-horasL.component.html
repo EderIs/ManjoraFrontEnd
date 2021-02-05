@@ -10,15 +10,15 @@
                     <input type="text" *ngIf="this.horaL != null" name="horaL.nombreHoraL" [(ngModel)]="horaL.nombreHoraL" class="form-control" placeholder="Nombre" 
                     required>
     
-                    <input type="text" *ngIf="this.horaL == null" name="nombreHoraL" [(ngModel)]="nombreHoraL" class="form-control" placeholder="Pais" 
+                    <input type="text" *ngIf="this.horaL == null" name="this.nombreHoraL" [(ngModel)]="this.nombreHoraL" class="form-control" placeholder="Nombre" 
                     required>
                 </div>
                 <div class="form-group">
                     <label for="nombreContacto">Promedio Horas</label>
-                    <input type="number" *ngIf="this.horaL != null" name="horaL.promedioHoraDia" [(ngModel)]="horaL.promedioHoraDia" class="form-control" placeholder="Pais" 
+                    <input type="number" *ngIf="this.horaL != null" name="horaL.promedioHoraDia" [(ngModel)]="horaL.promedioHoraDia" class="form-control" placeholder="0" 
                     required>
     
-                    <input type="number" *ngIf="this.horaL == null" name="promedioHoraDia" [(ngModel)]="promedioHoraDia" class="form-control" placeholder="Pais" 
+                    <input type="number" *ngIf="this.horaL == null" name="this.promedioHoraDia" [(ngModel)]="this.promedioHoraDia" class="form-control" placeholder="0" 
                     required>
                 </div>
             </div>

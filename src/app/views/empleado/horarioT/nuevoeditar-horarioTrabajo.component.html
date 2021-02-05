@@ -1,76 +1,64 @@
 <div class="card">
     <div class="card-header">
-        <strong>Agregar</strong> Bancos
+        <strong>Agregar</strong> Horario de Trabajo
     </div>
     <div class="card-body">
-        <form (ngSubmit)="onCreate()">
+        <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
             <div class="form-group">
                 <div class="form-row">
-                    <div class="col-md-4">
-                        <label for="nombreContacto">Nombre Banco:</label>
-                        <input type="text" *ngIf="this.banco != null" name="banco.nombre"
-                            [(ngModel)]="this.banco.nombre" class="form-control" placeholder="Nombre Banco" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="nombreContacto">Calle</label>
-                        <input type="text" *ngIf="this.banco != null" name="banco.calle" [(ngModel)]="banco.calle"
-                            class="form-control" placeholder="Calle" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="nombreContacto">Calle secundaria</label>
-                        <input type="text" *ngIf="this.banco != null" name="banco.calleSecundaria"
-                            [(ngModel)]="banco.calleSecundaria" class="form-control" placeholder="Calle Secundaria"
-                            required>
-                    </div>
+
+                  <div class="col-md-6">
+                      <label for="horaL1">Nombre Horarios de Trabajo:</label>
+                    <input type="text" id="nombreHorariosT" name="nombreHorariosT" [(ngModel)]="this.horarioT.nombreHorariosT" class="form-control" placeholder="Horarios de Trabajo" 
+                    required>
+                  </div>
+
+                  <div class="col-md-6">
+                      <label for="horaL1">Dia de la Semana:</label>
+                    <input type="text" id="diaSemana" name="diaSemana" [(ngModel)]="this.horarioT.diaSemana" class="form-control" placeholder="Dia de la Semana" 
+                    required>
+                  </div>
+
+                  <div class="col-md-6">
+                      <label for="horaL1">Trabajar Desde:</label>
+                    <input id="trabajarDesde" step="1" name="trabajarDesde" [(ngModel)]="this.horarioT.trabajarDesde" class="form-control" placeholder="Trabajar Desde" type="time" required>
+                  </div>
+
+                  <div class="col-md-6">
+                      <label for="horaL1">Trabajar Hasta:</label>
+                    <input id="trabajarHasta" step="1" name="trabajarHasta" [(ngModel)]="this.horarioT.trabajarHasta" class="form-control" placeholder="Trabajar Hasta" type="time" required>
+                  </div>
+
+                  <div class="col-md-6">
+                      <label for="horaL1">Fecha de Inicio:</label>
+                    <input class="form-control" data-date-format="yyyy-mm-dd" id="fechaInicio" [(ngModel)]="this.horarioT.fechaInicio" type="date" name="fechaInicio" placeholder="Fecha de Inicio">
+                  </div>
+
+                  <div class="col-md-6">
+                      <label for="horaL1">Fecha de Finalizacion</label>
+                    <input class="form-control" data-date-format="yyyy-mm-dd" id="fechaFinalizacion" [(ngModel)]="this.horarioT.fechaFinalizacion" type="date" name="fechaFinalizacion" placeholder="Fecha de Finalizacion">
+                  </div>
+
+                  <div class="col-md-6">
+                      <label for="horaL1">Periodo Dia</label>
+                    <input type="text" id="periodoDia" name="periodoDia" [(ngModel)]="this.horarioT.periodoDia" class="form-control" placeholder="periodoDia" 
+                    required>
+                  </div>
+
+                  <div class="col-md-6">
+                      <label for="horaL1">Seleccione un Horario Laboral...</label>
+                      <select id="horaL1" name="horaL1" class="form-control" [(ngModel)]="this.horaL1" [ngModelOptions]="{standalone: true}">
+                        <option *ngIf="horarioT.horaLaboral==null" value=0 >Seleccione un Horario...</option>
+                        <option *ngIf="horarioT.horaLaboral!=null" hidden="true" value={{this.horarioT.horaLaboral.id}} >{{this.horarioT.horaLaboral.nombreHoraL}}</option>
+                        <option *ngFor="let HoraL of HorasL" value={{this.HoraL.id}}  >{{HoraL.nombreHoraL}}</option>
+                      </select>
+                    
+              </div>
+                  
                 </div>
-            </div>
-            <div class="form-group">
-            <div class="form-row">
-                <div class="col-md-6">
-                    <label for="nombreContacto">Ciudad</label>
-                    <input type="text" *ngIf="this.banco != null" name="banco.ciudad" [(ngModel)]="banco.ciudad"
-                        class="form-control" placeholder="Ciudad" required>
-                </div>
-                <div class="col-md-6">
-                    <label>Seleccione un pais</label>
-                    <select id="ddlPais" class="form-control" [(ngModel)]="this.pais1"
-                        [ngModelOptions]="{standalone: true}">
-                        <option value="0" >--Selecciona un Pais--</option>
-                        <option *ngFor="let pais of paises" value={{pais.id}}>{{pais.nombrePais}}</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-            <div class="form-group">
-            <div class="form-row">
-                <div class="col-md-6">
-                <label for="nombreContacto">Codigo Bancario</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.codigoIdenBancaria"
-                    [(ngModel)]="banco.codigoIdenBancaria" class="form-control" placeholder="Codigo Bancario" required="required">
-                </div>
-                <div class="col-md-6">
-                    <label for="nombreContacto">Codigo Postal</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.codigoPostal" [(ngModel)]="banco.codigoPostal"
-                    class="form-control" placeholder="Codigo Postal" required>
-                </div>
-                </div>
-        </div>
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md-6">
-                <label for="nombreContacto">Correo</label>
-                <input type="email" *ngIf="this.banco != null" name="banco.correoElectronico"
-                    [(ngModel)]="banco.correoElectronico" class="form-control" placeholder="Correo Electronico" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="nombreContacto">Telefono</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.telefono" [(ngModel)]="banco.telefono"
-                    class="form-control" placeholder="Pais" required>
-                </div>
-            </div>
             </div>
             <div class="card-footer">
-                <button type="submit" class="btn btn-sm btn-primary"> Agregar</button>
+                <button type="submit" class="btn btn-sm btn-primary"> Guardar</button>
                 <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>Cancelar</button>
             </div>
         </form>

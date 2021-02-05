@@ -34,4 +34,8 @@ export class PaisService {
   public delete(id: number): Observable<any> {
     return this.HttpClient.delete<any>(this.paisURL + `delete/${id}`);
   }
+
+  public listaByNombre(nombrePais:string):Observable<Pais[]>{
+    return this.HttpClient.get<Pais[]>(this.paisURL+`list/${nombrePais}`);
+  }
 }

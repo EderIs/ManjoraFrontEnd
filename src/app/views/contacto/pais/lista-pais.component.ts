@@ -8,6 +8,7 @@ import  {Pais} from '../../../models/pais';
 export class ListaPaisComponent implements OnInit{
   
 paises : Pais[]= [];
+busqueda: string="";
 
   constructor(private paisService : PaisService){}
 
@@ -24,6 +25,19 @@ paises : Pais[]= [];
       }
     )
   }
+
+  onSearch(){
+    if(this.busqueda != " "){
+      this.paisService.listaByNombre(this.busqueda).subscribe(model=>{
+      this.paises=model;
+      },err=>{
+        alert('No existen estados');
+      })
+    }else{
+      alert('No se realizo la busqueda correctamente');
+    }
+  }
+
 delete(id:number){
 
 if(id > 0){
