@@ -1,8 +1,14 @@
-<h2>Titulos</h2>
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand">Titulos</a>
+    <form class="form-inline" (ngSubmit)="onSearch()">
+        <input class="form-control mr-sm-2" type="search" name="busqueda" [(ngModel)]="busqueda" placeholder="Buscar" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+      </form>
+  </nav>
 
-<button class="btn btn-success" routerLink="/contacto/titulo/agregarTitulo">Agregar</button>
+<button class="btn btn-outline-success" routerLink="/contacto/titulo/agregarTitulo">Agregar</button>
 
-<table class="table">
+<table class="table table-light table-responsive-sm table-hover mb-0">
     <thead class="table-dark">
     <tr>
         <th scope="col">#</th>
@@ -18,9 +24,9 @@
         <td>{{titu.id}}</td>
         <td>{{titu.titulo}}</td>
         <td>{{titu.abreviatura}}</td>
-        <td><button class="btn btn-outline-primary" routerLink="/detalle/{{titu.id}}"><i class="far fa-eye"></i> Ver</button></td>
+        <!--<td><button class="btn btn-outline-primary" routerLink="/detalle/{{titu.id}}"><i class="far fa-eye"></i> Ver</button></td> -->
         <td><button class="btn btn-outline-warning" routerLink="/contacto/titulo/agregarTitulo/{{titu.id}}"><i class="far fa-edit"></i> Editar</button></td>
-        <td><button class="btn btn-outline-danger" (click)="borrar(titu.id)"><i class="far fa-trash-alt"></i> Eliminar</button></td> 
+        <td><button class="btn btn-outline-danger" (click)="borrar(titu.id)"><i class="far fa-trash"></i> Eliminar</button></td> 
     </tr>
     </tbody>
 </table>

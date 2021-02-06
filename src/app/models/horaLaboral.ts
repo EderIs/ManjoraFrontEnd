@@ -11,12 +11,8 @@ export class HoraLaboral{
         this.promedioHoraDia= parseFloat(horaL[2]);
     }
 
-    public setHoraLaboral(nombreHoraL: string, promedioHoraDia:number){
+    public getHoraLaboral(nombreHoraL: string, promedioHoraDia: number){
         this.nombreHoraL = nombreHoraL;
         this.promedioHoraDia = promedioHoraDia;
-    }
-
-    public getHoraLaboral(nombreHoraL: string){
-        this.nombreHoraL = nombreHoraL;
     }
    }

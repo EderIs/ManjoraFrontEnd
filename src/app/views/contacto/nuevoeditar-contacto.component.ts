@@ -30,6 +30,8 @@ export class nuevoEditarContactoComponent implements OnInit {
   res:string;
   estadoE :string []= [];
   tituloE :string []= [];
+  public fotografia: any=File;
+
   constructor(
     private estadoService: EstadoService,
     private tituloService: TituloService,
@@ -65,6 +67,13 @@ export class nuevoEditarContactoComponent implements OnInit {
       this.cargarEstado();
     }
   }
+
+  onSelectFile(event){
+    const file = event.target.files[0];
+    this.fotografia=file;
+  }
+
+
 
   cargarEstado(): void {
     this.estadoService.lista().subscribe(model => {
@@ -123,6 +132,7 @@ export class nuevoEditarContactoComponent implements OnInit {
 
     this.estado.push(this.estado1.toString()," ");
     this.titulo.push(this.titulo1.toString()," ");
+    this.contacto.fotografia= this.fotografia;
 
     this.contacto.setEstado(new Estado(this.estado));
     this.contacto.setTitulo(new Titulo(this.titulo));

@@ -10,24 +10,57 @@ import { Empleado } from '../../models/empleado';
 })
 
 export class ListaEmpleadoComponent implements OnInit{
-  
-  empleado: Empleado[] = [];
-  constructor(private empleadoService: EmpleadoService) { }
-  
+  busqueda: string="";
+  empleados : Empleado[]= [];
 
+  constructor(private empleadoService : EmpleadoService){}
 
   ngOnInit(): void {
-    this.cargarContactos();
+      this.cargarHorario();    
   }
-  cargarContactos(): void{
+  cargarHorario(): void{
     this.empleadoService.lista().subscribe(
       data => {
-        this.empleado = data;
+        this.empleados = data;
       },
       err =>{
         console.log(err);
       }
     )
   }
+
+  onSearch(){
+    if(this.busqueda != " "){
+      this.empleadoService.listaByNombre(this.busqueda).subscribe(model=>{
+      this.empleados=model;
+      },err=>{
+        alert('No existen Horas');
+      })
+    }else{
+      alert('No se realizo la busqueda correctamente');
+    }
+  }
+
+borrar(id:number){
+
+if(id > 0){
+
+  this.empleadoService.delete(id).subscribe(model=>{
+alert('Se elimino el registro');
+this.cargarHorario();
+
+  },err=>{
+
+alert("No se pudo eliminar Pais");
+console.log(err.error.mensaje);
+
+  })
+
+}else{
+alert('no hay numero');
+}
+
+
+}
 
 }

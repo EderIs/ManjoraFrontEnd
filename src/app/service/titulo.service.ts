@@ -34,4 +34,8 @@ export class TituloService {
   public delete(id: number): Observable<any> {
     return this.HttpClient.delete<any>(this.tituloURL + `delete/${id}`);
   }
+
+  public listaByTitulo(titulo:string):Observable<Titulo[]>{
+    return this.HttpClient.get<Titulo[]>(this.tituloURL+`list/${titulo}`);
+  }
 }

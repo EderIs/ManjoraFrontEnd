@@ -15,7 +15,9 @@ export class DepartamentoService {
     public lista(): Observable <Departamento[]> {
       return this.HttpClient.get<Departamento[]>(this.departamentoURL + 'list');
     }
-  
+    public listaByNombre(nombre:string):Observable<Departamento[]>{
+      return this.HttpClient.get<Departamento[]>(this.departamentoURL+`list/${nombre}`);
+      }
     public detail(id: number): Observable <Departamento> {
       return this.HttpClient.get<Departamento>(this.departamentoURL + `detail/${id}`);
     }

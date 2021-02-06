@@ -1,35 +1,31 @@
   <div class="card">
     <div class="card-header">
-        <strong>Agregar</strong> Bancos
+        <strong>Agregar</strong> Estados
     </div>
     <div class="card-body">
         <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
-            <div class="form-group">
-                <div class="form-row">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                    </div>
+          <div class="form-group">
+                  <div class="col-md-12">
+                    <label>Estado:</label>
                     <input type="text" id="nombreEstado" name="nombreEstado" [(ngModel)]="this.estado.nombreEstado" class="form-control" placeholder="Nombre del Estado" 
                     required>
                   </div>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                    </div>
+                  <div class="form-row"></div>
+                  <div class="col-md-12">
+                    <label>Codigo:</label>
                     <input type="number" id="codigo" name="codigo" [(ngModel)]="this.estado.codigo" class="form-control" placeholder="0" 
                     required>
                   </div>
-                </div>
-            </div>
-            <div class="form-group">
-              <div class="form-group select-wrapper">
+                  
+              <div class="col-md-12">
                 <label>Seleccione un País...</label>
                 <select class="form-control" [(ngModel)]="this.pais1" [ngModelOptions]="{standalone: true}">
                   <option  *ngIf="this.estado.pais==null" value=0 >Seleccione un Pais...</option>
                   <option *ngIf="this.estado.pais!=null" hidden="true" value={{this.estado.pais.id}} >{{this.estado.pais.nombrePais}}</option>
                   <option *ngFor="let pais of paises" value={{this.pais.id}}  >{{pais.nombrePais}}</option>
                 </select>
+                </div>
               </div>
-        </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-sm btn-primary"> Guardar</button>
                 <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>Cancelar</button>

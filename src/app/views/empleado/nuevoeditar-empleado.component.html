@@ -1,79 +1,155 @@
 <div class="card">
-    <div class="card-header">
-        <strong>Agregar</strong> Bancos
-    </div>
-    <div class="card-body">
-        <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md-4">
-                        <label for="nombreContacto">Nombre Banco:</label>
-                        <input type="text" *ngIf="this.banco != null" name="banco.nombre"
-                            [(ngModel)]="this.banco.nombre" class="form-control" placeholder="Nombre Banco" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="nombreContacto">Calle</label>
-                        <input type="text" *ngIf="this.banco != null" name="banco.calle" [(ngModel)]="banco.calle"
-                            class="form-control" placeholder="Calle" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="nombreContacto">Calle secundaria</label>
-                        <input type="text" *ngIf="this.banco != null" name="banco.calleSecundaria"
-                            [(ngModel)]="banco.calleSecundaria" class="form-control" placeholder="Calle Secundaria"
-                            required>
-                    </div>
+  <div class="card-header">
+      <strong>Agregar</strong> Horario de Trabajo
+  </div>
+  <div class="card-body">
+      <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
+          <div class="form-group">
+              <div class="form-row">
+                <label for="horaL1">Fotografia:</label>
+              <div class="input-group mb-3">
+                
+                <div class="custom-file">
+                  <label for="horaL1">Fotografia:</label>
+                  <input type="file" [(ngModel)]="this.empleado.fotografia" class="custom-file-input" name="fotografia" id="fotografia" #imagenInputFile
+                  (change)="onFileChange($event)" accept="image/png, image/jpeg, image/gif">
+                  <label class="custom-file-label" for="imagen">Elige una imagen</label>
+              </div>
+              <div *ngIf="imagen" class="mt-5">
+                  <h5>Vista Previa:</h5>
+                  <div>
+                      <img class="image-thumbnail" style="max-width: 100px" [src]="imagenMin">
+                  </div>
+              </div>
+              </div>
+
+              <label for="horaL1">Nombre de Empleado:</label>
+                <div class="input-group mb-3">
+                  <input type="text" id="nombreEmpleado" name="nombreEmpleado" [(ngModel)]="this.empleado.nombreEmpleado" class="form-control" placeholder="nombreEmpleado" 
+                  required>
                 </div>
-            </div>
-            <div class="form-group">
-            <div class="form-row">
-                <div class="col-md-6">
-                    <label for="nombreContacto">Ciudad</label>
-                    <input type="text" *ngIf="this.banco != null" name="banco.ciudad" [(ngModel)]="banco.ciudad"
-                        class="form-control" placeholder="Ciudad" required>
+
+                <label for="horaL1">Titulo de Trabajo:</label>
+                <div class="input-group mb-3">
+                  <input type="text" id="tituloTrabajo" name="tituloTrabajo" [(ngModel)]="this.empleado.tituloTrabajo" class="form-control" placeholder="tituloTrabajo" 
+                  required>
                 </div>
-                <div class="col-md-6">
-                    <label>Seleccione un pais</label>
-                    <select id="ddlPais" class="form-control" [(ngModel)]="this.pais1"
-                        [ngModelOptions]="{standalone: true}">
-                        <option value="0" >--Selecciona un Pais--</option>
-                        <option *ngFor="let pais of paises" value={{pais.id}}>{{pais.nombrePais}}</option>
+
+                <label for="horaL1">Direccion Privada:</label>
+                <div class="input-group mb-3">
+                  <input type="text" id="direccionPrivada" name="direccionPrivada" [(ngModel)]="this.empleado.direccionPrivada" class="form-control" placeholder="direccionPrivada" 
+                  required>
+                </div>
+
+                <label for="horaL1">Contacto de Emergencia:</label>
+                <div class="input-group mb-3">
+                  <input type="text" id="contactoEmergencia" name="contactoEmergencia" [(ngModel)]="this.empleado.contactoEmergencia" class="form-control" placeholder="contactoEmergencia" 
+                  required>
+                </div>
+
+                <label for="horaL1">Telefono de Emergencia:</label>
+                <div class="input-group mb-3">
+                  <input type="tel" id="telefonoEmergencia" name="telefonoEmergencia" [(ngModel)]="this.empleado.telefonoEmergencia" class="form-control" placeholder="telefonoEmergencia" 
+                  required>
+                </div>
+
+                <label for="horaL1">Km Casa al Trabajo:</label>
+                <div class="input-group mb-3">
+                  <input type="number" id="kmCasaTrabajo" name="kmCasaTrabajo" [(ngModel)]="this.empleado.kmCasaTrabajo" class="form-control" placeholder="kmCasaTrabajo" 
+                  required>
+                </div>
+
+                <label for="horaL1">Sexo:</label>
+                <div class="input-group mb-3">
+                    <select class="form-control" [(ngModel)]="this.empleado.sexo" [ngModelOptions]="{standalone: true}">
+                      <option *ngIf="horarioT.horaLaboral==null" value=0 >Sexo...</option>
+                      <option value="Hombre">Hombre</option>
+                      <option value="Mujer"  >Mujer</option>
                     </select>
-                </div>
             </div>
+
+            <label for="horaL1">Estado Civil:</label>
+              <div class="input-group mb-3">
+                <select class="form-control" [(ngModel)]="this.empleado.estadoCivil" [ngModelOptions]="{standalone: true}">
+                  <option *ngIf="empleado.estadoCivil==null" value=0 >Estado Civil...</option>
+                  <option value="Hombre">Hombre</option>
+                  <option value="Mujer"  >Mujer</option>
+                </select>
+              </div>
+
+              <label for="horaL1">Numero de Hijos:</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+              </div>
+              <input type="number" id="numeroHijos" name="numeroHijos" [(ngModel)]="this.empleado.numeroHijos" class="form-control" placeholder="numeroHijos" 
+              required>
+            </div>
+
+            <label for="horaL1">Fecha de Nacimiento:</label>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <input class="form-control" data-date-format="yyyy-mm-dd" id="fechaNacimiento" [(ngModel)]="this.empleado.fechaNacimiento" type="date" name="fechaNacimiento" placeholder="fechaNacimiento">
+                  </div>
+                </div>
+
+                <label for="horaL1">Lugar de Nacimiento:</label>
+                <div class="input-group mb-3">
+                  <input type="text" id="lugarNacimiento" name="lugarNacimiento" [(ngModel)]="this.empleado.lugarNacimiento" class="form-control" placeholder="lugarNacimiento" 
+                  required>
+                </div>
+
+                <label for="horaL1">Nivel de Certificación:</label>
+                  <div class="input-group mb-3">
+                    <select class="form-control" [(ngModel)]="this.empleado.nivelCertificado" [ngModelOptions]="{standalone: true}">
+                      <option *ngIf="empleado.nivelCertificado==null" value=0 >nivelCertificado...</option>
+                      <option value="Hombre">Hombre</option>
+                      <option value="Mujer"  >Mujer</option>
+                    </select>
+                  </div>
+
+                  <label for="horaL1">Escuela:</label>
+            <div class="input-group mb-3">
+              <input type="text" id="escuela" name="escuela" [(ngModel)]="this.empleado.escuela" class="form-control" placeholder="escuela" 
+              required>
+            </div>
+
+            <label for="horaL1">Nota Adicional:</label>
+            <div class="input-group mb-3">
+              <input type="text" id="notaAdicional" name="notaAdicional" [(ngModel)]="this.empleado.notaAdicional" class="form-control" placeholder="notaAdicional" 
+              required>
+            </div>
+
+            <label for="horaL1">Nota:</label>
+            <div class="input-group mb-3">
+              <input type="text" id="nota" name="nota" [(ngModel)]="this.empleado.nota" class="form-control" placeholder="nota" 
+              required>
+            </div>
+
+            <label for="horaL1">Estado:</label>
+            <div class="input-group mb-3">
+                <select class="form-control" [(ngModel)]="this.empleado.estado" [ngModelOptions]="{standalone: true}">
+                  <option *ngIf="empleado.estado==null" value=0 >estado...</option>
+                  <option value="Hombre">Hombre</option>
+                  <option value="Mujer"  >Mujer</option>
+                </select>
         </div>
-            <div class="form-group">
-            <div class="form-row">
-                <div class="col-md-6">
-                <label for="nombreContacto">Codigo Bancario</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.codigoIdenBancaria"
-                    [(ngModel)]="banco.codigoIdenBancaria" class="form-control" placeholder="Codigo Bancario" required="required">
-                </div>
-                <div class="col-md-6">
-                    <label for="nombreContacto">Codigo Postal</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.codigoPostal" [(ngModel)]="banco.codigoPostal"
-                    class="form-control" placeholder="Codigo Postal" required>
-                </div>
-                </div>
-        </div>
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md-6">
-                <label for="nombreContacto">Correo</label>
-                <input type="email" *ngIf="this.banco != null" name="banco.correoElectronico"
-                    [(ngModel)]="banco.correoElectronico" class="form-control" placeholder="Correo Electronico" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="nombreContacto">Telefono</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.telefono" [(ngModel)]="banco.telefono"
-                    class="form-control" placeholder="Pais" required>
-                </div>
+
+        <label for="horaL1">Horario Laboral:</label>
+                <div class="input-group mb-3">
+                    <select class="form-control" [(ngModel)]="this.horaL1" [ngModelOptions]="{standalone: true}">
+                      <option *ngIf="horarioT.horaLaboral==null" value=0 >Seleccione un Horario...</option>
+                      <option *ngIf="horarioT.horaLaboral!=null" hidden="true" value={{this.horarioT.horaLaboral.id}} >{{this.horarioT.horaLaboral.nombreHoraL}}</option>
+                      <option *ngFor="let HoraL of HorasL" value={{this.HoraL.id}}  >{{HoraL.nombreHoraL}}</option>
+                    </select>
             </div>
-            </div>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-sm btn-primary"> Agregar</button>
-                <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>Cancelar</button>
-            </div>
-        </form>
-    </div>
+                
+              </div>
+          </div>
+          <div class="card-footer">
+              <button type="submit" class="btn btn-sm btn-primary"> Guardar</button>
+              <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>Cancelar</button>
+          </div>
+      </form>
+  </div>
 
 </div>

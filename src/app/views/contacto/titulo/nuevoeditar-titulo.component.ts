@@ -11,8 +11,6 @@ import { Titulo } from '../../../models/titulo';
 
 export class NuevoEditarTituloComponent implements OnInit{
   titul: string []= [];
-    titulo: string = "";
-    abreviatura: string = "";
     titu: Titulo = null;
     id: number = this.activatedRoute.snapshot.params.id;
 
@@ -34,17 +32,20 @@ export class NuevoEditarTituloComponent implements OnInit{
          
         }
       );
+      this.titu = new Titulo(this.titul);
+    }
+    else{
+      this.titu = new Titulo(this.titul);
     }
     
   }
 
   onCreate(): void {
     if(this.id!=null){
-      console.log(JSON.stringify(this.titu));
       this.tituloService.update(this.id, this.titu).subscribe(
         data => {
           this.titu = data;
-          alert('Se inserto correctamente');
+          alert('Se actualizo correctamente');
           this.router.navigate(['/contacto/titulo/listaTitulo']);
         },
           err => {
@@ -53,9 +54,7 @@ export class NuevoEditarTituloComponent implements OnInit{
        
     }
     else{
-      this.titul.push(" ",this.titulo,this.abreviatura);
-     const titut = new Titulo(this.titul);
-    this.tituloService.save(titut).subscribe(
+    this.tituloService.save(this.titu).subscribe(
       response => {
        alert('Se inserto correctamente');
        this.router.navigate(['/contacto/titulo/listaTitulo']);

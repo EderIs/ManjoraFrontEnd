@@ -1,79 +1,50 @@
 <div class="card">
-    <div class="card-header">
-        <strong>Agregar</strong> Bancos
-    </div>
-    <div class="card-body">
-        <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md-4">
-                        <label for="nombreContacto">Nombre Banco:</label>
-                        <input type="text" *ngIf="this.banco != null" name="banco.nombre"
-                            [(ngModel)]="this.banco.nombre" class="form-control" placeholder="Nombre Banco" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="nombreContacto">Calle</label>
-                        <input type="text" *ngIf="this.banco != null" name="banco.calle" [(ngModel)]="banco.calle"
-                            class="form-control" placeholder="Calle" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="nombreContacto">Calle secundaria</label>
-                        <input type="text" *ngIf="this.banco != null" name="banco.calleSecundaria"
-                            [(ngModel)]="banco.calleSecundaria" class="form-control" placeholder="Calle Secundaria"
-                            required>
-                    </div>
+  <div class="card-header">
+      <strong>Agregar</strong> Departamento
+  </div>
+  <div class="card-body">
+      <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
+          <div class="form-group">
+              <div class="form-row">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                  </div>
+                  <input type="text" id="nombreDepartamento" name="nombreDepartamento" [(ngModel)]="this.departamento.nombreDepartamento" class="form-control" placeholder="Nombre del Departamento" 
+                  required>
                 </div>
-            </div>
-            <div class="form-group">
-            <div class="form-row">
-                <div class="col-md-6">
-                    <label for="nombreContacto">Ciudad</label>
-                    <input type="text" *ngIf="this.banco != null" name="banco.ciudad" [(ngModel)]="banco.ciudad"
-                        class="form-control" placeholder="Ciudad" required>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                  </div>
+                  <input type="text" id="estado" name="estado" [(ngModel)]="this.departamento.estado" class="form-control" placeholder="0" 
+                  required>
                 </div>
-                <div class="col-md-6">
-                    <label>Seleccione un pais</label>
-                    <select id="ddlPais" class="form-control" [(ngModel)]="this.pais1"
-                        [ngModelOptions]="{standalone: true}">
-                        <option value="0" >--Selecciona un Pais--</option>
-                        <option *ngFor="let pais of paises" value={{pais.id}}>{{pais.nombrePais}}</option>
-                    </select>
-                </div>
-            </div>
+              </div>
+          </div>
+
+          <div class="col-md-4">
+            <label>Seleccione un Empleado</label>
+            <select class="form-control" [(ngModel)]="this.empleado1"
+                [ngModelOptions]="{standalone: true}">
+                <option  *ngIf="this.empleado==null" value="0" >--Selecciona un Empleado--</option>
+                <option *ngIf="this.empleado!=null" hidden="true" value=0 >{{empleado.nombreEmpleado}}</option>
+                <option *ngFor="let empleado of empleados" value={{this.empleado.id}}>{{empleado.nombreEmpleado}}</option>
+            </select>
         </div>
-            <div class="form-group">
-            <div class="form-row">
-                <div class="col-md-6">
-                <label for="nombreContacto">Codigo Bancario</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.codigoIdenBancaria"
-                    [(ngModel)]="banco.codigoIdenBancaria" class="form-control" placeholder="Codigo Bancario" required="required">
-                </div>
-                <div class="col-md-6">
-                    <label for="nombreContacto">Codigo Postal</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.codigoPostal" [(ngModel)]="banco.codigoPostal"
-                    class="form-control" placeholder="Codigo Postal" required>
-                </div>
-                </div>
-        </div>
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md-6">
-                <label for="nombreContacto">Correo</label>
-                <input type="email" *ngIf="this.banco != null" name="banco.correoElectronico"
-                    [(ngModel)]="banco.correoElectronico" class="form-control" placeholder="Correo Electronico" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="nombreContacto">Telefono</label>
-                <input type="text" *ngIf="this.banco != null" name="banco.telefono" [(ngModel)]="banco.telefono"
-                    class="form-control" placeholder="Pais" required>
-                </div>
+          <!-- <div class="form-group">
+            <div class="form-group select-wrapper">
+              <label>Seleccione un Empleado...</label>
+              <select class="form-control" [(ngModel)]="this.empleado1" [ngModelOptions]="{standalone: true}">
+                <option  *ngIf="this.departamento.empleado==null" value=0 >Seleccione un Empleado...</option>
+                <option *ngIf="this.departamento.empleado!=null" hidden="true" value={{this.departamento.empleado.id}} >{{this.departamento.empleado.nombreEmpleado}}</option>
+                <option *ngFor="let empleado of empleados" value={{this.empleado.id}}  >{{empleado.nombreEmpleado}}</option>
+              </select>
             </div>
-            </div>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-sm btn-primary"> Agregar</button>
-                <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>Cancelar</button>
-            </div>
-        </form>
-    </div>
+      </div> -->
+          <div class="card-footer">
+              <button type="submit" class="btn btn-sm btn-primary"> Guardar</button>
+              <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>Cancelar</button>
+          </div>
+      </form>
+  </div>
 
 </div>

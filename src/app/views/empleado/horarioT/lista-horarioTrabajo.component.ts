@@ -37,7 +37,8 @@ export class ListaHorarioTrabajoComponent implements OnInit{
       alert('No se realizo la busqueda correctamente');
     }
   }
-delete(id:number){
+
+borrar(id:number){
 
 if(id > 0){
 

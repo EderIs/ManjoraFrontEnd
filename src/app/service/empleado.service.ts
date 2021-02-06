@@ -7,12 +7,16 @@ import { Empleado } from '../models/empleado';
   providedIn: 'root'
 })
 export class EmpleadoService {
-  empleadoURL = 'http://localhost:8080/empleado/'
+  empleadoURL = 'http://localhost:8090/empleado/'
 
   constructor(private HttpClient: HttpClient) { }
 
   public lista(): Observable <Empleado[]> {
     return this.HttpClient.get<Empleado[]>(this.empleadoURL + 'list');
+  }
+
+  public listaByNombre(nombreEmpleado:string):Observable<Empleado[]>{
+    return this.HttpClient.get<Empleado[]>(this.empleadoURL+`list/${nombreEmpleado}`);
   }
 
   public detail(id: number): Observable <Empleado> {

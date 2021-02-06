@@ -10,6 +10,7 @@ import { Titulo } from '../../../models/titulo';
 
 export class listaTituloComponent implements OnInit{
   titulos: Titulo[] = [];
+  busqueda: string="";
   constructor(
     private tituloService: TituloService
     ) { }
@@ -27,6 +28,18 @@ export class listaTituloComponent implements OnInit{
         console.log(err);
       }
     );
+  }
+
+  onSearch(){
+    if(this.busqueda != " "){
+      this.tituloService.listaByTitulo(this.busqueda).subscribe(model=>{
+      this.titulos=model;
+      },err=>{
+        alert('No existen estados');
+      })
+    }else{
+      alert('No se realizo la busqueda correctamente');
+    }
   }
 
   borrar(id: number) {
