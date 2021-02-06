@@ -10,7 +10,7 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular';
 import {interceptorProvider} from './interceptors/prod-interceptor.service';
 
-import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
