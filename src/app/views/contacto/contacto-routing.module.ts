@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import {ProGuardService as guard} from '../../guards/pro-guard.service';
 
 // import components childrens
 import {listaContactoComponent} from './lista-contacto.component';

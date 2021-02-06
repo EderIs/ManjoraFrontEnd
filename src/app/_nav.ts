@@ -1,5 +1,19 @@
 import { INavData } from '@coreui/angular';
 
+export const navItemsUser : INavData[] =[
+  {
+    title: true,
+    name: 'Ajustes',
+},
+  {
+    name:'Ajustes',
+    url: '/ajuste',
+    icon: 'icon-speedometer'
+  }
+]
+
+
+
 export const navItems: INavData[] = [
   
   {

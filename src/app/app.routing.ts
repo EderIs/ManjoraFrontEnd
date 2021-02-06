@@ -1,5 +1,8 @@
 import { Component, NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import {ProGuardService as guard} from './guards/pro-guard.service';
+
+
 
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
@@ -34,7 +37,7 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'register',
+    path: 'register/:id',
     component: RegisterComponent,
     data: {
       title: 'Register Page'
@@ -43,7 +46,9 @@ export const routes: Routes = [
   {
     path: '',
     component: DefaultLayoutComponent,
+    canActivate: [guard],
     data: {
+      expectedRol: ['admin','user'],
       title: 'Home'
     },
     children: [

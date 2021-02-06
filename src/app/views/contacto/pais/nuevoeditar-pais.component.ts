@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import  {Pais} from '../../../models/pais'
 import  {PaisService} from '../../../service/pais.service'
+import {TokenService} from '../../../service/token.service';
 
 
 @Component({
@@ -21,12 +22,15 @@ pais1 :string []=[];
   private paisService : PaisService,
   private router: Router,
   private activatedRouter: ActivatedRoute,
-  
+  private tokeService:TokenService
   ) {}
 
 
   ngOnInit(): void {
-    
+    if (this.tokeService.getToken()) {
+     
+      this.tokeService.getAuthorities();
+    }
 if(this.id!=null){
 
 this.paisService.detail(this.id).subscribe(model=>{

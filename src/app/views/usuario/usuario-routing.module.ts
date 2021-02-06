@@ -19,7 +19,7 @@ const routes: Routes = [
         redirectTo: 'usuario'
       },
       {
-        path: 'usuario',
+        path: 'usuario/listaUsuario',
         component: ListaUsuarioComponent,
         data: {
           title: 'Usuarios'
@@ -29,14 +29,14 @@ const routes: Routes = [
         path: 'agregarNuevo',
         component: NuevoEditarUsuarioComponent,
         data: {
-          title: 'Empleado / Agregar'
+          title: 'Usuario / Agregar'
         }
       },
       {
         path: 'agregarNuevo/:id',
         component: NuevoEditarUsuarioComponent,
         data: {
-          title: 'Empleados / Editar'
+          title: 'Usuario / Editar'
         }
       },
     ]

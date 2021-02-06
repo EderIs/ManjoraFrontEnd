@@ -5,43 +5,38 @@
         <div class="col-md-6 mx-auto">
           <div class="card mx-4">
             <div class="card-body p-4">
-              <form>
-                <h1>Register</h1>
-                <p class="text-muted">Create your account</p>
+              <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
+                <h1>Registrate</h1>
+                <p class="text-muted">Crea tu cuenta</p>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-user"></i></span>
                   </div>
-                  <input type="text" class="form-control" placeholder="Username" autocomplete="username" required>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">@</span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="Email" autocomplete="email" required>
+                  <input type="text" class="form-control"  placeholder="Nombre del usuario" name="usuario.nombreUsuario" [(ngModel)]="this.usuario.nombreUsuario" required>
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-lock"></i></span>
                   </div>
-                  <input type="password" class="form-control" placeholder="Password" autocomplete="new-password" required>
+                  <input type="password" class="form-control" name="usuario.password" [(ngModel)]="this.usuario.password" placeholder="Contraseña" autocomplete="new-password" required>
                 </div>
                 <div class="input-group mb-4">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-lock"></i></span>
                   </div>
-                  <input type="password" class="form-control" placeholder="Repeat password" autocomplete="new-password" required>
+                  <input  [(ngModel)]="this.repContrasena" name="repContrasena" type="password" class="form-control" placeholder="Repetir Contraseña" autocomplete="new-password" required>
                 </div>
-                <button type="button" class="btn btn-block btn-success">Create Account</button>
+                <input type="submit"  class="btn btn-block btn-success" value="Crear Cuenta">
+
               </form>
             </div>
             <div class="card-footer p-4">
               <div class="row">
                 <div class="col-6">
-                  <button class="btn btn-block btn-facebook" type="button"><span>facebook</span></button>
+                <span>@Manjora</span>
                 </div>
                 <div class="col-6">
-                  <button class="btn btn-block btn-twitter" type="button"><span>twitter</span></button>
+                  <span>Derechos reservados</span>
                 </div>
               </div>
             </div>

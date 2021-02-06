@@ -3,47 +3,66 @@ import { Usuario } from '../../models/usuario';
 import { UsuarioService } from '../../service/usuario.service';
 
 @Component({
-  templateUrl: 'lista-ajuste.component.html'
+    templateUrl: 'lista-ajuste.component.html'
 })
 
-export class ListaAjusteComponent implements OnInit{
-    
-usuario : Usuario=null;
+export class ListaAjusteComponent implements OnInit {
 
-@ViewChild('txtCorreo',{static:true}) element: ElementRef;
-@ViewChild('invitacionP',{static:true}) element2 :ElementRef;
+    usuario: Usuario = null;
 
-constructor(private render:Renderer2, private usuarioService : UsuarioService){}
+    @ViewChild('txtCorreo', { static: true }) element: ElementRef;
+    @ViewChild('invitacionP', { static: true }) element2: ElementRef;
+
+    constructor(private render: Renderer2, private usuarioService: UsuarioService) { }
 
     ngOnInit(): void {
         this.getListUsersPending();
     }
 
-    enviarCorreo(){
+    enviarCorreo() {
 
-     let txtCorreo =   this.element.nativeElement.value;    
-     this.usuario = new Usuario("Prueba1",txtCorreo,"1234",new Date(),null,false);
+        let txtCorreo = this.element.nativeElement.value;
+        this.usuario = new Usuario("Prueba3", txtCorreo, "1234", new Date(), null, false);
 
-      this.usuarioService.save(this.usuario).subscribe(model=>
-        {
-            alert('Correo Enviado');
-            
-        },err=>{
 
-            console.log("error");
-        }); 
-     }   
+        this.usuarioService.save(this.usuario).subscribe(model => {
+          
+                alert('Correo Enviado');
 
-     getListUsersPending(){
+                let div = this.render.createElement("div");
+                this.render.addClass(div, "col-md-4");
+                let valorp = this.render.createElement("p");
+                this.render.setStyle(valorp, "font-size", "11px");
+                this.render.appendChild(valorp, this.render.createText(this.usuario.email));
+                this.render.appendChild(div, valorp);
+    
+                this.render.appendChild(this.element2.nativeElement, div);
+                this.element.nativeElement.value = " ";
+           
+        }, err => {
 
-        let nuevosC = "";
-        for (let index = 0; index < 6; index++) {
-            
-            nuevosC += `<div class="col-md-4"><p>${"Juan"+index}</p></div>`;
+            alert(err.error.mensaje);
+            this.element.nativeElement.value = " ";
+        });
+    }
 
-        }
-        
-        this.element2.nativeElement.innerHTML=nuevosC;
+    getListUsersPending() {
 
-     }
+
+        this.usuarioService.listaByEstado().subscribe(model => {
+
+            if (model.length > 0) {
+                let nuevosC = "";
+                for (let index = 0; index < model.length; index++) {
+
+                    nuevosC += `<div class="col-md-4"><p style="font-size:11px;">${model[index]}</p></div>`;
+                }
+                this.element2.nativeElement.innerHTML = nuevosC;
+            }
+
+        }, err => {
+
+        })
+
+    }
 }

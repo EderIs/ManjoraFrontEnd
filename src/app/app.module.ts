@@ -8,6 +8,7 @@ import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular';
+import {interceptorProvider} from './interceptors/prod-interceptor.service';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -18,6 +19,7 @@ import { AppComponent } from './app.component';
 
 // Import containers
 import { DefaultLayoutComponent } from './containers';
+import{ FormsModule} from '@angular/forms';
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
@@ -64,7 +66,8 @@ import { ChartsModule } from 'ng2-charts';
     IconModule,
     IconSetModule.forRoot(),
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   declarations: [
     AppComponent,
@@ -75,6 +78,7 @@ import { ChartsModule } from 'ng2-charts';
     RegisterComponent
   ],
   providers: [
+    interceptorProvider,
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy

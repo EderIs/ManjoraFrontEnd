@@ -1,33 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import { EmpleadoService } from '../../service/empleado.service';
-import { Empleado } from '../../models/empleado';
+import { UsuarioService } from '../../service/usuario.service';
+import { Usuario } from '../../models/usuario';
 
 @Component({
   selector: 'app-lista-usuario',
   templateUrl: 'Lista-usuario.component.html'
 })
 
-export class ListaUsuarioComponent implements OnInit{
-  
-  empleado: Empleado[] = [];
-  constructor(private empleadoService: EmpleadoService) { }
-  
+export class ListaUsuarioComponent implements OnInit {
 
+  usuarios: Usuario[] = [];
+  constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
-    this.cargarContactos();
+    this.cargarUsuarios();
   }
-  cargarContactos(): void{
-    this.empleadoService.lista().subscribe(
-      data => {
-        this.empleado = data;
-      },
-      err =>{
-        console.log(err);
-      }
-    )
+  cargarUsuarios(): void {
+    this.usuarioService.lista().subscribe(model => {
+
+      this.usuarios = model;
+
+    }, err => {
+
+    })
+  }
+
+  borrarUsuario(id: number): void {
+
+    this.usuarioService.delete(id).subscribe(model => {
+
+      alert("Usuario eliminado");
+      this.cargarUsuarios();
+    }, err => {
+      console.log(err.error.mensaje);
+    })
+
   }
 
 }
