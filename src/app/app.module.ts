@@ -70,7 +70,7 @@ import { ChartsModule } from 'ng2-charts';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule
-    NgxMaterialTimepickerModule
+   
   ],
   declarations: [
     AppComponent,

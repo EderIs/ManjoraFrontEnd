@@ -18,7 +18,7 @@ export class ContactoService {
     return this.HttpClient.get<Contacto[]>(this.contactoURL+`list/${nombre}`);
     }
 
-  public detail(id: number): Observable <Contacto> {
+  public detail(id: string): Observable <Contacto> {
     return this.HttpClient.get<Contacto>(this.contactoURL + `detail/${id}`);
   }
 

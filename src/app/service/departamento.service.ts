@@ -11,7 +11,7 @@ export class DepartamentoService {
     departamentoURL = 'http://localhost:8090/departamento/'
   
     constructor(private HttpClient: HttpClient) { }
-  
+
     public lista(): Observable <Departamento[]> {
       return this.HttpClient.get<Departamento[]>(this.departamentoURL + 'list');
     }

@@ -56,17 +56,17 @@ const routes: Routes = [
         }
       },
       {
-        path:'titulo/agregarTitulo',
+        path:'new',
         component: NuevoEditarTituloComponent,
         data:{
           title:'Titulos / Agregar'
         }
       },
       {
-        path:'titulo/agregarTitulo/:id',
+        path:':id',
         component: NuevoEditarTituloComponent,
         data:{
-          title:'Titulos / Agregar'
+          title:'Titulos / Editar'
         }
       },
       {

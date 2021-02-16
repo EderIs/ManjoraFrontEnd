@@ -1,4 +1,72 @@
-<div class="card">
+<div class="row">
+  <div   class="col s12 m12">
+    <div *ngIf="ferm"  class="card" class="card blue-grey lighten-5">
+      <div  class="card-content">
+        <span class="card-title">{{editMode ? 'Editar' : 'Nuevo'}} Contacto</span>
+        <form [formGroup]="ferm" >
+          <div class="row">
+
+            <div class="input-field col s12">
+              <input type="text" id="nombreContacto" formControlName="nombreContacto">
+              <label for="nombreContacto" [class.active]="ferm.get('nombreContacto').value !== null" >NombreContacto</label>
+              <small class="red-text" *ngIf="ferm.get('nombreContacto').value == null && ferm.get('nombreContacto').touched">
+                Campo Invalido
+              </small>
+            </div>
+
+            <div class="input-field col s12">
+              <input type="text" id="calle" formControlName="calle">
+              <label for="calle" [class.active]="ferm.get('calle').value !== null">Calle</label>
+              <small class="red-text" *ngIf="ferm.get('calle').value == null && ferm.get('calle').touched" >
+                Campo Invalido
+              </small>
+            </div>
+
+             <!-- <div class="input-field col s12"> 
+                <label for="titulo" [class.active]="ferm.get('titulo').value !== null">Seleccionar Titulo</label> 
+              <select class="form-control" formControlName="titulo">
+              <option *ngFor="let titulo of titulos" value={{this.titulo.id}}>{{titulo.titulo}}</option>
+              
+            </select>
+            </div>  -->  
+           <!--   <div class="input-field col s12"> 
+              <label for="estado" [class.active]="ferm.get('estado').value !== null">Seleccionar estado</label> 
+            <select class="form-control" formControlName="estado">
+            <option *ngFor="let estado of estados" value={{this.estado.id}}>{{estado.nombreEstado}}</option>    
+          </select>
+          </div>  -->
+
+            <div class="input-field col s12">
+              <input type="text" id="calleSecundaria" formControlName="calleSecundaria">
+              <label for="calleSecundaria" [class.active]="ferm.get('calleSecundaria').value !== null">CalleSecundaria</label>
+              <small class="red-text" *ngIf="ferm.get('calleSecundaria').value == null && ferm.get('calleSecundaria').touched" >
+                Campo Invalido
+              </small>
+            </div>
+        
+
+
+
+          </div>
+        </form>
+      </div>
+      <div class="card-action d-flex justify-content-flex-end">
+        <div class="p-1">
+          <button class="btn waves-effect cyan" routerLink="/contacto/contacto">Cancel</button>
+        </div>
+        <div class="p-1">
+          <button class="btn waves-effect green" [disabled]="ferm.invalid" (click)="submit()">
+            {{editMode ? 'Guardar Cambios' : 'Agregar Contacto'}}<i class="material-icons right">send</i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- <div class="card">
   <div class="card-header">
       <strong>Agregar</strong> Contactos
   </div>
@@ -6,11 +74,13 @@
       <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
           <div class="form-group">
               <div class="form-row">
+
                   <div class="col-md-4">
                       <label for="nombreContacto">Nombre Contato:</label>
                       <input type="text" *ngIf="this.contacto != null" name="contacto.nombreContacto"
                           [(ngModel)]="this.contacto.nombreContacto" class="form-control" placeholder="Nombre Contacto" required>
                   </div>
+                  
                   <div class="form-group">
                     <label for="file">subir Imagen:</label>
                     <input type="file"  class="form-control" accept="image/*" (change)="onSelectFile($event)" style="height: 100%">
@@ -144,11 +214,6 @@
       </div>
     </div>
 </div>
-
-
-
-        
-         
         
           <div class="card-footer">
               <button type="submit" class="btn btn-sm btn-primary"> Agregar</button>
@@ -157,4 +222,4 @@
       </form>
   </div>
 
-</div>
+</div> -->

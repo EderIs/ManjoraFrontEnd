@@ -110,7 +110,7 @@ export class NuevoEditarEmpleadoComponent implements OnInit{
   }
 
   cargarPuesto(): void {
-    this.puestoService.lista().subscribe(
+    this.puestoService.fetchPuestos().subscribe(
       data => {
         this.puestos = data;
       },

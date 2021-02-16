@@ -25,10 +25,7 @@ export const navItems: INavData[] = [
     name: 'Configuracion',
     url: '/Dashboard',
     icon: 'icon-speedometer',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    },
+    
 children:[
   {
     name: 'Titulos',
@@ -79,10 +76,7 @@ children:[
       name: 'Configuracion',
       url: '/Dashboard',
       icon: 'icon-speedometer',
-      badge: {
-        variant: 'info',
-        text: 'NEW'
-      },
+      
   children:[
     {
       name: 'Departamentos',

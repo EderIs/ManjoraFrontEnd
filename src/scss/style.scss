@@ -6,3 +6,58 @@
 
 // If you want to add something do it here
 @import "custom";
+
+.dataTables_length{
+    div label{
+        display: none;
+    }
+
+    div> label:before{
+        display: block;
+        content: "Mostrar" ;
+    }
+
+    label{
+        select{
+            display: initial !important;
+            width: auto !important;
+        }
+    }
+}
+
+.dataTables_wrapper no-footer{
+    padding-top: 0px;
+}
+
+
+
+
+.dataTables_filter{
+    label{
+        input{
+             margin: unset !important;
+            width: auto !important;  
+             padding-left: 10px !important; 
+            height: unset !important; 
+        }
+    }
+}
+
+.d-flex{
+    display: flex;
+}
+
+.justify-content-flex-end{
+justify-content: flex-end;
+}
+
+.p-1{
+    padding: 0.25em;
+}
+
+.card-title{
+    height: -10px;
+}
+.title{
+    height: 10px;
+}

@@ -58,6 +58,9 @@ export class NuevoEditarDepartamentoComponent implements OnInit{
       }
     );
   }
+  cargarDepartamentos(): void {
+    this.departamentoService.lista().subscribe();
+  }
 
   onCreate(): void {
    // this.empleado.push(this.empleado1.toString()," ");
@@ -76,6 +79,9 @@ export class NuevoEditarDepartamentoComponent implements OnInit{
     this.departamentoService.save(this.departamento).subscribe(
       response => {
        alert('Se inserto correctamente');
+       this.router.navigate(['/empleado/departamento/listarDepartamento']);
+       
+
       },
       error =>{
         console.log(error);

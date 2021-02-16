@@ -1,39 +1,57 @@
-<div class="card">
-    <div class="card-header">
-        <strong>Agregar</strong> Puestos
-    </div>
-    <div class="card-body">
-        <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md-4">
-                        <label for="nombreContacto">Nombre Puesto:</label>
-                        <input type="text" *ngIf="this.puesto != null" name="puesto.nombrePuesto"
-                            [(ngModel)]="this.puesto.nombrePuesto" class="form-control" placeholder="Nombre Puesto" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label>Seleccione un Departamento</label>
-                        <select class="form-control" [(ngModel)]="this.departamento1"
-                            [ngModelOptions]="{standalone: true}">
-                            <option  *ngIf="this.departamento==null" value="0" >--Selecciona un Departamento--</option>
-                            <option *ngIf="this.departamento!=null" hidden="true" value=0 >{{departamento.nombreDepartamento}}</option>
-                            <option *ngFor="let departamento of departamentos" value={{this.departamento.id}}>{{departamento.nombreDepartamento}}</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="nombreContacto">Descripcion del trabajo</label>
-                        <input type="text" *ngIf="this.puesto != null" name="puesto.descripcionTrabajo"
-                            [(ngModel)]="puesto.descripcionTrabajo" class="form-control" placeholder="Descripcion del Trabajo"
-                            required>
+
+<div class="row">
+    <div class="col s12 m12">
+      <div class="card" class="card blue-grey lighten-5">
+        <div class="card-content">
+          <span class="card-title">{{ editMode ? 'Editar' : 'Nuevo'}} Puesto</span>
+        <div class="card-content">
+            <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
+                <div class="form-group">
+                    <div class="form-row">
+
+                        <div class="col-md-4">
+                            <label for="nombreContacto">Nombre Puesto:</label>
+                            <input type="text" *ngIf="this.puesto != null" name="puesto.nombrePuesto"
+                                [(ngModel)]="this.puesto.nombrePuesto" class="form-control" placeholder="Nombre Puesto" required>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label for="nombreContacto">Descripcion del trabajo</label>
+                            <input type="text" *ngIf="this.puesto != null" name="puesto.descripcionTrabajo"
+                                [(ngModel)]="puesto.descripcionTrabajo" class="form-control" placeholder="Descripcion del Trabajo"
+                                required>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label>Seleccione un Departamento</label>
+                            <select class="form-control" [(ngModel)]="this.departamento1"
+                                [ngModelOptions]="{standalone: true}">
+                                <option  *ngIf="this.departamento==null" value="0" >--Selecciona un Departamento--</option>
+                                <option *ngIf="this.departamento!=null" hidden="true" value=0 >{{departamento.nombreDepartamento}}</option>
+                                <option *ngFor="let departamento of departamentos" value={{this.departamento.id}}>{{departamento.nombreDepartamento}}</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </div>
-     
-            <div class="card-footer">
-                <button type="submit" class="btn btn-sm btn-primary"> Agregar</button>
-                <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>Cancelar</button>
-            </div>
-        </form>
+                <div class="card-action d-flex justify-content-flex-end">
+                    <div class="p-1">
+                        <button class="btn waves-effect btn-outline-danger" routerLink="/empleado/puesto/listarPuesto">Cancel</button>
+                     </div>
+                    <div class="p-1">
+                         <button type="submit" class="btn waves-effect btn-outline-primary" >
+                             {{editMode ? 'Guardar Cambios' : 'Agregar Puesto'}}<i class="material-icons right">send</i></button>
+                     </div>
+                 </div>
+            </form>
+        </div>      
+      </div>
+      </div>
     </div>
+  </div>
 
-</div>
+
+  
+
+
+
+

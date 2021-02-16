@@ -15,7 +15,7 @@ export class TituloService {
     return this.HttpClient.get<Titulo[]>(this.tituloURL + 'list');
   }
 
-  public detail(id: number): Observable <Titulo> {
+  public detail(id: string): Observable <Titulo> {
     return this.HttpClient.get<Titulo>(this.tituloURL + `detail/${id}`);
   }
 
@@ -23,16 +23,16 @@ export class TituloService {
     return this.HttpClient.get<Titulo>(this.tituloURL + `detail/${nombreTitulo}`);
   }
 
-  public save(titulo: Titulo): Observable<any> {
-    return this.HttpClient.post<any>(this.tituloURL + 'create', titulo);
+  public save(titulo: Titulo): Observable<Titulo> {
+    return this.HttpClient.post<Titulo>(this.tituloURL + 'create', titulo);
   }
 
   public update(id: number, titulo: Titulo): Observable<any> {
     return this.HttpClient.put<any>(this.tituloURL + `update/${id}`, titulo);
   }
 
-  public delete(id: number): Observable<any> {
-    return this.HttpClient.delete<any>(this.tituloURL + `delete/${id}`);
+  public delete(id: number): Observable<Titulo> {
+    return this.HttpClient.delete<Titulo>(this.tituloURL + `delete/${id}`);
   }
 
   public listaByTitulo(titulo:string):Observable<Titulo[]>{

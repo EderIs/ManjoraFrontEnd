@@ -1,20 +1,20 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { Router,ActivatedRoute } from '@angular/router';
-import { Banco } from '../../../models/banco';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Departamento } from '../../../models/departamento';
-import  {Pais} from '../../../models/pais'
 import { Puesto } from '../../../models/puesto';
-import { BancoService } from '../../../service/banco.service';
 import { DepartamentoService } from '../../../service/departamento.service';
-import  {PaisService} from '../../../service/pais.service'
 import { PuestoService } from '../../../service/puesto.service';
 
 
 @Component({
-  templateUrl: 'nuevoeditar-puesto.component.html'
+  templateUrl: 'nuevoeditar-puesto.component.html',
+  styleUrls: ['nuevoeditar-puesto.componente.scss'],
 })
 
-export class NuevoEditarPuestoComponent implements OnInit{
+export class NuevoEditarPuestoComponent implements OnInit {
+
+
+  editMode = false;
   puesto: Puesto = null;
   private id: number = this.activatedRouter.snapshot.params.id;
   departamentos: Departamento[] = [];
@@ -28,6 +28,12 @@ export class NuevoEditarPuestoComponent implements OnInit{
     , private departamentoService: DepartamentoService, private rende2: Renderer2) { }
 
   ngOnInit(): void {
+    this.activatedRouter.paramMap.subscribe(paramMap => {
+      if (paramMap.has('id')) {
+        this.editMode = true;
+      }
+    })
+
 
     if (this.id > 0) {
       this.puestoService.detail(this.id).subscribe(model => {
@@ -37,7 +43,7 @@ export class NuevoEditarPuestoComponent implements OnInit{
         this.cargarDepartamento();
 
         this.departamento1 = this.puesto.departamento.id;
-        
+
 
       }, err => {
 
@@ -45,7 +51,7 @@ export class NuevoEditarPuestoComponent implements OnInit{
 
       })
     } else {
-      this.puesto = new Puesto('',null, '', );
+      this.puesto = new Puesto('', null, '',);
       this.cargarDepartamento();
       this.departamento1 = 0;
     }
@@ -56,7 +62,7 @@ export class NuevoEditarPuestoComponent implements OnInit{
 
       this.departamentoE.push(this.departamento1.toString(), " ");
 
-      this.puestoService.update(this.puesto.id, new Puesto(this.puesto.nombrePuesto,new Departamento(this.departamentoE),
+      this.puestoService.update(this.puesto.id, new Puesto(this.puesto.nombrePuesto, new Departamento(this.departamentoE),
         this.puesto.descripcionTrabajo)).subscribe(model => {
 
           alert('se actualizo el puesto corretamente');
@@ -65,21 +71,26 @@ export class NuevoEditarPuestoComponent implements OnInit{
 
 
     } else {
+      
+      
       this.departamento.push(this.departamento1.toString(), " ");
-
       this.puesto.setDepartamento(new Departamento(this.departamento));
-
       this.puestoService.save(this.puesto).subscribe(model => {
-
         this.route.navigate(['empleado/puesto/listarPuesto']);
 
-
       }, err => {
-        console.log(err.err.mensaje);
+       alert(err.error.mensaje);
+        
+        
 
       })
     }
   }
+
+ 
+
+
+
   onDetails() {
 
   }
@@ -98,4 +109,4 @@ export class NuevoEditarPuestoComponent implements OnInit{
   changePais(e): void {
   }
 
-}
+} 

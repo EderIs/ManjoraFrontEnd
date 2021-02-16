@@ -55,14 +55,14 @@ const routes: Routes = [
         }
       },
       {
-        path: 'puesto/agregarPuesto',
+        path: 'new',
         component: NuevoEditarPuestoComponent,
         data: {
           title: 'Puestos / Agregar'
         }
       },
       {
-        path: 'puesto/agregarPuesto/:id',
+        path: ':id',
         component: NuevoEditarPuestoComponent,
         data: {
           title: 'Puestos / Editar'

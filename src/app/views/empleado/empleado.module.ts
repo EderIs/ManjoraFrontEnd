@@ -16,12 +16,17 @@ import { NuevoEditarHorarioTrabajoComponent } from './horarioT/nuevoeditar-horar
 
 // Theme Routing
 import {EmpleadoRoutingModule} from './empleado-routing.module'
-import{ FormsModule} from '@angular/forms';
+import{ FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { DataTablesModule } from 'angular-datatables';
 @NgModule({
   imports: [
     CommonModule,
     EmpleadoRoutingModule,
-    FormsModule    
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,  
+    DataTablesModule
   ],
   declarations: [
     ListaEmpleadoComponent,

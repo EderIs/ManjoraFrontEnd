@@ -1,82 +1,65 @@
-import { Component, OnInit } from '@angular/core';
-import { BancoService } from '../../../service/banco.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Puesto } from '../../../models/puesto';
 import { PuestoService } from '../../../service/puesto.service';
-import { Banco } from '../../../models/banco';
+import { Subject, Subscription } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
+
 @Component({
-  templateUrl: 'lista-puesto.component.html'
+  templateUrl: 'lista-puesto.component.html',
+  styleUrls: ['nuevoeditar-puesto.componente.scss'],
 })
 
-export class ListaPuestoComponent implements OnInit{
- 
+export class ListaPuestoComponent implements OnInit, OnDestroy {
 
-  puestos : Puesto[]=[];
-  busqueda:string="";
-
+  puestos: Puesto[];
+  dtTrigger = new Subject();
 
 
-constructor(private puestoService : PuestoService){}
+  constructor(private puestoService: PuestoService,
+    private route: Router,
+    private activatedRoute: ActivatedRoute) { }
 
-  ngOnInit(): void {
-   
-    this.cargarPuestos();
-  
+    ngOnInit(): void {
+
+    this.puestoService.Puestos.subscribe(puestos => {
+      this.puestos = puestos;
+      this.dtTrigger.next();
+
+    })
+
+    //if (this.puestos != null) {
+    this.puestoService.fetchPuestos().subscribe();
+    // }else{
+    //   this.cargarPuestos()
+    // }
   }
 
-cargarPuestos(){
 
-  this.puestoService.lista().subscribe(model=>{
+  cargarPuestos() {
+    this.puestoService.fetchPuestos().subscribe(model => {
+      this.puestos = model;
+      console.log(model)
+    }, err => {
+      console.log(err.error.mensaje);
+    });
+  }
 
-this.puestos = model;
-
-console.log(model)
-
-  },err=>{
-    console.log(err.error.mensaje);
-  });
-  
-}
-
-delete(id:number){
-if(id > 0){
-
-  this.puestoService.delete(id).subscribe(model=>{
-
-    alert('Se elimino correctaente el puesto');
-    this.cargarPuestos();
-  },err=>{
-    
-    alert("No se pudo eliminar");
-
-  })
-
-}else{
-alert('Error al eliminar el Puesto');
-
-}
-}
-
-onSearch(){
-
-  if(this.busqueda != " "){
-
-this.puestoService.listaByNombre(this.busqueda).subscribe(model=>{
-
-this.puestos=model;
-
-},err=>{
-
-  alert('No existen puestos');
-})
-
-
-  }else{
-
-alert('No se realizo la busqueda correctamente');
+  delete(id: number) {
+    if (id > 0) {
+      this.puestoService.delete(id).subscribe(res => {
+        this.puestos = this.puestos?.filter(Puesto => Puesto.id !== res.id);
+        alert("se elimino registro con exito");
+        this.route.navigate(['empleado/puesto/listarPuesto']);
+      })
+    } else {
+      alert("no se pudo eliminar");
+    }
 
   }
 
 
+  ngOnDestroy() {
+    this.dtTrigger.unsubscribe()
+  }
 }
 
-}

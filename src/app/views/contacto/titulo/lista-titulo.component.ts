@@ -1,56 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { TituloService } from '../../../service/titulo.service';
 import { Titulo } from '../../../models/titulo';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
   templateUrl: 'lista-titulo.component.html'
 })
 
-export class listaTituloComponent implements OnInit{
+export class listaTituloComponent implements OnInit, OnDestroy{
+
   titulos: Titulo[] = [];
-  busqueda: string="";
+  dtTrigger = new Subject();
+
+
   constructor(
     private tituloService: TituloService
     ) { }
 
-  ngOnInit(): void {
-    this.cargarTitulos();
+
+  ngOnInit() {
+      this.tituloService.lista().subscribe(titulos => {
+       this.titulos=titulos;
+       this.dtTrigger.next();
+     });
+    this.tituloService.lista().subscribe();
   }
 
-  cargarTitulos(): void {
-    this.tituloService.lista().subscribe(
-      data => {
-        this.titulos = data;
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
 
-  onSearch(){
-    if(this.busqueda != " "){
-      this.tituloService.listaByTitulo(this.busqueda).subscribe(model=>{
-      this.titulos=model;
-      },err=>{
-        alert('No existen estados');
-      })
-    }else{
-      alert('No se realizo la busqueda correctamente');
+  delete( id: number){
+    try {
+      this.tituloService.delete(id).subscribe(res => {
+        this.titulos = this.titulos.filter(titulo => titulo.id !== res.id);
+        alert("registro borrado!!")
+      });
+    } catch (error) {
+       alert("error al eliminar")
+      console.error(error);
     }
-  }
+      
+}
 
-  borrar(id: number) {
-    this.tituloService.delete(id).subscribe(
-      data => {
-       console.log(data);
-        this.cargarTitulos();
-      },
-      err => {
-        console.log(err)
-      }
-    );
-  }
+
+  ngOnDestroy(){
+      this.dtTrigger.unsubscribe()
+    }
+    
+  
 }

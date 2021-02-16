@@ -1,19 +1,42 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Puesto } from '../models/puesto';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
+
+
+
 export class PuestoService {
+
+  private mPuestos = new  BehaviorSubject<Puesto[]>([])
   puestoURL = 'http://localhost:8090/puesto/'
+
+  get Puestos(): Observable<Puesto[]>{
+    return this.mPuestos.asObservable()
+  }
 
   constructor(private HttpClient: HttpClient) { }
 
-  public lista(): Observable <Puesto[]> {
+  
+fetchPuestos(): Observable<any>{
+  return this.HttpClient.get<Puesto[]>(this.puestoURL + 'list')
+  .pipe(
+    tap(puestos => {
+      this.mPuestos.next(puestos); 
+    })
+  )
+}
+
+
+  /* public lista(): Observable <Puesto[]> {
     return this.HttpClient.get<Puesto[]>(this.puestoURL + 'list');
-  }
+  }  */
+ 
+ 
   public listaByNombre(nombre:string):Observable<Puesto[]>{
     return this.HttpClient.get<Puesto[]>(this.puestoURL+`list/${nombre}`);
     }
@@ -34,7 +57,7 @@ export class PuestoService {
     return this.HttpClient.put<any>(this.puestoURL + `update/${id}`, puesto);
   }
 
-  public delete(id: number): Observable<any> {
-    return this.HttpClient.delete<any>(this.puestoURL + `delete/${id}`);
+  public delete(id: number): Observable<Puesto> {
+    return this.HttpClient.delete<Puesto>(`${this.puestoURL}${id}`);
   }
 }
