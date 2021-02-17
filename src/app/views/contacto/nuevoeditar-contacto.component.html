@@ -29,12 +29,13 @@
               
             </select>
             </div>  -->  
-           <!--   <div class="input-field col s12"> 
-              <label for="estado" [class.active]="ferm.get('estado').value !== null">Seleccionar estado</label> 
-            <select class="form-control" formControlName="estado">
+             <div class="input-field col s12" formGroupName="estado"> 
+              <label for="estado" [class.active]="ferm.get('estado').value !== null">Estado</label> 
+            <select class="form-control" name="id" formControlName="id" >
+              <option value="id" selected>Seleccione</option>
             <option *ngFor="let estado of estados" value={{this.estado.id}}>{{estado.nombreEstado}}</option>    
           </select>
-          </div>  -->
+          </div> 
 
             <div class="input-field col s12">
               <input type="text" id="calleSecundaria" formControlName="calleSecundaria">
@@ -62,7 +63,9 @@
     </div>
   </div>
 </div>
-
+<pre>
+  {{ ferm.value | json}}
+</pre>
 
 
 

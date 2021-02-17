@@ -1,6 +1,6 @@
 
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { EstadoService } from '../../service/estado.service';
@@ -31,7 +31,7 @@ export class nuevoEditarContactoComponent implements OnInit {
   estado1: number = 0;
   estado: string[] = [];
   estadoE :string []= [];
-
+  estadd:Estado;
   contal: string []= [];
   
  id: number = this.activatedRoute.snapshot.params.id;
@@ -134,12 +134,12 @@ initForm(){
       updateOn: 'change',
       validators: [Validators.required]
     }),
-   /*   estado: new FormControl(this.contactos ? this.contactos.estado : null, {
-      updateOn: 'change'
-    }) 
-    , 
-*/
-
+    
+    estado: new FormGroup({
+      id: new FormControl(this.contactos ? this.contactos.id: null,{
+        updateOn: 'change'
+      }),
+       }),
   });
 }
 

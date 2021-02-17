@@ -12,7 +12,7 @@ export class Contacto {
     calle: string;
     calleSecundaria: string;
     ciudad: string;
-    estado: Estado;
+    estado: Estado[];
     codigoPostal: number;
     nif: string;
     puestoTrabajo: string;
@@ -26,7 +26,7 @@ export class Contacto {
     usuario: Usuario;
     referenciaInterna: string;
 
-    constructor(
+    /* constructor(
         nombreContacto: string,
         tipoContacto: boolean,
         fotografia: string,
@@ -85,6 +85,6 @@ export class Contacto {
             
             this.titulo=titulo;
             }
-
+ */
 
 }
