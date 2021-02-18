@@ -12,7 +12,7 @@ export class Contacto {
     calle: string;
     calleSecundaria: string;
     ciudad: string;
-    estado: Estado[];
+    estado: Estado;
     codigoPostal: number;
     nif: string;
     puestoTrabajo: string;
@@ -25,6 +25,7 @@ export class Contacto {
     rol: boolean;
     usuario: Usuario;
     referenciaInterna: string;
+    
 
     /* constructor(
         nombreContacto: string,
@@ -70,9 +71,7 @@ export class Contacto {
         this.referenciaInterna = referenciaInterna;
 
     }
-    public getEstado():Estado{
-        return this.estado;
-        }
+    
         public setEstado(estado:Estado):void{
         
         this.estado=estado;

@@ -31,23 +31,12 @@
             </div>  -->  
              <div class="input-field col s12" formGroupName="estado"> 
               <label for="estado" [class.active]="ferm.get('estado').value !== null">Estado</label> 
-            <select class="form-control" name="id" formControlName="id" >
-              <option value="id" selected>Seleccione</option>
-            <option *ngFor="let estado of estados" value={{this.estado.id}}>{{estado.nombreEstado}}</option>    
-          </select>
+            <select class="form-control" name="id" formControlName="id"  >
+              <option value=null selected *ngIf="estado.id == null" hidden>Seleccione...</option>
+              <option value={estado.id}} selected *ngIf="estado.id != null" hidden>{{estado.nombreEstado}}</option>
+              <option *ngFor="let estado of estados" value={{estado.id}}>{{estado.nombreEstado}}</option>    
+              </select>
           </div> 
-
-            <div class="input-field col s12">
-              <input type="text" id="calleSecundaria" formControlName="calleSecundaria">
-              <label for="calleSecundaria" [class.active]="ferm.get('calleSecundaria').value !== null">CalleSecundaria</label>
-              <small class="red-text" *ngIf="ferm.get('calleSecundaria').value == null && ferm.get('calleSecundaria').touched" >
-                Campo Invalido
-              </small>
-            </div>
-        
-
-
-
           </div>
         </form>
       </div>
@@ -63,9 +52,6 @@
     </div>
   </div>
 </div>
-<pre>
-  {{ ferm.value | json}}
-</pre>
 
 
 

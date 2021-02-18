@@ -74,7 +74,7 @@ initForm(){
     abreviatura: new FormControl(this.titulos ? this.titulos.abreviatura : null, {
       updateOn: 'change',
       validators: [Validators.required]
-    })
+    }),
   });
 }
 

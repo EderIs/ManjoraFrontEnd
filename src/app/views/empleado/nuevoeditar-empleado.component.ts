@@ -18,7 +18,7 @@ import { UsuarioService } from '../../service/usuario.service';
 
 export class NuevoEditarEmpleadoComponent implements OnInit{
   empleado: Empleado = null;
-  fotografia: File;
+  fotografia: any;
   imagenMin: File;
 
   direccionesTrab: Contacto[] = [];
@@ -69,7 +69,6 @@ export class NuevoEditarEmpleadoComponent implements OnInit{
       this.empleadoService.detail(this.id).subscribe(
         data => {
           this.empleado = data;
-          console.log(this.empleado);
           this.direccionTrab1 = data.direccionTrabajo.id;
           this.puesto1 = data.idPuesto.id;
           this.responsable1 = data.idResponsable.id;
@@ -82,10 +81,10 @@ export class NuevoEditarEmpleadoComponent implements OnInit{
          
         }
       );
-      this.empleado = new Empleado(this.horaLab);
+      this.empleado = new Empleado(this.responsable);
     }
     else{
-      this.empleado = new Empleado(this.horaLab);
+      this.empleado = new Empleado(this.responsable);
     }
   }
 
@@ -96,6 +95,26 @@ export class NuevoEditarEmpleadoComponent implements OnInit{
       this.imagenMin = evento.target.result;
     };
     fr.readAsDataURL(this.fotografia);
+  }
+
+  insertar(empleado: Empleado){
+    this.empleadoService.save(empleado).subscribe(
+      data => {
+      },
+      err => {
+        
+      }
+    );
+  }
+
+  actualizar(id: number,empleado: Empleado){
+    this.empleadoService.update(id,empleado).subscribe(
+      data => {
+      },
+      err => {
+        
+      }
+    );
   }
 
   cargarContacto(): void {
@@ -178,31 +197,33 @@ export class NuevoEditarEmpleadoComponent implements OnInit{
       this.empleado.idMonitor.id = this.monitor1;
       this.empleado.horasLaborales.id = this.horaLab1;
       this.empleado.idUsuario.id = this.usuario1;
-      this.empleadoService.update(this.id, this.empleado).subscribe(
+      this.empleadoService.upload(this.fotografia).subscribe(
         data => {
-          this.empleado = data;
-          console.log(this.empleado);
+          this.empleado.fotografia = data;
+          setTimeout(() => {
+            this.actualizar(this.id,this.empleado);
+            this.router.navigate(['/']);
+          }, 1000);
         },
-          err => {
-            console.log(err);
-            console.log(this.empleado);
-            });
+        err => {
+          alert(err.error.mensaje);
+        }
+      );
     }
     else{
-      //this.empleado.setPuesto(new Puesto(this.puesto));
       this.empleado.setResponsable(new Empleado(this.responsable));
       this.empleado.setMonitor(new Empleado(this.monitor));
-      //this.empleado.setDirecciontrabajo(new Contacto(this.direccionTrab));
       this.empleado.setHorasLaborales(new HoraLaboral(this.horaLab));
-      //this.empleado.setUsuario(new Usuario(this.usuario));
-      this.empleadoService.save(this.empleado).subscribe(
-        response => {
-          console.log(this.empleado);
-        alert('Se inserto correctamente');
-
+      this.empleadoService.upload(this.fotografia).subscribe(
+        data => {
+          this.empleado.fotografia = data;
+          setTimeout(() => {
+            this.insertar(this.empleado);
+            this.router.navigate(['/']);
+          }, 1000);
         },
-        error =>{
-          console.log(error);
+        err => {
+          alert(err.error.mensaje);
         }
       );
     }

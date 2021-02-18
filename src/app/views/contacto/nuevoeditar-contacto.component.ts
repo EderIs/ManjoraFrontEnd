@@ -21,7 +21,7 @@ export class nuevoEditarContactoComponent implements OnInit {
 
   ferm: FormGroup;
   editMode=false;
-  contactos:Contacto;
+  contactos:Contacto = null;
   contac: Contacto= null;
   submitted=false;
   titulos: Titulo[] = [];
@@ -31,7 +31,7 @@ export class nuevoEditarContactoComponent implements OnInit {
   estado1: number = 0;
   estado: string[] = [];
   estadoE :string []= [];
-  estadd:Estado;
+  estadd:Estado =null;
   contal: string []= [];
   
  id: number = this.activatedRoute.snapshot.params.id;
@@ -45,7 +45,9 @@ export class nuevoEditarContactoComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.cargarTitulo();
 
+    this.cargarEstado();
     this.activatedRoute.paramMap.subscribe(paramMap =>{
       if (paramMap.has('id')) {
         this.editMode=true;
@@ -64,9 +66,7 @@ export class nuevoEditarContactoComponent implements OnInit {
         });
       }else{
         this.initForm();
-        this.cargarTitulo();
-
-        this.cargarEstado();
+        
         //this.estado1 = this.contactos.estado.id;
         
        
@@ -104,15 +104,14 @@ export class nuevoEditarContactoComponent implements OnInit {
   }
 
   cargarEstado(): void {
-    this.estadoService.lista().subscribe(model => {
+      this.estadoService.lista().subscribe(model => {
 
-      this.estados = model;
-
-    }, err => {
-
-      console.log(err.err.mensaje);
-    })
-
+        this.estados = model;
+  
+      }, err => {
+  
+        console.log(err.err.mensaje);
+      })
   }
 
 
@@ -130,28 +129,26 @@ initForm(){
       updateOn: 'change'
     })
     , */
-    calleSecundaria: new FormControl(this.contactos ? this.contactos.calleSecundaria : null, {
-      updateOn: 'change',
-      validators: [Validators.required]
-    }),
     
     estado: new FormGroup({
-      id: new FormControl(this.contactos ? this.contactos.id: null,{
-        updateOn: 'change'
+      id: new FormControl(this.contactos ? this.contactos.estado.id: null,{
+        updateOn: 'change',
       }),
+      
        }),
+       
   });
 }
 
 submit(){
   
-
   if (this.ferm.invalid) {
     return alert("form inavalido")
 
   }
   
   else if(this.id!= null){
+    
     this.contactoService.update(this.id, this.ferm.value).subscribe(
       data => {
         this.contac = data;
@@ -177,13 +174,14 @@ submit(){
     console.log(this.estado1);  */
     
    //const p = 1
-/* 
+ /*
    this.estado.push(this.estado1.toString()," ");
 
     this.contactos.setEstado(new Estado(this.estado)); */
 
   this.contactoService.save(this.ferm.value).subscribe(
     response => {
+      
      alert('Movimiento exitoso');
      this.router.navigate(['/contacto/contacto']);
     },

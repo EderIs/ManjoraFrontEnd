@@ -31,6 +31,12 @@ export class EmpleadoService {
     return this.HttpClient.post<any>(this.empleadoURL + 'create', empleado);
   }
 
+  public upload(imagen: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('multipartFile', imagen);
+    return this.HttpClient.post<any>(this.empleadoURL + 'upload', formData);
+  }
+
   public update(id: number, empleado: Empleado): Observable<any> {
     return this.HttpClient.put<any>(this.empleadoURL + `update/${id}`, empleado);
   }

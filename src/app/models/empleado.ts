@@ -1,11 +1,12 @@
 import { Contacto } from "./contacto";
 import { HoraLaboral } from "./horaLaboral";
+import { Imagen } from "./imagen";
 import { Puesto } from "./puesto";
 import { Usuario } from "./usuario";
 
 export class Empleado {
     id?: number;
-    fotografia: ImageBitmap;
+    fotografia: Imagen;
     nombreEmpleado: string;
     idCategoria: number;
     direccionTrabajo: Contacto;
@@ -34,32 +35,39 @@ export class Empleado {
     constructor(empleado: string[]){
 
         this.id=parseInt(empleado[0]);
-        this.fotografia=JSON.parse(empleado[1]);
-        this.nombreEmpleado=empleado[2];
-        this.idCategoria=parseInt(empleado[3]);
-        this.tituloTrabajo=empleado[4];
-        this.direccionPrivada=empleado[5];
-        this.contactoEmergencia=empleado[6];
-        this.telefonoEmergencia=empleado[7];
-        this.kmCasaTrabajo=parseFloat(empleado[8]);
-        this.sexo=empleado[9];
-        this.estadoCivil=empleado[10];
-        this.numeroHijos=parseInt(empleado[11]);
-        this.fechaNacimiento=new Date(Date.parse(empleado[12]));
-        this.lugarNacimiento=empleado[13];
-        this.nivelCertificado=empleado[14];
-        this.escuela=empleado[15];
-        this.notaAdicional=empleado[16];
-        this.nota=empleado[17];
-        this.estado=JSON.parse(empleado[18]);
+        this.nombreEmpleado=empleado[1];
+        this.idCategoria=parseInt(empleado[2]);
+        this.tituloTrabajo=empleado[3];
+        this.direccionPrivada=empleado[4];
+        this.contactoEmergencia=empleado[5];
+        this.telefonoEmergencia=empleado[6];
+        this.kmCasaTrabajo=parseFloat(empleado[7]);
+        this.sexo=empleado[8];
+        this.estadoCivil=empleado[9];
+        this.numeroHijos=parseInt(empleado[10]);
+        this.fechaNacimiento=new Date(Date.parse(empleado[11]));
+        this.lugarNacimiento=empleado[12];
+        this.nivelCertificado=empleado[13];
+        this.escuela=empleado[14];
+        this.notaAdicional=empleado[15];
+        this.nota=empleado[16];
+        this.estado=JSON.parse(empleado[17]);
     }
 
-    setEmpleado(fotografia: ImageBitmap, nombreEmpleado: string, idCategoria: number, direccionTrabajo: Contacto, idPuesto: Puesto,
+    public setImagen(fotografia:Imagen){
+        this.fotografia = fotografia;
+    }
+
+    public getImagen(): Imagen{
+        return this.fotografia;
+    }
+
+    setEmpleado(nombreEmpleado: string, idCategoria: number, direccionTrabajo: Contacto, idPuesto: Puesto,
         tituloTrabajo: string, idResponsable: Empleado, idMonitor: Empleado, horasLaborales: HoraLaboral, direccionPrivada: string,
         contactoEmergencia: string, telefonoEmergencia: string, kmCasaTrabajo: number, sexo: string,
         estadoCivil: string, numeroHijos: number, fechaNacimiento: Date, lugarNacimiento: string, nivelCertificado: string,
         escuela: string, notaAdicional: string, idUsuario: Usuario, nota: string, estado: boolean){
-        this.fotografia = fotografia;
+        
         this.nombreEmpleado = nombreEmpleado;
         this.idCategoria = idCategoria;
         this.direccionTrabajo = direccionTrabajo;

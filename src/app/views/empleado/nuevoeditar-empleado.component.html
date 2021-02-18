@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">
-      <strong>Agregar</strong> Horario de Trabajo
+      <strong>Agregar</strong> Empelado
   </div>
   <div class="card-body">
       <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
@@ -10,12 +10,11 @@
               <div class="input-group mb-3">
                 
                 <div class="custom-file">
-                  <label for="horaL1">Fotografia:</label>
-                  <input type="file" [(ngModel)]="this.empleado.fotografia" class="custom-file-input" name="fotografia" id="fotografia" #imagenInputFile
+                  <input type="file" class="custom-file-input" id="fotografia" #imagenInputFile
                   (change)="onFileChange($event)" accept="image/png, image/jpeg, image/gif">
-                  <label class="custom-file-label" for="imagen">Elige una imagen</label>
+                  <label class="custom-file-label" for="fotografia">Elige una imagen</label>
               </div>
-              <div *ngIf="imagen" class="mt-5">
+              <div *ngIf="fotografia" class="mt-5">
                   <h5>Vista Previa:</h5>
                   <div>
                       <img class="image-thumbnail" style="max-width: 100px" [src]="imagenMin">
