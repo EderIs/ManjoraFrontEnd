@@ -24,7 +24,7 @@ export class UsuarioService {
   }
 
   public detailName(nombreUsuario: string): Observable <Usuario> {
-    return this.HttpClient.get<Usuario>(this.usuarioURL + `detail/${nombreUsuario}`);
+    return this.HttpClient.get<Usuario>(this.usuarioURL + `detailname/${nombreUsuario}`);
   }
 
   public sendEmail(correoE : String):Observable<any>{
@@ -32,7 +32,7 @@ export class UsuarioService {
   }
 
   public save(usuario: Usuario): Observable<any> {
-    return this.HttpClient.post<any>(this.usuarioURL + 'create', usuario);
+    return this.HttpClient.post<any>(this.usuarioURL + 'create',usuario);
   }
 
   public update(id: number, usuario: Usuario): Observable<any> {

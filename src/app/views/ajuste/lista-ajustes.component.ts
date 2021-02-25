@@ -22,10 +22,10 @@ export class ListaAjusteComponent implements OnInit {
     enviarCorreo() {
 
         let txtCorreo = this.element.nativeElement.value;
-        this.usuario = new Usuario("Prueba3", txtCorreo, "1234", new Date(), null, false);
+        this.usuario = new Usuario(null,"Prueba3", txtCorreo, "1234", new Date(), null, false,"");
 
 
-        this.usuarioService.save(this.usuario).subscribe(model => {
+        this.usuarioService.save(null).subscribe(model => {
           
                 alert('Correo Enviado');
 

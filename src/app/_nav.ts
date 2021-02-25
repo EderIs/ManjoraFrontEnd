@@ -9,6 +9,11 @@ export const navItemsUser : INavData[] =[
     name:'Ajustes',
     url: '/ajuste',
     icon: 'icon-speedometer'
+  },
+  {  
+    name:'Calendario',
+    url:'calendario/calendario',
+    icon:'fa fa-calendar'
   }
 ]
 
@@ -114,5 +119,10 @@ children:[
       name:'Ajustes',
       url: '/ajuste',
       icon: 'icon-speedometer'
+    },
+    {  
+      name:'Calendario',
+      url:'calendario/calendario',
+      icon:'fa fa-calendar'
     }  
 ];

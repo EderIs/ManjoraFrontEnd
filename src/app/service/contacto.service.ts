@@ -14,9 +14,17 @@ export class ContactoService {
   public lista(): Observable <Contacto[]> {
     return this.HttpClient.get<Contacto[]>(this.contactoURL + 'list');
   }
+  public listaContactoToCalendario(idCon : number):Observable<Contacto[]>{
+
+    return this.HttpClient.get<Contacto[]>(this.contactoURL+`listContactos/${idCon}`)
+  }
   public listaByNombre(nombre:string):Observable<Contacto[]>{
     return this.HttpClient.get<Contacto[]>(this.contactoURL+`list/${nombre}`);
-    }
+  }
+
+  public detailIdContacto(idUser : number):Observable<number>{
+    return this.HttpClient.get<number>(this.contactoURL+`contactoU/${idUser}`)
+  }
 
   public detail(id: number): Observable <Contacto> {
     return this.HttpClient.get<Contacto>(this.contactoURL + `detail/${id}`);

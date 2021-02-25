@@ -52,7 +52,7 @@ this.router.navigate(['/dashboard']);
 
 },err=>{
 
-alert(err.error.mensaje);
+alert("Datos incorrectos!");
 this.isLogged=false;
 this.isLoginFail=true;
 this.nombreUsuario="";

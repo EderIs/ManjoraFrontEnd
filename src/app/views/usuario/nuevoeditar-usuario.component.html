@@ -3,47 +3,57 @@
 
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="background-color: #20a8d8; color: white;">
                     <strong>Agregar</strong> Usuario
                 </div>
                 <div class="card-body">
-                    <form action="">
+                    <form (ngSubmit)="this.onCreate()" #f="ngForm" novalidate >
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="usuario.nombre"><b>Nombre completo:</b></label>
+                                    <input type="text" [(ngModel)]="this.usuario.nombre" name="usuario.nombre"  placeholder="Nombre del usuario" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="usuario.nombreUsuario"><b>Usuario:</b></label>
+                                    <input type="text" [(ngModel)]="this.usuario.nombreUsuario" name="usuario.nombreUsuario"  placeholder="Usuario" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Nombre:</label>
-                                    <input type="text" placeholder="Usuario" class="form-control">
+                                    <label><b>Correo electronico:</b></label>
+                                    <input type="email" [(ngModel)]="this.usuario.email" name="usuario.email" placeholder="correo electronico" class="form-control" required>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label>Correo electronico:</label>
-                                    <input type="text" placeholder="correo electronico" class="form-control">
+                                    <label><b>Contraseña:</b></label>
+                                    <input type="password" [(ngModel)]="this.usuario.password" name="usuario.password" placeholder="Contraseña" class="form-control" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Contraseña:</label>
-                                    <input type="password" placeholder="Contraseña" class="form-control">
+                                    <label><b>Repetir contraseña:</b></label>
+                                    <input type="password" [(ngModel)]="this.repContrasena" name="repContrasena" placeholder="Repetir contraseña" class="form-control" required>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="col-md-8"><label>Estado:</label></div>
-                                    <div class="col-md-4">
-                                        <input type="radio" placeholder="Contraseña" class="form-control">
-                                    </div>
-
-
+                                <div class="col-md-6">
+                                <div class="clearfix">
+                                    <label><b>Estatus: </b></label>
+                                    <label class="switch switch-label switch-pill switch-success switch-sm float-right">
+                                      <input type="checkbox" [(ngModel)]="this.usuario.estado" name="check" class="switch-input"  checked>
+                                      <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                    </label>
+                                  </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <input type="button" class="btn btn-outline btn-danger" value="Guardar" >
+                                <div class="col-md-6">
+                                    <input type="submit" class="btn btn-outline btn-primary btn-block" [disabled]="f.form.invalid"  value="Guardar" >
+            
                                 </div>
                             </div>
                         </div>
@@ -53,26 +63,20 @@
         </div>
         <div class="col-md-4">
             <div class="card">
-                <div class="card-header">
-                    <strong>Agregar</strong> Usuario
+                <div class="card-header" style="background-color: #20a8d8; color: white;">
+                    <strong>Cargar</strong> Imagen
                 </div>
                 <div class="card-body">
                     <div class="col-md-12">
-                        <img #imagenI src="assets/img/avatars/perfil.png" class="imagenes1 img-avatar"
+                        <img #imagenI src="../../../assets//img/avatars/perfil.png" class="imagenes1 img-avatar"
                          alt="admin@bootstrapmaster.com" title="imagen" />
                     </div>
+                    <br>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-12">
-                                <label >Seleccionar imagen</label>
-                                <input #fileImagen name="cargarImagen" type="file" class="form-control" >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <input type="button" class="btn btn-outline btn-danger" value="Guardar" (click)="cargarImagen()">
+                                <label for="formFileSm" class="form-label"><b>Carga una imagen:</b></label>
+                                <input id="formFileSm" name="cargarImagen" type="file" class="form-control" accept="image/*" (change)="cargarImagen($event)">
                             </div>
                         </div>
                     </div>
