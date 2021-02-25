@@ -15,7 +15,7 @@ export class PaisService {
     return this.HttpClient.get<Pais[]>(this.paisURL + 'list');
   }
 
-  public detail(id: number): Observable <Pais> {
+  public detail(id: string): Observable <Pais> {
     return this.HttpClient.get<Pais>(this.paisURL + `detail/${id}`);
   }
 

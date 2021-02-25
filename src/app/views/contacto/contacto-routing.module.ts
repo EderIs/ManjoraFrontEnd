@@ -112,17 +112,17 @@ const routes: Routes = [
         }
       },
       {
-        path:'estado/agregarEstado',
+        path:'estado/agregarNuevo',
         component: NuevoEditarEstadoComponent,
         data:{
           title:'Estado / Agregar'
         }
       },
       {
-        path:'estado/agregarEstado/:id',
+        path:'estado/editarNuevo/:id',
         component: NuevoEditarEstadoComponent,
         data:{
-          title:'Estado / Agregar'
+          title:'Estado / Editar'
         }
       },
       {
@@ -133,13 +133,13 @@ const routes: Routes = [
         }
       },
       {
-        path:'pais/agregarPais',
+        path:'pais/agregarNuevo',
         component: NuevoEditarPaisComponent,
         data:{
           title:'Pais / Agregar'
         }
       },{
-        path:'pais/editarPais/:id',
+        path:'pais/editarNuevo/:id',
         component: NuevoEditarPaisComponent,
         data:{
           title:'Pais / Editar'

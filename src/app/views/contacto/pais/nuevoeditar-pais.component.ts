@@ -1,79 +1,80 @@
 import { Component, OnInit } from '@angular/core';
-import { Router,ActivatedRoute } from '@angular/router';
-import  {Pais} from '../../../models/pais'
-import  {PaisService} from '../../../service/pais.service'
-import {TokenService} from '../../../service/token.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Pais } from '../../../models/pais'
+import { PaisService } from '../../../service/pais.service'
 
 
 @Component({
   templateUrl: 'nuevoeditar-pais.component.html'
 })
 
-export class NuevoEditarPaisComponent implements OnInit{
+export class NuevoEditarPaisComponent implements OnInit {
 
+  ferm: FormGroup;
+  editMode = false;
+  paises: Pais;
+  pai: Pais = null;
+  id: number = this.activatedRoute.snapshot.params.id;
 
-nombrePais: string = "";
-id : number= this.activatedRouter.snapshot.params.id;
-pais : Pais=null;
-pais1 :string []=[];
-
-
- constructor(
-  private paisService : PaisService,
-  private router: Router,
-  private activatedRouter: ActivatedRoute,
-  private tokeService:TokenService
-  ) {}
-
+  constructor(
+    private paisService: PaisService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
-    if (this.tokeService.getToken()) {
-     
-      this.tokeService.getAuthorities();
+    this.activatedRoute.paramMap.subscribe(paramMap => {
+      if (paramMap.has('id')) {
+        this.editMode = true;
+
+        this.paisService.detail(paramMap.get('id')).subscribe(paises => {
+          this.paises = paises;
+          this.initForm();
+        });
+      }
+      else {
+        this.initForm();
+      }
+    })
+  }
+
+  initForm() {
+    this.ferm = new FormGroup({
+      nombrePais: new FormControl(this.paises ? this.paises.nombrePais : null, {
+        updateOn: 'change',
+        validators: [Validators.required]
+      }),
+    });
+  }
+
+  submit() {
+    if (this.ferm.invalid) {
+      return alert("form inavalido")
     }
-if(this.id!=null){
+    else if (this.id != null) {
+      this.paisService.update(this.id, this.ferm.value).subscribe(
+        data => {
+          this.pai = data;
+          alert('Se actualizo correctamente');
+          this.router.navigate(['/contacto/pais/listarPais']);
+        },
+        err => {
+          console.log(err);
+        });
+    }
+    else {
+      this.paisService.save(this.ferm.value).subscribe(
+        response => {
+          alert('Movimiento exitoso');
+          this.router.navigate(['/contacto/pais/listarPais']);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    }
 
-this.paisService.detail(this.id).subscribe(model=>{
-this.pais=model;
-},
-err=>{
-
-console.log('el error esta aqui'+ err.err.message);
-}
-)
-}
   }
-
-onCreate(): void{
-
-  if(this.pais != null ){
-this.paisService.update(this.pais.id,this.pais).subscribe(model=>{
-
-alert('Se actualizo correctaente, el pais');
-this.router.navigate(['/contacto/pais/listarPais']);
-
-},err=>{
-console.log('Ocurrio un error en '+err.err.message);
-
-})
-}else{
-
-
-  this.pais1.push("0",this.nombrePais);
-  const pais = new Pais(this.pais1);
-  
-  this.paisService.save(pais).subscribe(data=>{
-  {
-  alert('Se guardo correctamente pais');
-  this.router.navigate(['/contacto/pais/listarPais']);
-  }
-  err =>{
-  
-  alert('No se guardo el pais');
-  }
-  })
-  }
-
-}
 
 }

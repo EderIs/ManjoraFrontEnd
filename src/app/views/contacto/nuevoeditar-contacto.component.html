@@ -1,42 +1,207 @@
 <div class="row">
-  <div   class="col s12 m12">
-    <div *ngIf="ferm"  class="card" class="card blue-grey lighten-5">
-      <div  class="card-content">
+  <div class="col s12 m12">
+    <div *ngIf="ferm" class="card" class="card blue-grey lighten-5">
+      <div class="card-content">
         <span class="card-title">{{editMode ? 'Editar' : 'Nuevo'}} Contacto</span>
-        <form [formGroup]="ferm" >
+        <form [formGroup]="ferm">
           <div class="row">
+            <div class="row">
 
-            <div class="input-field col s12">
-              <input type="text" id="nombreContacto" formControlName="nombreContacto">
-              <label for="nombreContacto" [class.active]="ferm.get('nombreContacto').value !== null" >NombreContacto</label>
-              <small class="red-text" *ngIf="ferm.get('nombreContacto').value == null && ferm.get('nombreContacto').touched">
-                Campo Invalido
+              <div class="input-field col s6">
+                <input type="text" id="nombreContacto" formControlName="nombreContacto">
+                <label for="nombreContacto"
+                  [class.active]="ferm.get('nombreContacto').value !== null">NombreContacto</label>
+                <small class="red-text"
+                  *ngIf="ferm.get('nombreContacto').value == null && ferm.get('nombreContacto').touched && ferm.get('nombreContacto').errors?.required">
+                  *Campo Invalido
+                </small>
+                <small class="red-text"
+                  *ngIf="ferm.get('nombreContacto').dirty && ferm.get('nombreContacto').errors?.required">
+                  *Campo no debe estar vacio
+                </small>
+                <small class="red-text" *ngIf="ferm.get('nombreContacto').errors?.pattern">
+                  *El campo solo debe llevar letras
+                </small>
+                <div class="input-field col s6">
+                  <input type="text" id="calle" formControlName="calle">
+                  <label for="calle" [class.active]="ferm.get('calle').value !== null">Calle</label>
+                  <small class="red-text"
+                    *ngIf="ferm.get('calle').value == null && ferm.get('calle').touched && ferm.get('calle').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="red-text" *ngIf="ferm.get('calle').dirty && ferm.get('calle').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="red-text" *ngIf="ferm.get('calle').errors?.pattern">
+                    *El campo solo debe llevar letras
+                  </small>
+                </div>
+                <div class="input-field col s6">
+                  <input type="text" id="calleSecundaria" formControlName="calleSecundaria">
+                  <label for="calleSecundaria"
+                    [class.active]="ferm.get('calleSecundaria').value !== null">calleSecundaria</label>
+                  <small class="red-text"
+                    *ngIf="ferm.get('calleSecundaria').value == null && ferm.get('calleSecundaria').touched && ferm.get('calleSecundaria').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="red-text"
+                    *ngIf="ferm.get('calleSecundaria').dirty && ferm.get('calleSecundaria').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="red-text" *ngIf="ferm.get('calleSecundaria').errors?.pattern">
+                    *El campo solo debe llevar letras
+                  </small>
+                </div>
+                <div class="input-field col s3">
+                  <input type="text" id="ciudad" formControlName="ciudad">
+                  <label for="ciudad" [class.active]="ferm.get('ciudad').value !== null">ciudad</label>
+                  <small class="red-text"
+                    *ngIf="ferm.get('ciudad').value == null && ferm.get('ciudad').touched && ferm.get('ciudad').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="red-text" *ngIf="ferm.get('ciudad').dirty && ferm.get('ciudad').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="red-text" *ngIf="ferm.get('ciudad').errors?.pattern">
+                    *El campo solo debe llevar letras
+                  </small>
+                </div>
+                <div class="input-field col s3">
+                  <input type="text" id="codigoPostal" formControlName="codigoPostal">
+                  <label for="codigoPostal"
+                    [class.active]="ferm.get('codigoPostal').value !== null">codigoPostal</label>
+                  <small class="red-text"
+                    *ngIf="ferm.get('codigoPostal').value == null && ferm.get('codigoPostal').touched && ferm.get('codigoPostal').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="red-text"
+                    *ngIf="ferm.get('codigoPostal').dirty && ferm.get('codigoPostal').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="red-text" *ngIf="ferm.get('codigoPostal').errors?.pattern">
+                    *El campo solo debe llevar numeros y deben ser solo 5
+                  </small>
+                </div>
+                <div class="input-field col s3">
+                  <input type="text" id="nif" formControlName="nif">
+                  <label for="nif" [class.active]="ferm.get('nif').value !== null">Nif</label>
+                  <small class="red-text"
+                    *ngIf="ferm.get('nif').value == null && ferm.get('nif').touched && ferm.get('nif').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="red-text" *ngIf="ferm.get('nif').dirty && ferm.get('nif').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="red-text" *ngIf="ferm.get('nif').errors?.pattern">
+                    *El campo solo debe llevar numeros y deben ser solo 13
+                  </small>
+                </div>
+                <div class="input-field col s3">
+                  <input type="text" id="puestoTrabajo" formControlName="puestoTrabajo">
+                  <label for="puestoTrabajo"
+                    [class.active]="ferm.get('puestoTrabajo').value !== null">puestoTrabajo</label>
+                  <small class="red-text"
+                    *ngIf="ferm.get('puestoTrabajo').value == null && ferm.get('puestoTrabajo').touched && ferm.get('puestoTrabajo').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="red-text"
+                    *ngIf="ferm.get('puestoTrabajo').dirty && ferm.get('puestoTrabajo').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="red-text" *ngIf="ferm.get('puestoTrabajo').errors?.pattern">
+                    *El campo solo debe llevar letras
+                  </small>
+                </div>
+                <div class="input-field col s3">
+                  <input type="text" id="telefono" formControlName="telefono">
+                  <label for="telefono" [class.active]="ferm.get('telefono').value !== null">telefono</label>
+                  <small class="red-text"
+                    *ngIf="ferm.get('telefono').value == null && ferm.get('telefono').touched && ferm.get('telefono').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="red-text" *ngIf="ferm.get('telefono').dirty && ferm.get('telefono').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="red-text" *ngIf="ferm.get('telefono').errors?.pattern">
+                    *El campo solo debe llevar numeros y deben ser solo 10
+                  </small>
+                </div>
+                <div class="input-field col s3">
+                  <input type="text" id="movil" formControlName="movil">
+                  <label for="movil" [class.active]="ferm.get('movil').value !== null">movil</label>
+                  <small class="red-text"
+                    *ngIf="ferm.get('movil').value == null && ferm.get('movil').touched && ferm.get('movil').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="red-text" *ngIf="ferm.get('movil').dirty && ferm.get('movil').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="red-text" *ngIf="ferm.get('movil').errors?.pattern">
+                    *El campo solo debe llevar numeros y deben ser solo 10
+                  </small>
+                </div>
+                <div class="input-field col s3">
+                  <input type="text" id="correoElectronico" formControlName="correoElectronico">
+                  <label for="correoElectronico"
+                    [class.active]="ferm.get('correoElectronico').value !== null">correoElectronico</label>
+                  <small class="red-text"
+                    *ngIf="ferm.get('correoElectronico').value == null && ferm.get('correoElectronico').touched && ferm.get('correoElectronico').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="red-text"
+                    *ngIf="ferm.get('correoElectronico').dirty && ferm.get('correoElectronico').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="red-text" *ngIf="ferm.get('correoElectronico').errors?.pattern">
+                    *Escribe un correo valido
+                  </small>
+                </div>
+                <div class="input-field col s3">
+                  <input type="text" id="sitioWeb" formControlName="sitioWeb">
+                  <label for="sitioWeb" [class.active]="ferm.get('sitioWeb').value !== null">sitioWeb</label>
+                  <small class="red-text"
+                    *ngIf="ferm.get('sitioWeb').value == null && ferm.get('correoElectronico').touched && ferm.get('sitioWeb').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="red-text" *ngIf="ferm.get('sitioWeb').dirty && ferm.get('sitioWeb').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="red-text" *ngIf="ferm.get('sitioWeb').errors?.pattern">
+                    *Escribe una direccion valida
+                  </small>
+                </div>
+              </div>
+           
+            </div>
+            <div class="input-field col s6">
+              <input type="text" id="notas" formControlName="notas">
+              <label for="notas" [class.active]="ferm.get('notas').value !== null">notas</label>
+              <small class="red-text"
+                *ngIf="ferm.get('notas').value == null && ferm.get('notas').touched && ferm.get('notas').errors?.required">
+                *Campo Invalido
+              </small>
+              <small class="red-text" *ngIf="ferm.get('notas').dirty && ferm.get('notas').errors?.required">
+                *Campo no debe estar vacio
               </small>
             </div>
-
-            <div class="input-field col s12">
-              <input type="text" id="calle" formControlName="calle">
-              <label for="calle" [class.active]="ferm.get('calle').value !== null">Calle</label>
-              <small class="red-text" *ngIf="ferm.get('calle').value == null && ferm.get('calle').touched" >
-                Campo Invalido
-              </small>
+            <div class="row">
+              <div class="input-field col s6" formGroupName="estado">
+                <label for="estado" [class.active]="ferm.get('estado').value !== null">Estado</label>
+                <select class="form-control" name="id" formControlName="id">
+                  <option value=null selected *ngIf="estado.id == null" hidden>Seleccione...</option>
+                  <option value={estado.id}} selected *ngIf="estado.id != null" hidden>{{estado.nombreEstado}}</option>
+                  <option *ngFor="let estado of estados" value={{estado.id}}>{{estado.nombreEstado}}</option>
+                </select>
+              </div>
+              <div class="input-field col s6" formGroupName="titulo">
+                <label for="titulo" [class.active]="ferm.get('titulo').value !== null">titulo</label>
+                <select class="form-control" name="id" formControlName="id">
+                  <option value=null selected *ngIf="titulo.id == null" hidden>Seleccione...</option>
+                  <option value={titulo.id}} selected *ngIf="titulo.id != null" hidden>{{titulo.titulo}}</option>
+                  <option *ngFor="let titulo of titulos" value={{titulo.id}}>{{titulo.titulo}}</option>
+                </select>
+              </div>
             </div>
-
-             <!-- <div class="input-field col s12"> 
-                <label for="titulo" [class.active]="ferm.get('titulo').value !== null">Seleccionar Titulo</label> 
-              <select class="form-control" formControlName="titulo">
-              <option *ngFor="let titulo of titulos" value={{this.titulo.id}}>{{titulo.titulo}}</option>
-              
-            </select>
-            </div>  -->  
-             <div class="input-field col s12" formGroupName="estado"> 
-              <label for="estado" [class.active]="ferm.get('estado').value !== null">Estado</label> 
-            <select class="form-control" name="id" formControlName="id"  >
-              <option value=null selected *ngIf="estado.id == null" hidden>Seleccione...</option>
-              <option value={estado.id}} selected *ngIf="estado.id != null" hidden>{{estado.nombreEstado}}</option>
-              <option *ngFor="let estado of estados" value={{estado.id}}>{{estado.nombreEstado}}</option>    
-              </select>
-          </div> 
           </div>
         </form>
       </div>
@@ -52,163 +217,3 @@
     </div>
   </div>
 </div>
-
-
-
-<!-- <div class="card">
-  <div class="card-header">
-      <strong>Agregar</strong> Contactos
-  </div>
-  <div class="card-body">
-      <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
-          <div class="form-group">
-              <div class="form-row">
-
-                  <div class="col-md-4">
-                      <label for="nombreContacto">Nombre Contato:</label>
-                      <input type="text" *ngIf="this.contacto != null" name="contacto.nombreContacto"
-                          [(ngModel)]="this.contacto.nombreContacto" class="form-control" placeholder="Nombre Contacto" required>
-                  </div>
-                  
-                  <div class="form-group">
-                    <label for="file">subir Imagen:</label>
-                    <input type="file"  class="form-control" accept="image/*" (change)="onSelectFile($event)" style="height: 100%">
-                </div>
-
-                  <div class="col-md-4">
-                      <label for="nombreContacto">Calle</label>
-                      <input type="text" *ngIf="this.contacto != null" name="contacto.calle" [(ngModel)]="contacto.calle"
-                          class="form-control" placeholder="Calle" required>
-                  </div>
-                  
-              </div>
-          </div>
-
-          <div class="form-group">
-            <div class="form-row">      
-                <div class="col-md-4">
-                  <label>Seleccione un Titulo</label>
-                  <select class="form-control" [(ngModel)]="this.titulo1"
-                      [ngModelOptions]="{standalone: true}">
-                      <option  *ngIf="this.contacto.titulo==null" value="0" >--Selecciona un Titulo--</option>
-                      <option *ngIf="this.contacto.titulo!=null" hidden="true" value=0 >{{contacto.titulo.titulo}}</option>
-                      <option *ngFor="let titulo of titulos" value={{this.titulo.id}}>{{titulo.titulo}}</option>
-                  </select>
-              </div>
-
-              
-              <div class="col-md-4">
-                <label for="nombreContacto">Calle Secundaria:</label>
-                <input type="text" *ngIf="this.contacto != null" name="contacto.calleSecundaria"
-                    [(ngModel)]="this.contacto.calleSecundaria" class="form-control" placeholder="calle Secundaria" required>
-            </div>
-                 
-            </div>
-        </div>
-
-        <div class="form-group">
-          <div class="form-row">
-
-            <div class="col-md-4">
-              <label for="nombreContacto">Puesto de trabajo</label>
-              <input type="text" *ngIf="this.contacto != null" name="contacto.puestoTrabajo" [(ngModel)]="contacto.puestoTrabajo"
-                  class="form-control" placeholder="Puesto de Trabajo" required>
-          </div>
-              <div class="col-md-4">
-                  <label for="nombreContacto">Ciudad</label>
-                  <input type="text" *ngIf="this.contacto != null" name="contacto.ciudad"
-                      [(ngModel)]="this.contacto.ciudad" class="form-control" placeholder="Nombre ciudad" required>
-              </div>                    
-          </div>
-      </div>
-
-
-      <div class="form-group">
-        <div class="form-row"> 
-          
-          <div class="col-md-4">
-            <label for="nombreContacto">Correo Electronico:</label>
-            <input type="text" *ngIf="this.contacto != null" name="contacto.correoElectronico"
-                [(ngModel)]="this.contacto.correoElectronico" class="form-control" placeholder="correo Electronico" required>
-        </div>
-          
-
-            <div class="col-md-4">
-              <label>Seleccione un Estado</label>
-              <select class="form-control" [(ngModel)]="this.estado1"
-                  [ngModelOptions]="{standalone: true}">
-                  <option  *ngIf="this.contacto.estado==null" value="0" >--Selecciona un Estado--</option>
-                  <option *ngIf="this.contacto.estado!=null" hidden="true" value=0 >{{contacto.estado.nombreEstado}}</option>
-                  <option *ngFor="let estado of estados" value={{this.estado.id}}>{{estado.nombreEstado}}</option>
-              </select>
-          </div>
-
-          
-          
-             
-        </div>
-    </div>
-
-
-
-      <div class="form-group">
-        <div class="form-row">
-
-          <div class="col-md-4">
-            <label for="nombreContacto">Telefono</label>
-            <input type="text" *ngIf="this.contacto != null" name="contacto.telefono" [(ngModel)]="contacto.telefono"
-                class="form-control" placeholder="Telefono" required>
-        </div>
-            <div class="col-md-4">
-                <label for="nombreContacto">Codigo Postal:</label>
-                <input type="text" *ngIf="this.contacto != null" name="contacto.codigoPostal"
-                    [(ngModel)]="this.contacto.codigoPostal" class="form-control" placeholder="Codigo Postal" required>
-            </div>
-            
-        </div>
-    </div>
-
-    <div class="form-group">
-      <div class="form-row">
-
-        <div class="col-md-4">
-          <label for="nombreContacto">Movil</label>
-          <input type="text" *ngIf="this.contacto != null" name="contacto.movil" [(ngModel)]="contacto.movil"
-              class="form-control" placeholder="Movil" required>
-      </div>
-          <div class="col-md-4">
-              <label for="nombreContacto">NIF:</label>
-              <input type="text" *ngIf="this.contacto != null" name="contacto.nif"
-                  [(ngModel)]="this.contacto.nif" class="form-control" placeholder="nif" required>
-          </div>
-          
-      </div>
-  </div>
-  <div class="form-group">
-    <div class="form-row"> 
-      <div class="col-md-4">     
-        <label for="nombreContacto">Sitio Web</label>
-        <input type="text" *ngIf="this.contacto != null" name="contacto.sitioWeb" [(ngModel)]="contacto.sitioWeb"
-            class="form-control" placeholder="sitio Web" required>
-    </div>
-        
-      </div>
-</div>
-<div class="form-group">
-  <div class="form-row"> 
-      <div class="col-md-4">
-          <label for="nombreContacto">Notas:</label>
-          <input type="text" *ngIf="this.contacto != null" name="contacto.notas"
-              [(ngModel)]="this.contacto.notas" class="form-control" placeholder="notas" required>
-      </div>
-    </div>
-</div>
-        
-          <div class="card-footer">
-              <button type="submit" class="btn btn-sm btn-primary"> Agregar</button>
-              <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>Cancelar</button>
-          </div>
-      </form>
-  </div>
-
-</div> -->

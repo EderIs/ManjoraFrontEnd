@@ -19,7 +19,7 @@ export class EstadoService {
     return this.HttpClient.get<Estado[]>(this.estadoURL+`list/${nombreEstado}`);
     }
 
-  public detail(id: number): Observable <Estado> {
+  public detail(id: string): Observable <Estado> {
     return this.HttpClient.get<Estado>(this.estadoURL + `detail/${id}`);
   }
 

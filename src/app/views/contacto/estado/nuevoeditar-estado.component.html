@@ -1,36 +1,47 @@
-  <div class="card">
-    <div class="card-header">
-        <strong>Agregar</strong> Estados
-    </div>
-    <div class="card-body">
-        <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
-          <div class="form-group">
-                  <div class="col-md-12">
-                    <label>Estado:</label>
-                    <input type="text" id="nombreEstado" name="nombreEstado" [(ngModel)]="this.estado.nombreEstado" class="form-control" placeholder="Nombre del Estado" 
-                    required>
-                  </div>
-                  <div class="form-row"></div>
-                  <div class="col-md-12">
-                    <label>Codigo:</label>
-                    <input type="number" id="codigo" name="codigo" [(ngModel)]="this.estado.codigo" class="form-control" placeholder="0" 
-                    required>
-                  </div>
-                  
-              <div class="col-md-12">
-                <label>Seleccione un País...</label>
-                <select class="form-control" [(ngModel)]="this.pais1" [ngModelOptions]="{standalone: true}">
-                  <option  *ngIf="this.estado.pais==null" value=0 >Seleccione un Pais...</option>
-                  <option *ngIf="this.estado.pais!=null" hidden="true" value={{this.estado.pais.id}} >{{this.estado.pais.nombrePais}}</option>
-                  <option *ngFor="let pais of paises" value={{this.pais.id}}  >{{pais.nombrePais}}</option>
-                </select>
-                </div>
+<div class="row">
+  <div class="col s12 m12">
+    <div *ngIf="ferm" class="card" class="card blue-grey lighten-5">
+      <div class="card-content">
+        <span class="card-title">{{editMode ? 'Editar' : 'Nuevo'}} Estado</span>
+        <form [formGroup]="ferm">
+          <div class="row">
+              <div class="input-field col s6">
+                <input type="text" id="nombreEstado" formControlName="nombreEstado">
+                <label for="nombreEstado" [class.active]="ferm.get('nombreEstado').value !== null">nombreEstado</label>
+                <small class="red-text"
+                  *ngIf="ferm.get('nombreEstado').value == null && ferm.get('nombreEstado').touched">
+                  Campo Invalido
+                </small>
               </div>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-sm btn-primary"> Guardar</button>
-                <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>Cancelar</button>
-            </div>
+              <div class="input-field col s6">
+                <input type="text" id="codigo" formControlName="codigo">
+                <label for="codigo" [class.active]="ferm.get('codigo').value !== null">codigo</label>
+                <small class="red-text" *ngIf="ferm.get('codigo').value == null && ferm.get('codigo').touched">
+                  Campo Invalido
+                </small>
+              </div>
+              
+                <div class="input-field col s6" formGroupName="pais">
+                  <label for="pais" [class.active]="ferm.get('pais').value !== null">Pais</label>
+                  <select class="form-control" name="id" formControlName="id">
+                    <option value=null selected *ngIf="pais.id == null" hidden>Seleccione...</option>
+                    <option value={pais.id}} selected *ngIf="pais.id != null" hidden>{{pais.nombrePais}}</option>
+                    <option *ngFor="let pais of paises" value={{pais.id}}>{{pais.nombrePais}}</option>
+                  </select>
+                </div>
+              
+          </div>
         </form>
+      </div>
+      <div class="card-action d-flex justify-content-flex-end">
+        <div class="p-1">
+          <button class="btn waves-effect cyan" routerLink="/contacto/estado/listarEstado">Cancel</button>
+        </div>
+        <div class="p-1">
+          <button class="btn waves-effect green" [disabled]="ferm.invalid" (click)="submit()">
+            {{editMode ? 'Guardar Cambios' : 'Agregar Contacto'}}<i class="material-icons right">send</i></button>
+        </div>
+      </div>
     </div>
-
+  </div>
 </div>

@@ -1,26 +1,29 @@
-
-<div class="card">
-    <div class="card-header">
-        <strong>Agregar</strong> Pais
+<div class="row">
+    <div class="col s12 m12">
+      <div *ngIf="ferm" class="card" class="card blue-grey lighten-5">
+        <div class="card-content">
+          <span class="card-title">{{editMode ? 'Editar' : 'Nuevo'}} Pais</span>
+          <form [formGroup]="ferm">
+            <div class="row">
+              <div class="input-field col s12">
+                <input type="text" id="nombrePais" formControlName="nombrePais">
+                <label for="nombrePais" [class.active]="ferm.get('nombrePais').value !== null">nombrePais</label>
+                <small class="red-text" *ngIf="ferm.get('nombrePais').value == null && ferm.get('nombrePais').touched">
+                  Campo Invalido
+                </small>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card-action d-flex justify-content-flex-end">
+          <div class="p-1">
+            <button class="btn waves-effect cyan" routerLink="/contacto/pais/listarPais">Cancel</button>
+          </div>
+          <div class="p-1">
+            <button class="btn waves-effect green" [disabled]="ferm.invalid" (click)="submit()">
+              {{editMode ? 'Guardar Cambios' : 'Agregar Titulo'}}<i class="material-icons right">send</i></button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="card-body">
-        <form (ngSubmit)="onCreate()" novalidate #f="ngForm" >
-
-            <div class="form-group">
-                <label for="nombreContacto">Pais</label>
-                <input type="text" *ngIf="this.pais != null" minlength="4" maxlength="30" name="pais.nombrePais" [(ngModel)]="pais.nombrePais" class="form-control" placeholder="Pais" 
-                required>
-
-                <input type="text" *ngIf="this.pais == null" name="nombrePais" [(ngModel)]="nombrePais" class="form-control" placeholder="Pais" 
-                required>
-            </div>
-
-             <div class="card-footer">
-                <button type="submit" class="btn btn-sm btn-primary" [disabled]="!f.valid" > Agregar</button>
-                <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
-            </div>
-
-    </form>
-</div>
-
-</div>
+  </div>

@@ -1,63 +1,43 @@
-import { Component, OnInit } from '@angular/core';
-import  {PaisService} from '../../../service/pais.service';
-import  {Pais} from '../../../models/pais';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { PaisService } from '../../../service/pais.service';
+import { Pais } from '../../../models/pais';
+import { Subject } from 'rxjs';
+
 @Component({
   templateUrl: 'lista-pais.component.html'
 })
 
-export class ListaPaisComponent implements OnInit{
-  
-paises : Pais[]= [];
-busqueda: string="";
+export class ListaPaisComponent implements OnInit, OnDestroy {
 
-  constructor(private paisService : PaisService){}
+  paises: Pais[] = [];
+  dtTrigger = new Subject();
 
-  ngOnInit(): void {
-      this.cargarPais();    
-  }
-  cargarPais(): void{
-    this.paisService.lista().subscribe(
-      data => {
-        this.paises = data;
-      },
-      err =>{
-        console.log(err);
-      }
-    )
+  constructor(
+    private paisService: PaisService
+  ) { }
+
+  ngOnInit() {
+    this.paisService.lista().subscribe(paises => {
+      this.paises = paises;
+      this.dtTrigger.next();
+    });
+    this.paisService.lista().subscribe();
   }
 
-  onSearch(){
-    if(this.busqueda != " "){
-      this.paisService.listaByNombre(this.busqueda).subscribe(model=>{
-      this.paises=model;
-      },err=>{
-        alert('No existen estados');
-      })
-    }else{
-      alert('No se realizo la busqueda correctamente');
+  delete(id: number) {
+    try {
+      this.paisService.delete(id).subscribe(res => {
+        this.paises = this.paises.filter(pais => pais.id !== res.id);
+        alert("registro borrado!!")
+      });
+    } catch (error) {
+      alert("error al eliminar")
+      console.error(error);
     }
+
   }
 
-delete(id:number){
-
-if(id > 0){
-
-  this.paisService.delete(id).subscribe(model=>{
-alert('Se elimino el registro');
-this.cargarPais();
-
-  },err=>{
-
-alert("No se pudo eliminar Pais");
-console.log(err.error.mensaje);
-
-  })
-
-}else{
-alert('no hay numero');
-}
-
-
-}
-
+  ngOnDestroy() {
+    this.dtTrigger.unsubscribe()
+  }
 }
