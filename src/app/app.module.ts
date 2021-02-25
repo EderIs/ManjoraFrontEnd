@@ -11,8 +11,6 @@ import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular
 import {interceptorProvider} from './interceptors/prod-interceptor.service';
 
 
-
-
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -50,6 +48,7 @@ import { AppRoutingModule } from './app.routing';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
+import { NuevoEditarUsuarioComponent } from './views/usuario/nuevoeditar-usuario.component';
 
 @NgModule({
   imports: [
@@ -70,7 +69,6 @@ import { ChartsModule } from 'ng2-charts';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule
-   
   ],
   declarations: [
     AppComponent,

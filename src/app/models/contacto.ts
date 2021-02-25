@@ -27,7 +27,7 @@ export class Contacto {
     referenciaInterna: string;
     
 
-    /* constructor(
+     constructor(
         nombreContacto: string,
         tipoContacto: boolean,
         fotografia: string,
@@ -84,6 +84,6 @@ export class Contacto {
             
             this.titulo=titulo;
             }
- */
+ 
 
 }

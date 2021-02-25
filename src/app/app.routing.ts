@@ -94,6 +94,10 @@ export const routes: Routes = [
       {
         path: 'widgets',
         loadChildren: () => import('./views/widgets/widgets.module').then(m => m.WidgetsModule)
+      },
+      {
+        path:'calendario',
+        loadChildren: () => import('./views/calendario/calendario.module').then(c => c.EmpleadoModule)
       }
     ]
   },

@@ -1,5 +1,6 @@
 export class Usuario {
     id?: number;
+    nombre: String;
     nombreUsuario: string;
     email: string;
     password: string;
@@ -7,15 +8,18 @@ export class Usuario {
     ultimoAcceso: Date;
     estado: boolean;
     authorities: string[];
+    pathImagen: String;
 
-
-    constructor(nombreUsuario: string, email: string, password: string, fechaCreacion: Date, ultimoAcceso: Date, estado: boolean) {
+    constructor(nombre: String, nombreUsuario: string, email: string, password: string, fechaCreacion: Date, ultimoAcceso: Date,
+        estado: boolean, nombreImagen: String) {
+        this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.password = password;
         this.fechaCreacion = fechaCreacion;
         this.ultimoAcceso = ultimoAcceso;
         this.estado = estado;
+        this.pathImagen = nombreImagen;
     }
 
     public setNombreUsuario(nombreUsuario: string): void {

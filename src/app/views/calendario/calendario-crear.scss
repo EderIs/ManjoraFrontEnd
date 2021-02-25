@@ -1,0 +1,63 @@
+
+table td {
+
+    height: 70px; 
+    border: 1px solid black;
+
+}
+
+.numero{
+
+    position: static;
+    margin-left: 0px;
+    margin-top: 0px;
+    padding: 0px; 
+    left: 70px;
+}
+.nombres{
+    font-size: 10px;
+}
+.semana{
+    background-color: rgb(252, 252, 253);
+    height: 70px; width: 20px;
+}
+
+.iconos{
+
+left: -25px;
+
+}
+.color{
+    background-color: #3885A3;
+    color: white;
+    text-decoration-line: underline overline;
+}
+.colorN {
+
+    background-color: #e4e5e6;
+    color:black;
+}
+
+.non-selectable {
+pointer-events: none;
+}
+
+.menuC{
+    overflow: scroll;
+    overflow-x: hidden;
+     max-height: 410px;
+}
+
+
+#barraC {
+    background-color: #3885A3;
+color: white;
+}
+
+.mouse{
+    cursor: pointer;
+    -moz-user-select: none; 
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none; 
+}

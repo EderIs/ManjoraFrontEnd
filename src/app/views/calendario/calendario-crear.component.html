@@ -1,0 +1,152 @@
+<div class="row">
+<div class="col-lg-8">
+  <table class="table table-responsive-sm table-outline mb-0">
+    <thead class="thead-light">
+      <tr>
+        <th id="barraC" class="text-center" colspan="7">
+          <i class="fa fa-arrow-circle-left fa-lg" (click)="this.modificatedDate('a')"></i>
+          &nbsp;<span>{{this.fecha}}</span>&nbsp;<i class="fa fa-arrow-circle-right fa-lg" (click)="this.modificatedDate('d')"></i></th>
+      </tr>
+      <tr>
+        <th class="text-center" scope="col" >Dom.</th>
+        <th class="text-center" scope="col">Lun.</th>
+        <th class="text-center" scope="col">Mar.</th>
+        <th class="text-center" scope="col">Mier.</th>
+        <th class="text-center" scope="col">Juev.</th>
+        <th class="text-center" scope="col">Vier.</th>
+        <th class="text-center" scope="col">Sab.</th>
+      </tr>
+    </thead>
+    <tbody class="mouse">
+     <tr *ngFor="let dias of this.getSem1">
+      <td class="text-center" id="{{dias.Sunday}}" [ngClass]="{'color':dias.Sunday.length > 3, 'colorN':dias.Sunday.length < 3}" (click)="this.getDate($event)"><span class = "non-selectable">{{dias.Sunday}}</span></td> 
+      <td class="text-center" id="{{dias.Monday}}" [ngClass]="{'color':dias.Monday.length > 3, 'colorN':dias.Monday.length < 3}" (click)="this.getDate($event)" ><span class = "non-selectable">{{dias.Monday}}</span></td>
+      <td class="text-center" id="{{dias.Tuesday}}" [ngClass]="{'color':dias.Tuesday.length > 3, 'colorN':dias.Tuesday.length < 3}" (click)="this.getDate($event)"><span class = "non-selectable">{{dias.Tuesday}}</span></td>
+      <td class="text-center" id="{{dias.Wednesday}}" [ngClass]="{'color':dias.Wednesday.length > 3, 'colorN':dias.Wednesday.length < 3}" (click)="this.getDate($event)"><span class = "non-selectable">{{dias.Wednesday}}</span></td>
+      <td class="text-center" id="{{dias.Thursday}}" [ngClass]="{'color':dias.Thursday.length > 3, 'colorN':dias.Thursday.length < 3}" (click)="this.getDate($event)"><span class = "non-selectable">{{dias.Thursday}}</span></td>
+      <td class="text-center" id="{{dias.Friday}}" [ngClass]="{'color':dias.Friday.length > 3, 'colorN':dias.Friday.length < 3}" (click)="this.getDate($event)"><span class = "non-selectable">{{dias.Friday}}</span></td>
+      <td class="text-center" id="{{dias.Saturday}}"  [ngClass]="{'color':dias.Saturday.length > 3, 'colorN':dias.Saturday.length < 3}" (click)="this.getDate($event)"><span class = "non-selectable">{{dias.Saturday}}</span></td> 
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="col-sm-12 col-lg-4">
+  <div class="brand-card">
+    <div class="brand-card-header" style="background-color: #3885A3;">
+      <i class="fa fa-calendar">
+          <a>Eventos del dia</a>
+      </i>
+      <div class="chart-wrapper">
+        <canvas baseChart class="chart"
+        ></canvas>
+      </div>
+    </div>
+    <div class="brand-card-body menuC">
+      <div class="form-group">
+      <div *ngIf="this.eventos.length >= 1">
+        <div class="list-group-item list-group-item-accent-danger list-group-item-divider" *ngFor="let evento of this.eventos">
+          <div>{{this.evento.fecha}}
+            <strong>{{this.evento.resumen}}</strong>
+          </div>
+          <small class="text-muted mr-3">
+            <i class="icon-calendar"></i> {{this.evento.horaInicio}} - {{this.evento.horaFinal}}</small>
+          <small class="text-muted">
+            <i class="fa fa-users"></i> Integrantes: </small>
+          <div class="avatars-stack mt-2">
+            <div class="nombres" *ngFor="let contacto of this.evento.contactos">
+              <strong>{{this.contacto.nombreContacto}}</strong>
+            </div>
+          </div>
+          <div>
+            <input type="button" value="Editar" class="btn btn-info  btn-sm" data-toggle="modal" (click)="this.getCalearioById(this.evento.id)">
+            <input type="button" value="Eliminar" class="btn btn-danger  btn-sm" (click)="this.deleteCalendario(this.evento.id)">
+          </div>
+        </div>
+      </div>
+      <div *ngIf="this.eventos.length <= 0">
+        <div class="col-md-12">
+          <span class="badge badge-pill badge-danger">Sin eventos...</span> 
+          </div>      
+      </div>
+    </div>
+    </div>
+    <div *ngIf="this.eventos.length >=1" class="card-footer">
+      <div class="col-md-12">
+        <div class="mx-auto">
+          <button class="btn btn-info" (click)="this.getCalendarioNewFecha(this.eventos[0].fecha)">Crear en esta fecha</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Inicio de Modal -->
+
+<div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{this.calendarioBase?.resumen}}</h4>
+        <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form  id="formCal" (ngSubmit)="onCreate()"  novalidate autocomplete="off">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Resumen:</label>
+              <input type="text" name="resumen" class="form-control" [(ngModel)]="this.calendarioBase.resumen" placeholder="Resumen">    
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="fecha">Fecha:</label>
+            <input type="date" name="fecha" id="fecha" class="form-control" [ngModel]="this.calendarioBase?.fecha | date:'yyyy-MM-dd'" readonly>
+          </div>
+          </div>
+          <div class="col-md-6">
+          <div class="form-group">
+          <label for="time1">Hora Inicio:</label>
+          <input type="time"  step="1"  name="time1" class="form-control" [(ngModel)]="this.calendarioBase.horaInicio" onkeydown="return false"> 
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Hora Final:</label>
+            <input type="time" step="1" name="timef" class="form-control" [(ngModel)]="this.calendarioBase.horaFinal" onkeydown="return false" >
+          </div>
+        </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+           <div class="form-group">
+            <label>Seleccione un Contacto: </label>
+            <select id="ddlContacto" class="form-control" name="contactos"  selected="0"
+            (change)="this.seleccionarContacto($event)">
+                <option value="0" >--Selecciona un Contacto--</option>
+                 <option *ngFor="let cont of this.contactos" value={{cont.id}} >{{cont.nombreContacto}}</option> 
+            </select>
+          </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Contactos seleccionados: </label>
+              
+              <a class="btn" style="font-size: 12px;" *ngFor="let contactoN of this.contactosSel | keyvalue;" id="{{contactoN.key}}">
+                <div id="{{contactoN.key}}" (click)="this.editarElementos(contactoN.key)" >
+                <span class="badge badge-pill badge-danger" >X</span> &nbsp;{{contactoN.value}}</div></a>                      
+          </div>
+          </div>
+        </div>
+      </div>
+    </form>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="largeModal.hide()">Cancelar</button>
+        <button type="submit" class="btn btn-primary" form="formCal">Guardar Fecha</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
