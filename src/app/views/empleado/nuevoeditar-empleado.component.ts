@@ -62,7 +62,7 @@ export class NuevoEditarEmpleadoComponent implements OnInit, OnDestroy{
     ) { }
   
   ngOnInit(): void {
-    this.cargarContacto();
+    //this.cargarContacto();
     this.cargarPuesto();
     //this.cargarResponsable();
     this.cargarHorasLab();
@@ -224,7 +224,7 @@ export class NuevoEditarEmpleadoComponent implements OnInit, OnDestroy{
         }),
         
       }),
-             
+             /*
       direccionTrabajo: new FormGroup({
         id: new FormControl(this.empleado ? this.empleado.direccionTrabajo: null,{
           updateOn: 'change',
@@ -232,6 +232,7 @@ export class NuevoEditarEmpleadoComponent implements OnInit, OnDestroy{
         }),
         
          }),
+         */
 /*
             responsable: new FormGroup({
               id: new FormControl(this.empleado ? this.empleado.idResponsable.id: null,{
@@ -249,7 +250,7 @@ export class NuevoEditarEmpleadoComponent implements OnInit, OnDestroy{
 */                   
     });
   }
-
+/*
   cargarContacto(): void {
     this.contactoService.lista().subscribe(
       data => {
@@ -260,7 +261,7 @@ export class NuevoEditarEmpleadoComponent implements OnInit, OnDestroy{
       }
     );
   }
-
+*/
   cargarPuesto(): void {
     this.puestoService.fetchPuestos().subscribe(
       data => {
