@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
 import { HoraLaboral } from '../../../models/horaLaboral';
 import { HorarioTrabajo } from '../../../models/horarioTrabajo';
@@ -11,45 +12,92 @@ import { HorarioTrapService } from '../../../service/horario-trap.service';
 })
 
 export class NuevoEditarHorarioTrabajoComponent implements OnInit{
-  HorasL: HoraLaboral[] = [];
-  horarioT: HorarioTrabajo = null;
-  horaL : string [] =[];
-  horaL1 : number = 0; 
-  id: number = this.activatedRoute.snapshot.params.id;
+  form: FormGroup;
+  editMode=false;
+  submitted=false;
+  horarioTrab:HorarioTrabajo = null;
+
+  horasLaborales: HoraLaboral[] = [];
+  horaL: string[] = [];
   
-  
+ id: number = this.activatedRoute.snapshot.params.id;
+
   constructor(
-    private horarioLabService: HorarioLabService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private horarioTrabService: HorarioTrapService
+    private horaLabService: HorarioLabService,
+    private horaTrabService: HorarioTrapService,
     ) { }
   
   ngOnInit(): void {
-    this.cargarHorarioL();
-    if (this.id != null){
-      this.horarioTrabService.detail(this.id).subscribe(
-        data => {
-          this.horarioT = data;
-          console.log(this.horarioT);
-          this.horaL1 = data.horasLaborales.id;
-        },
-        err => {
-          console.log(err);
-         
-        }
-      );
-      this.horarioT = new HorarioTrabajo(this.horaL);
-    }
-    else{
-      this.horarioT = new HorarioTrabajo(this.horaL);
-    }
+    this.cargarHorasL();
+    this.activatedRoute.paramMap.subscribe(paramMap =>{
+      if (paramMap.has('id')) {
+        this.editMode=true;
+        const id = paramMap.get('id')
+        console.log(id);
+        this.horaTrabService.detail(parseInt(paramMap.get('id'))).subscribe(horarioTrab =>{
+          this.horarioTrab = horarioTrab;
+          this.initForm();
+        });
+      }else{
+        this.horarioTrab = new HorarioTrabajo();
+        this.initForm();
+      }
+    })
   }
 
-  cargarHorarioL(): void {
-    this.horarioLabService.lista().subscribe(
+  initForm(){
+    this.form = new FormGroup({
+      nombreHorariosT: new FormControl(this.horarioTrab ? this.horarioTrab.nombreHorariosT : null, {
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$')]
+      }),
+
+      diaSemana: new FormControl(this.horarioTrab ? this.horarioTrab.diaSemana: null,{
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$')]
+      }),
+
+      trabajarDesde: new FormControl(this.horarioTrab ? this.horarioTrab.diaSemana: null,{
+        updateOn: 'change',
+        validators: [Validators.required]
+      }),
+
+      trabajarHasta: new FormControl(this.horarioTrab ? this.horarioTrab.diaSemana: null,{
+        updateOn: 'change',
+        validators: [Validators.required]
+      }),
+
+      fechaInicio: new FormControl(this.horarioTrab ? this.horarioTrab.diaSemana: null,{
+        updateOn: 'change',
+        validators: [Validators.required]
+      }),
+
+      fechaFinalizacion: new FormControl(this.horarioTrab ? this.horarioTrab.diaSemana: null,{
+        updateOn: 'change',
+        validators: [Validators.required]
+      }),
+
+      periodoDia: new FormControl(this.horarioTrab ? this.horarioTrab.diaSemana: null,{
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$')]
+      }),
+
+      horasLaborales: new FormGroup({
+        id: new FormControl(this.horarioTrab ? this.horarioTrab.horasLaborales: null,{
+          updateOn: 'change',
+          validators: [Validators.required]
+        }),
+        
+      }),
+    });
+  }
+
+  cargarHorasL(): void {
+    this.horaLabService.lista().subscribe(
       data => {
-        this.HorasL = data;
+        this.horasLaborales = data;
       },
       err => {
         console.log(err);
@@ -57,34 +105,34 @@ export class NuevoEditarHorarioTrabajoComponent implements OnInit{
     );
   }
 
-  onCreate(): void {
-    this.horaL.push(this.horaL1.toString(),"",null);
-    if(this.id!=null){
-      this.horarioT.horasLaborales.id = this.horaL1;
-      this.horarioTrabService.update(this.id, this.horarioT).subscribe(
+  submit(){
+    if (this.form.invalid) {
+      return alert("form inavalido")
+    }
+    else if (this.id != null) {
+            this.horaTrabService.update(this.id,this.form.value).subscribe(
         data => {
-          this.horarioT = data;
-          console.log(this.horarioT);
+          this.horarioTrab = data;
+          alert('Se actualizo correctamente');
+          this.router.navigate(['/empleado/puesto/listarPuesto']);
         },
-          err => {
-            console.log(err);
-            console.log(this.horarioT);
-            });
-    }
-    else{
-    this.horarioT.setHoraLaboral(new HoraLaboral(this.horaL));
-    this.horarioTrabService.save(this.horarioT).subscribe(
-      response => {
-        console.log(this.horarioT);
-       alert('Se inserto correctamente');
+        err => { 
+          console.log(err);
+        });
 
-      },
-      error =>{
-        console.log(error);
-      }
-    );
     }
-    this.router.navigate(['/empleado/horarioT/listarHorarioT']);
-  }
+    else {
+      this.horaTrabService.save(this.form.value).subscribe(
+        response => {
+
+          alert('Movimiento exitoso');
+          this.router.navigate(['/empleado/puesto/listarPuesto']);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    } 
+    } 
 
 }

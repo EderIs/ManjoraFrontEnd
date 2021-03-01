@@ -55,7 +55,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'new',
+        path: 'puesto/agregarPuesto',
         component: NuevoEditarPuestoComponent,
         data: {
           title: 'Puestos / Agregar'

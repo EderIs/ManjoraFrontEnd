@@ -5,7 +5,7 @@ export class Puesto {
     nombrePuesto: string;
     departamento: Departamento;
     descripcionTrabajo: String;
-
+/*
     constructor(nombrePuesto: string, departamento: Departamento, descripcionTrabajo: String){
         this.nombrePuesto = nombrePuesto;
         this.departamento = departamento;
@@ -19,5 +19,5 @@ export class Puesto {
             
         this.departamento=departamento;
         }
-
+*/
 }

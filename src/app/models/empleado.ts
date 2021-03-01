@@ -6,14 +6,14 @@ import { Usuario } from "./usuario";
 
 export class Empleado {
     id?: number;
-    fotografia: Imagen;
+    fotografia: string;
     nombreEmpleado: string;
-    idCategoria: number;
+    categoria: number;
     direccionTrabajo: Contacto;
-    idPuesto: Puesto;
+    puesto: Puesto;
     tituloTrabajo: string;
-    idResponsable: Empleado;
-    idMonitor: Empleado;
+    responsable: Empleado;
+    monitor: Empleado;
     horasLaborales: HoraLaboral;
     //idCuentaBancaria: CuentaBancaria;
     direccionPrivada: string;
@@ -28,15 +28,15 @@ export class Empleado {
     nivelCertificado: string;
     escuela: string;
     notaAdicional: string;
-    idUsuario: Usuario;
+    usuario: Usuario;
     nota: string;
     estado: boolean;
-
+/*
     constructor(empleado: string[]){
 
         this.id=parseInt(empleado[0]);
         this.nombreEmpleado=empleado[1];
-        this.idCategoria=parseInt(empleado[2]);
+        this.categoria=parseInt(empleado[2]);
         this.tituloTrabajo=empleado[3];
         this.direccionPrivada=empleado[4];
         this.contactoEmergencia=empleado[5];
@@ -69,9 +69,9 @@ export class Empleado {
         escuela: string, notaAdicional: string, idUsuario: Usuario, nota: string, estado: boolean){
         
         this.nombreEmpleado = nombreEmpleado;
-        this.idCategoria = idCategoria;
+        this.categoria = idCategoria;
         this.direccionTrabajo = direccionTrabajo;
-        this.idPuesto = idPuesto;
+        this.puesto = idPuesto;
         this.tituloTrabajo = tituloTrabajo;
         this.idResponsable = idResponsable;
         this.idMonitor = idMonitor;
@@ -88,7 +88,7 @@ export class Empleado {
         this.nivelCertificado = nivelCertificado;
         this.escuela =escuela;
         this.notaAdicional = notaAdicional;
-        this.idUsuario = idUsuario;
+        this.usuario = idUsuario;
         this.nota = nota;
         this.estado = estado;
     }
@@ -102,11 +102,11 @@ export class Empleado {
     }
 
     public getPuesto():Puesto{
-        return this.idPuesto;
+        return this.puesto;
     }
         
     public setPuesto(idPuesto:Puesto):void{
-        this.idPuesto=idPuesto;
+        this.puesto=idPuesto;
     }
 
     public getResponsable():Empleado{
@@ -134,10 +134,11 @@ export class Empleado {
     }
 
     public getUsuario():Usuario{
-        return this.idUsuario;
+        return this.usuario;
     }
         
     public setUsuario(idUsuario:Usuario):void{
-        this.idUsuario=idUsuario;
+        this.usuario=idUsuario;
     }
+    */
 }

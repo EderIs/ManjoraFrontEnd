@@ -1,4 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Departamento } from '../../../models/departamento';
 import { Puesto } from '../../../models/puesto';
@@ -12,101 +13,101 @@ import { PuestoService } from '../../../service/puesto.service';
 })
 
 export class NuevoEditarPuestoComponent implements OnInit {
+  form: FormGroup;
+  editMode=false;
+  submitted=false;
+  puesto:Puesto = null;
 
-
-  editMode = false;
-  puesto: Puesto = null;
-  private id: number = this.activatedRouter.snapshot.params.id;
   departamentos: Departamento[] = [];
   departamento: string[] = [];
-  departamento1: number = 0;
-  res: string;
-  departamentoE: string[] = [];
+  
+ id: number = this.activatedRoute.snapshot.params.id;
 
-  constructor(private puestoService: PuestoService
-    , private activatedRouter: ActivatedRoute, private route: Router
-    , private departamentoService: DepartamentoService, private rende2: Renderer2) { }
-
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private puestoService: PuestoService,
+    private departamentoService: DepartamentoService,
+    ) { }
+  
   ngOnInit(): void {
-    this.activatedRouter.paramMap.subscribe(paramMap => {
+    this.cargarDepartamentos();
+    this.activatedRoute.paramMap.subscribe(paramMap =>{
       if (paramMap.has('id')) {
-        this.editMode = true;
+        this.editMode=true;
+        const id = paramMap.get('id')
+        console.log(id);
+        this.puestoService.detail(parseInt(paramMap.get('id'))).subscribe(puesto =>{
+          this.puesto = puesto;
+          this.initForm();
+        });
+      }else{
+        this.puesto = new Puesto();
+        this.initForm();
       }
     })
-
-
-    if (this.id > 0) {
-      this.puestoService.detail(this.id).subscribe(model => {
-
-        this.puesto = model;
-
-        this.cargarDepartamento();
-
-        this.departamento1 = this.puesto.departamento.id;
-
-
-      }, err => {
-
-        console.log('error en: ' + err.mensaje);
-
-      })
-    } else {
-      this.puesto = new Puesto('', null, '',);
-      this.cargarDepartamento();
-      this.departamento1 = 0;
-    }
   }
 
-  onCreate(): void {
-    if (this.puesto.id > 0) {
+  initForm(){
+    this.form = new FormGroup({
+      nombrePuesto: new FormControl(this.puesto ? this.puesto.nombrePuesto : null, {
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$')]
+      }),
 
-      this.departamentoE.push(this.departamento1.toString(), " ");
+      descripcionTrabajo: new FormControl(this.puesto ? this.puesto.descripcionTrabajo: null,{
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$')]
+      }),
 
-      this.puestoService.update(this.puesto.id, new Puesto(this.puesto.nombrePuesto, new Departamento(this.departamentoE),
-        this.puesto.descripcionTrabajo)).subscribe(model => {
+      departamento: new FormGroup({
+        id: new FormControl(this.puesto ? this.puesto.departamento: null,{
+          updateOn: 'change',
+          validators: [Validators.required]
+        }),
+        
+      }),
+    });
+  }
 
-          alert('se actualizo el puesto corretamente');
-          this.route.navigate(['empleado/puesto/listarPuesto']);
+  cargarDepartamentos(): void {
+    this.departamentoService.lista().subscribe(
+      data => {
+        this.departamentos = data;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  submit(){
+    if (this.form.invalid) {
+      return alert("form inavalido")
+    }
+    else if (this.id != null) {
+            this.puestoService.update(this.id,this.form.value).subscribe(
+        data => {
+          this.puesto = data;
+          alert('Se actualizo correctamente');
+          this.router.navigate(['/empleado/puesto/listarPuesto']);
+        },
+        err => { 
+          console.log(err);
         });
 
-
-    } else {
-      
-      
-      this.departamento.push(this.departamento1.toString(), " ");
-      this.puesto.setDepartamento(new Departamento(this.departamento));
-      this.puestoService.save(this.puesto).subscribe(model => {
-        this.route.navigate(['empleado/puesto/listarPuesto']);
-
-      }, err => {
-       alert(err.error.mensaje);
-        
-        
-
-      })
     }
-  }
+    else {
+      this.puestoService.save(this.form.value).subscribe(
+        response => {
 
- 
-
-
-
-  onDetails() {
-
-  }
-
-  cargarDepartamento(): void {
-    this.departamentoService.lista().subscribe(model => {
-
-      this.departamentos = model;
-
-    }, err => {
-
-      console.log(err.err.mensaje);
-    })
-
-  }
-  changePais(e): void {
-  }
-
+          alert('Movimiento exitoso');
+          this.router.navigate(['/empleado/puesto/listarPuesto']);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    } 
+    } 
 } 

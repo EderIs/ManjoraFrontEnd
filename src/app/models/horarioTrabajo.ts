@@ -12,7 +12,7 @@ fechaInicio:Date;
 fechaFinalizacion:Date;
 periodoDia:string;
 horasLaborales: HoraLaboral; 
-
+/*
 constructor( horarioTrabajo: string[] ){
     this.id=parseInt(horarioTrabajo[0]);
     this.nombreHorariosT=horarioTrabajo[1];
@@ -44,5 +44,5 @@ constructor( horarioTrabajo: string[] ){
         this.fechaFinalizacion=fechaFinalizacion;
         this.periodoDia=periodoDia;
         this.horasLaborales=horasLaborales;
-    }
+    }*/
 }

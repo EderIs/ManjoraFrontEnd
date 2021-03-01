@@ -1,66 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { EmpleadoService } from '../../service/empleado.service';
 import { Empleado } from '../../models/empleado';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-lista-contacto',
   templateUrl: 'Lista-empleado.component.html'
 })
 
-export class ListaEmpleadoComponent implements OnInit{
-  busqueda: string="";
-  empleados : Empleado[]= [];
+export class ListaEmpleadoComponent implements OnInit, OnDestroy{
+  empleados: Empleado[] = [];
+  dtTrigger = new Subject();
 
-  constructor(private empleadoService : EmpleadoService){}
 
-  ngOnInit(): void {
-      this.cargarHorario();    
-  }
-  cargarHorario(): void{
-    this.empleadoService.lista().subscribe(
-      data => {
-        this.empleados = data;
-      },
-      err =>{
-        console.log(err);
-      }
-    )
+  constructor(
+    private empleadoService: EmpleadoService
+    ) { }
+
+
+  ngOnInit() {
+      this.empleadoService.lista().subscribe(empleados => {
+       this.empleados=empleados;
+       this.dtTrigger.next();
+     });
+    this.empleadoService.lista().subscribe();
   }
 
-  onSearch(){
-    if(this.busqueda != " "){
-      this.empleadoService.listaByNombre(this.busqueda).subscribe(model=>{
-      this.empleados=model;
-      },err=>{
-        alert('No existen Horas');
-      })
-    }else{
-      alert('No se realizo la busqueda correctamente');
+
+  delete( id: number){
+    try {
+      this.empleadoService.delete(id).subscribe(res => {
+        this.empleados = this.empleados.filter(empleado => empleado.id !== res.id);
+        alert("registro borrado!!")
+      });
+    } catch (error) {
+       alert("error al eliminar")
+      console.error(error);
     }
-  }
-
-borrar(id:number){
-
-if(id > 0){
-
-  this.empleadoService.delete(id).subscribe(model=>{
-alert('Se elimino el registro');
-this.cargarHorario();
-
-  },err=>{
-
-alert("No se pudo eliminar Pais");
-console.log(err.error.mensaje);
-
-  })
-
-}else{
-alert('no hay numero');
+      
 }
-
-
-}
-
+  ngOnDestroy(){
+      this.dtTrigger.unsubscribe()
+    }
 }

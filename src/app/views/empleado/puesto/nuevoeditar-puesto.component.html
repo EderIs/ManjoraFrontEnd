@@ -1,57 +1,60 @@
 
-<div class="row">
-    <div class="col s12 m12">
-      <div class="card" class="card blue-grey lighten-5">
-        <div class="card-content">
-          <span class="card-title">{{ editMode ? 'Editar' : 'Nuevo'}} Puesto</span>
-        <div class="card-content">
-            <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
-                <div class="form-group">
-                    <div class="form-row">
+  <div class="container">
 
-                        <div class="col-md-4">
-                            <label for="nombreContacto">Nombre Puesto:</label>
-                            <input type="text" *ngIf="this.puesto != null" name="puesto.nombrePuesto"
-                                [(ngModel)]="this.puesto.nombrePuesto" class="form-control" placeholder="Nombre Puesto" required>
-                        </div>
-                        
-                        <div class="col-md-4">
-                            <label for="nombreContacto">Descripcion del trabajo</label>
-                            <input type="text" *ngIf="this.puesto != null" name="puesto.descripcionTrabajo"
-                                [(ngModel)]="puesto.descripcionTrabajo" class="form-control" placeholder="Descripcion del Trabajo"
-                                required>
-                        </div>
-                        
-                        <div class="col-md-4">
-                            <label>Seleccione un Departamento</label>
-                            <select class="form-control" [(ngModel)]="this.departamento1"
-                                [ngModelOptions]="{standalone: true}">
-                                <option  *ngIf="this.departamento==null" value="0" >--Selecciona un Departamento--</option>
-                                <option *ngIf="this.departamento!=null" hidden="true" value=0 >{{departamento.nombreDepartamento}}</option>
-                                <option *ngFor="let departamento of departamentos" value={{this.departamento.id}}>{{departamento.nombreDepartamento}}</option>
-                            </select>
-                        </div>
-                    </div>
+    <div class="row">
+      <div   class="col s12 m12">
+        <div *ngIf="form"  class="card" class="card blue-grey lighten-5">
+          <div  class="card-content">
+            <span class="card-title">{{editMode ? 'Editar' : 'Nuevo'}} Puesto</span>
+    
+            
+          
+            <form [formGroup]="form" >
+              <div class="row">
+                
+    
+                <div class="input-field col s12">
+                  <input type="text" id="nombrePuesto" formControlName="nombrePuesto">
+                  <label for="nombrePuesto" [class.active]="form.get('nombrePuesto').value !== null" >Nombre Puesto</label>
+                  <small class="red-text" *ngIf="form.get('nombrePuesto').value == null && form.get('nombrePuesto').touched">
+                    Campo Invalido
+                  </small>
                 </div>
-                <div class="card-action d-flex justify-content-flex-end">
-                    <div class="p-1">
-                        <button class="btn waves-effect btn-outline-danger" routerLink="/empleado/puesto/listarPuesto">Cancel</button>
-                     </div>
-                    <div class="p-1">
-                         <button type="submit" class="btn waves-effect btn-outline-primary" >
-                             {{editMode ? 'Guardar Cambios' : 'Agregar Puesto'}}<i class="material-icons right">send</i></button>
-                     </div>
-                 </div>
+
+                <div class="input-field col s12">
+                    <input type="text" id="descripcionTrabajo" formControlName="descripcionTrabajo">
+                    <label for="descripcionTrabajo" [class.active]="form.get('descripcionTrabajo').value !== null" >Descripción de trabajo</label>
+                    <small class="red-text" *ngIf="form.get('descripcionTrabajo').value == null && form.get('descripcionTrabajo').touched">
+                      Campo Invalido
+                    </small>
+                  </div>
+            </div>
+    
+      <div class="row">
+    
+        <div class="input-field col s12" formGroupName="departamento"> 
+            <label for="departamento" [class.active]="form.get('departamento').value !== null">Departamento</label> 
+            <select class="form-control" name="id" formControlName="id"  >
+            <option value=null selected *ngIf="departamento.id == null" hidden>--Seleccione un Departamento--</option>
+            <option value={departamento.id}} selected *ngIf="departamento.id != null" hidden>{{departamento.nombreDepartamento}}</option>
+            <option *ngFor="let departamento of departamentos" value={{departamento.id}}>{{departamento.nombreDepartamento}}</option>    
+            </select>
+            </div>
+    </div>    
             </form>
-        </div>      
-      </div>
+          </div>
+    
+          
+          <div class="card-action d-flex justify-content-flex-end">
+            <div class="p-1">
+              <button class="btn waves-effect cyan" routerLink="/empleado/puesto/listarPuesto">Cancel</button>
+            </div>
+            <div class="p-1">
+              <button class="btn waves-effect green" [disabled]="form.invalid" (click)="submit()">
+                {{editMode ? 'Guardar Cambios' : 'Agregar Empleado'}}<i class="material-icons right">send</i></button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
-
-  
-
-
-
-
+    </div>

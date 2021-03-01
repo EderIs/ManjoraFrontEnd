@@ -1,67 +1,99 @@
-<div class="card">
-    <div class="card-header">
-        <strong>Agregar</strong> Horario de Trabajo
-    </div>
-    <div class="card-body">
-        <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
-            <div class="form-group">
-                <div class="form-row">
+<div class="container">
 
-                  <div class="col-md-6">
-                      <label for="horaL1">Nombre Horarios de Trabajo:</label>
-                    <input type="text" id="nombreHorariosT" name="nombreHorariosT" [(ngModel)]="this.horarioT.nombreHorariosT" class="form-control" placeholder="Horarios de Trabajo" 
-                    required>
-                  </div>
-
-                  <div class="col-md-6">
-                      <label for="horaL1">Dia de la Semana:</label>
-                    <input type="text" id="diaSemana" name="diaSemana" [(ngModel)]="this.horarioT.diaSemana" class="form-control" placeholder="Dia de la Semana" 
-                    required>
-                  </div>
-
-                  <div class="col-md-6">
-                      <label for="horaL1">Trabajar Desde:</label>
-                    <input id="trabajarDesde" step="1" name="trabajarDesde" [(ngModel)]="this.horarioT.trabajarDesde" class="form-control" placeholder="Trabajar Desde" type="time" required>
-                  </div>
-
-                  <div class="col-md-6">
-                      <label for="horaL1">Trabajar Hasta:</label>
-                    <input id="trabajarHasta" step="1" name="trabajarHasta" [(ngModel)]="this.horarioT.trabajarHasta" class="form-control" placeholder="Trabajar Hasta" type="time" required>
-                  </div>
-
-                  <div class="col-md-6">
-                      <label for="horaL1">Fecha de Inicio:</label>
-                    <input class="form-control" data-date-format="yyyy-mm-dd" id="fechaInicio" [(ngModel)]="this.horarioT.fechaInicio" type="date" name="fechaInicio" placeholder="Fecha de Inicio">
-                  </div>
-
-                  <div class="col-md-6">
-                      <label for="horaL1">Fecha de Finalizacion</label>
-                    <input class="form-control" data-date-format="yyyy-mm-dd" id="fechaFinalizacion" [(ngModel)]="this.horarioT.fechaFinalizacion" type="date" name="fechaFinalizacion" placeholder="Fecha de Finalizacion">
-                  </div>
-
-                  <div class="col-md-6">
-                      <label for="horaL1">Periodo Dia</label>
-                    <input type="text" id="periodoDia" name="periodoDia" [(ngModel)]="this.horarioT.periodoDia" class="form-control" placeholder="periodoDia" 
-                    required>
-                  </div>
-
-                  <div class="col-md-6">
-                      <label for="horaL1">Seleccione un Horario Laboral...</label>
-                      <select id="horaL1" name="horaL1" class="form-control" [(ngModel)]="this.horaL1" [ngModelOptions]="{standalone: true}">
-                        <option *ngIf="horarioT.horaLaboral==null" value=0 >Seleccione un Horario...</option>
-                        <option *ngIf="horarioT.horaLaboral!=null" hidden="true" value={{this.horarioT.horaLaboral.id}} >{{this.horarioT.horaLaboral.nombreHoraL}}</option>
-                        <option *ngFor="let HoraL of HorasL" value={{this.HoraL.id}}  >{{HoraL.nombreHoraL}}</option>
-                      </select>
-                    
+  <div class="row">
+    <div   class="col s12 m12">
+      <div *ngIf="form"  class="card" class="card blue-grey lighten-5">
+        <div  class="card-content">
+          <span class="card-title">{{editMode ? 'Editar' : 'Nuevo'}} Horas de Trabajo</span>
+  
+          
+        
+          <form [formGroup]="form" >
+            <div class="row">
+              
+  
+              <div class="input-field col s12">
+                <input type="text" id="nombreHorariosT" formControlName="nombreHorariosT">
+                <label for="nombreHorariosT" [class.active]="form.get('nombreHorariosT').value !== null" >Nombre Hora Laboral</label>
+                <small class="red-text" *ngIf="form.get('nombreHorariosT').value == null && form.get('nombreHorariosT').touched">
+                  Campo Invalido
+                </small>
               </div>
-                  
-                </div>
-            </div>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-sm btn-primary"> Guardar</button>
-                <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>Cancelar</button>
-            </div>
-        </form>
-    </div>
 
-</div>
+              <div class="input-field col s12">
+                  <input type="text" id="diaSemana" formControlName="diaSemana">
+                  <label for="diaSemana" [class.active]="form.get('diaSemana').value !== null" >Promedio de Horas a Día</label>
+                  <small class="red-text" *ngIf="form.get('diaSemana').value == null && form.get('diaSemana').touched">
+                    Campo Invalido
+                  </small>
+                </div>
+
+
+                <div class="col-md-6">
+                  <label for="horaL1">Trabajar Desde:</label>
+                <input id="trabajarDesde" formControlName="trabajarDesde" step="1" name="trabajarDesde" class="form-control" placeholder="Trabajar Desde" type="time" required>
+                <small class="red-text" *ngIf="form.get('trabajarDesde').value == null && form.get('trabajarDesde').touched">
+                  Campo Invalido
+                </small>
+              </div>
+
+              <div class="col-md-6">
+                  <label for="horaL1">Trabajar Hasta:</label>
+                <input id="trabajarHasta" step="1" name="trabajarHasta" formControlName="trabajarHasta" class="form-control" placeholder="Trabajar Hasta" type="time" required>
+                <small class="red-text" *ngIf="form.get('trabajarHasta').value == null && form.get('trabajarHasta').touched">
+                  Campo Invalido
+                </small>
+              </div>
+
+              <div class="col-md-6">
+                  <label for="horaL1">Fecha de Inicio:</label>
+                <input class="form-control" data-date-format="yyyy-mm-dd" id="fechaInicio" formControlName="fechaInicio" type="date" name="fechaInicio" placeholder="Fecha de Inicio">
+                <small class="red-text" *ngIf="form.get('fechaInicio').value == null && form.get('fechaInicio').touched">
+                  Campo Invalido
+                </small>
+              </div>
+
+              <div class="col-md-6">
+                  <label for="horaL1">Fecha de Finalizacion</label>
+                <input class="form-control" data-date-format="yyyy-mm-dd" id="fechaFinalizacion" formControlName="fechaFinalizacion" type="date" name="fechaFinalizacion" placeholder="Fecha de Finalizacion">
+                <small class="red-text" *ngIf="form.get('fechaFinalizacion').value == null && form.get('fechaFinalizacion').touched">
+                  Campo Invalido
+                </small>
+              </div>
+
+              <div class="col-md-6">
+                <label for="horaL1">Periodo Dia</label>
+              <input type="text" id="periodoDia" name="periodoDia" formControlName="periodoDia" class="form-control" placeholder="periodoDia" 
+              required>
+              <small class="red-text" *ngIf="form.get('periodoDia').value == null && form.get('periodoDia').touched">
+                Campo Invalido
+              </small>
+            </div>
+
+            <div class="input-field col s12" formGroupName="horasLaborales"> 
+              <label for="horasLaborales" [class.active]="form.get('horasLaborales').value !== null">HorasLaborales</label> 
+              <select class="form-control" name="id" formControlName="id"  >
+              <option value=null selected *ngIf="horasLaborales.id == null" hidden>--Seleccione un Horario de Trabajo--</option>
+              <option value={horasLaborales.id}} selected *ngIf="horasLaborales.id != null" hidden>{{horasLaborales.nombreHoraL}}</option>
+              <option *ngFor="let horasLaborales of horasLaborales" value={{horasLaborales.id}}>{{horasLaborales.nombreHoraL}}</option>    
+              </select>
+              </div>
+
+          </div>
+          </form>
+        </div>
+  
+        
+        <div class="card-action d-flex justify-content-flex-end">
+          <div class="p-1">
+            <button class="btn waves-effect cyan" routerLink="/empleado/horasL/listarHorasL">Cancel</button>
+          </div>
+          <div class="p-1">
+            <button class="btn waves-effect green" [disabled]="form.invalid" (click)="submit()">
+              {{editMode ? 'Guardar Cambios' : 'Agregar Empleado'}}<i class="material-icons right">send</i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>

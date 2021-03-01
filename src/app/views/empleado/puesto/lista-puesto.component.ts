@@ -10,56 +10,38 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 
 export class ListaPuestoComponent implements OnInit, OnDestroy {
-
-  puestos: Puesto[];
+  puestos: Puesto[] = [];
   dtTrigger = new Subject();
 
 
-  constructor(private puestoService: PuestoService,
-    private route: Router,
-    private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private puestoService: PuestoService
+    ) { }
 
-    ngOnInit(): void {
 
-    this.puestoService.Puestos.subscribe(puestos => {
-      this.puestos = puestos;
-      this.dtTrigger.next();
-
-    })
-
-    //if (this.puestos != null) {
+  ngOnInit() {
+      this.puestoService.fetchPuestos().subscribe(puestos => {
+       this.puestos=puestos;
+       this.dtTrigger.next();
+     });
     this.puestoService.fetchPuestos().subscribe();
-    // }else{
-    //   this.cargarPuestos()
-    // }
   }
 
 
-  cargarPuestos() {
-    this.puestoService.fetchPuestos().subscribe(model => {
-      this.puestos = model;
-      console.log(model)
-    }, err => {
-      console.log(err.error.mensaje);
-    });
-  }
-
-  delete(id: number) {
-    if (id > 0) {
+  delete( id: number){
+    try {
       this.puestoService.delete(id).subscribe(res => {
-        this.puestos = this.puestos?.filter(Puesto => Puesto.id !== res.id);
-        alert("se elimino registro con exito");
-        this.route.navigate(['empleado/puesto/listarPuesto']);
-      })
-    } else {
-      alert("no se pudo eliminar");
+        this.puestos = this.puestos.filter(puesto => puesto.id !== res.id);
+        alert("registro borrado!!")
+      });
+    } catch (error) {
+       alert("error al eliminar")
+      console.error(error);
     }
-
-  }
-
-
-  ngOnDestroy() {
-    this.dtTrigger.unsubscribe()
-  }
+      
+}
+  ngOnDestroy(){
+      this.dtTrigger.unsubscribe()
+    }
 }
 

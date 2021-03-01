@@ -1,50 +1,73 @@
-<div class="card">
-  <div class="card-header">
-      <strong>Agregar</strong> Departamento
-  </div>
-  <div class="card-body">
-      <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
-          <div class="form-group">
-              <div class="form-row">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                  </div>
-                  <input type="text" id="nombreDepartamento" name="nombreDepartamento" [(ngModel)]="this.departamento.nombreDepartamento" class="form-control" placeholder="Nombre del Departamento" 
-                  required>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                  </div>
-                  <input type="text" id="estado" name="estado" [(ngModel)]="this.departamento.estado" class="form-control" placeholder="0" 
-                  required>
-                </div>
-              </div>
-          </div>
+<div class="container">
 
-          <div class="col-md-4">
-            <label>Seleccione un Empleado</label>
-            <select class="form-control" [(ngModel)]="this.empleado1"
-                [ngModelOptions]="{standalone: true}">
-                <option  *ngIf="this.empleado==null" value="0" >--Selecciona un Empleado--</option>
-                <option *ngIf="this.empleado!=null" hidden="true" value=0 >{{empleado.nombreEmpleado}}</option>
-                <option *ngFor="let empleado of empleados" value={{this.empleado.id}}>{{empleado.nombreEmpleado}}</option>
-            </select>
-        </div>
-          <!-- <div class="form-group">
-            <div class="form-group select-wrapper">
-              <label>Seleccione un Empleado...</label>
-              <select class="form-control" [(ngModel)]="this.empleado1" [ngModelOptions]="{standalone: true}">
-                <option  *ngIf="this.departamento.empleado==null" value=0 >Seleccione un Empleado...</option>
-                <option *ngIf="this.departamento.empleado!=null" hidden="true" value={{this.departamento.empleado.id}} >{{this.departamento.empleado.nombreEmpleado}}</option>
-                <option *ngFor="let empleado of empleados" value={{this.empleado.id}}  >{{empleado.nombreEmpleado}}</option>
-              </select>
+<div class="row">
+  <div   class="col s12 m12">
+    <div *ngIf="form"  class="card" class="card blue-grey lighten-5">
+      <div  class="card-content">
+        <span class="card-title">{{editMode ? 'Editar' : 'Nuevo'}} Departamento</span>
+
+        
+      
+        <form [formGroup]="form" >
+          <div class="row">
+            
+
+            <div class="input-field col s12">
+              <input type="text" id="nombreDepartamento" formControlName="nombreDepartamento">
+              <label for="nombreDepartamento" [class.active]="form.get('nombreDepartamento').value !== null" >Nombre Departamento</label>
+              <small class="red-text" *ngIf="form.get('nombreDepartamento').value == null && form.get('nombreDepartamento').touched">
+                Campo Invalido
+              </small>
             </div>
-      </div> -->
-          <div class="card-footer">
-              <button type="submit" class="btn btn-sm btn-primary"> Guardar</button>
-              <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>Cancelar</button>
-          </div>
-      </form>
-  </div>
 
+            <div class="input-field col s12"> 
+              <label for="estado" [class.active]="form.get('estado').value !== null">Estado</label> 
+            <select class="form-control" name="estado" formControlName="estado">
+              <option value=null selected *ngIf="departamento.estado == null" hidden>--Seleccione--</option>
+              <option value=true selected *ngIf="departamento.estado != null && departamento.estado == true" hidden>Activo</option>
+              <option value=false selected *ngIf="departamento.estado != null && departamento.estado == false" hidden>Inactivo</option>
+              <option value=true>Activo</option>
+              <option value=false>Inactivo</option>  
+              </select>
+          </div>
+          
+        </div>
+
+  <div class="row">
+
+  <div class="input-field col s12" formGroupName="empleado"> 
+    <label for="empleado" [class.active]="form.get('empleado').value !== null">Empleado</label> 
+  <select class="form-control" name="id" formControlName="id"  >
+    <option value=null selected *ngIf="empleado.id == null" hidden>--Seleccione un Empleado--</option>
+    <option value={empleado.id}} selected *ngIf="empleado.id != null" hidden>{{empleado.nombreEmpleado}}</option>
+    <option *ngFor="let empleado of empleados" value={{empleado.id}}>{{empleado.nombreEmpleado}}</option>    
+    </select>
+</div> 
+<!--
+<div class="input-field col s12" formGroupName="departamentoPadre"> 
+  <label for="departamentoPadre" [class.active]="form.get('departamentoPadre').value !== null">Departamento</label> 
+<select class="form-control" name="id" formControlName="id"  >
+  <option value=null selected *ngIf="departamentoPadre.id == null" hidden>Seleccione...</option>
+  <option value={departament.id}} selected *ngIf="departament.id != null" hidden>{{departament.nombreDepartamento}}</option>
+  <option *ngFor="let departament of departamentoPadre" value={{departament.id}}>{{departament.nombreDepartamento}}</option>    
+  </select>
+</div> 
+-->
+</div>    
+        </form>
+      </div>
+
+      
+      <div class="card-action d-flex justify-content-flex-end">
+        <div class="p-1">
+          <button class="btn waves-effect cyan" routerLink="/empleado/empleado">Cancel</button>
+        </div>
+        <div class="p-1">
+          <button class="btn waves-effect green" [disabled]="form.invalid" (click)="submit()">
+            {{editMode ? 'Guardar Cambios' : 'Agregar Empleado'}}<i class="material-icons right">send</i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </div>

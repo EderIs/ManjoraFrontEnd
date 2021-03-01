@@ -4,7 +4,7 @@ export class HoraLaboral{
     nombreHoraL:string;
     promedioHoraDia:number;
    
-   
+   /*
     constructor(horaL : string []){
         this.id= parseInt(horaL[0]);
         this.nombreHoraL= horaL[1];
@@ -15,4 +15,5 @@ export class HoraLaboral{
         this.nombreHoraL = nombreHoraL;
         this.promedioHoraDia = promedioHoraDia;
     }
+    */
    }

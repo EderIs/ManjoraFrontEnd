@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
 import { HoraLaboral } from '../../../models/horaLaboral';
 import { HorarioLabService } from '../../../service/horario-lab.service';
@@ -9,67 +10,79 @@ import { HorarioLabService } from '../../../service/horario-lab.service';
 })
 
 export class NuevoEditarHorasLComponent implements OnInit{
-nombreHoraL: string = "";
-promedioHoraDia: number = null;
-id : number= this.activatedRouter.snapshot.params.id;
-horaL : HoraLaboral=null;
-horasL :string []=[];
-
-
- constructor(
-  private horaLService : HorarioLabService,
-  private router: Router,
-  private activatedRouter: ActivatedRoute,
+  form: FormGroup;
+  editMode=false;
+  submitted=false;
+  horaLaboral:HoraLaboral = null;
   
-  ) {}
+ id: number = this.activatedRoute.snapshot.params.id;
 
-
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private horaLService: HorarioLabService,
+    ) { }
+  
   ngOnInit(): void {
-    
-if(this.id!=null){
-
-this.horaLService.detail(this.id).subscribe(model=>{
-this.horaL=model;
-},
-err=>{
-
-console.log('el error esta aqui'+ err.err.message);
-}
-)
-}
+    this.activatedRoute.paramMap.subscribe(paramMap =>{
+      if (paramMap.has('id')) {
+        this.editMode=true;
+        const id = paramMap.get('id')
+        console.log(id);
+        this.horaLService.detail(parseInt(paramMap.get('id'))).subscribe(depa =>{
+          this.horaLaboral = depa;
+          this.initForm();
+        });
+      }else{
+        this.horaLaboral = new HoraLaboral();
+        this.initForm();
+      }
+    })
   }
 
-onCreate(): void{
+  initForm(){
+    this.form = new FormGroup({
+      nombreHoraL: new FormControl(this.horaLaboral ? this.horaLaboral.nombreHoraL : null, {
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$')]
+      }),
 
-  if(this.horaL != null ){
-this.horaLService.update(this.horaL.id,this.horaL).subscribe(model=>{
-
-alert('Se actualizo correctaente, la hora');
-this.router.navigate(['/empleado/horasL/listarHorasL']);
-
-},err=>{
-console.log('Ocurrio un error en '+err.err.message);
-console.log(this.horaL);
-})
-}else{
-
-
-  this.horasL.push("0", this.nombreHoraL, this.promedioHoraDia.toString());
-  const horaL = new HoraLaboral(this.horasL);
-  console.log(horaL);
-  this.horaLService.save(horaL).subscribe(data=>{
-  {
-  alert('Se guardo correctamente hora laboral');
-  console.log(data);
-  this.router.navigate(['/empleado/horasL/listarHorasL']);
-  }
-  err =>{
-    console.log(horaL.nombreHoraL, horaL.promedioHoraDia);
-  alert('No se guardo el pais');
-  }
-  })
+      promedioHoraDia: new FormControl(this.horaLaboral ? this.horaLaboral.promedioHoraDia: null,{
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('[0-9]')]
+      }),
+    });
   }
 
-}
+
+  submit(){
+    if (this.form.invalid) {
+      return alert("form inavalido")
+    }
+    else if (this.id != null) {
+            this.horaLService.update(this.id,this.form.value).subscribe(
+        data => {
+          this.horaLaboral = data;
+          alert('Se actualizo correctamente');
+          this.router.navigate(['/empleado/departamento/listarDepartamento']);
+        },
+        err => { 
+          console.log(err);
+        });
+
+    }
+    else {
+      this.horaLService.save(this.form.value).subscribe(
+        response => {
+
+          alert('Movimiento exitoso');
+          this.router.navigate(['/empleado/departamento/listarDepartamento']);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    } 
+    } 
 
 }

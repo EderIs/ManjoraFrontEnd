@@ -6,7 +6,7 @@ import { Empleado } from "./empleado";
         empleado: Empleado;
         departamentoPadre: Departamento;
         estado: boolean;
-    
+    /*
          public setDepartamento(nombreDepartamento: string, empleado: Empleado, departamentoPadre: Departamento, estado: boolean){
             this.nombreDepartamento = nombreDepartamento;
             this.empleado = empleado;
@@ -25,6 +25,6 @@ import { Empleado } from "./empleado";
         
             public setEmpleado(empleado:Empleado):void{
             this.empleado=empleado;
-            }
+            }*/
     }
     

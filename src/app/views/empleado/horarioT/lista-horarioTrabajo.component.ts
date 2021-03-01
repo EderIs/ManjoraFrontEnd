@@ -7,29 +7,32 @@ import { HorarioTrapService } from '../../../service/horario-trap.service';
 })
 
 export class ListaHorarioTrabajoComponent implements OnInit{
+  horasTrab: HorarioTrabajo[] = [];
   busqueda: string="";
-  horarios : HorarioTrabajo[]= [];
-
-  constructor(private horarioService : HorarioTrapService){}
+  
+  constructor(
+    private horaTabService: HorarioTrapService
+    ) { }
 
   ngOnInit(): void {
-      this.cargarHorario();    
+    this.cargarHorasTrab();
   }
-  cargarHorario(): void{
-    this.horarioService.lista().subscribe(
+
+  cargarHorasTrab(): void {
+    this.horaTabService.lista().subscribe(
       data => {
-        this.horarios = data;
+        this.horasTrab = data;
       },
-      err =>{
+      err => {
         console.log(err);
       }
-    )
+    );
   }
 
   onSearch(){
     if(this.busqueda != " "){
-      this.horarioService.listaByNombre(this.busqueda).subscribe(model=>{
-      this.horarios=model;
+      this.horaTabService.listaByNombre(this.busqueda).subscribe(model=>{
+      this.horasTrab=model;
       },err=>{
         alert('No existen Horas');
       })
@@ -38,26 +41,17 @@ export class ListaHorarioTrabajoComponent implements OnInit{
     }
   }
 
-borrar(id:number){
 
-if(id > 0){
-
-  this.horarioService.delete(id).subscribe(model=>{
-alert('Se elimino el registro');
-this.cargarHorario();
-
-  },err=>{
-
-alert("No se pudo eliminar Pais");
-console.log(err.error.mensaje);
-
-  })
-
-}else{
-alert('no hay numero');
-}
-
-
-}
+  borrar(id: number) {
+    this.horaTabService.delete(id).subscribe(
+      data => {
+       console.log(data);
+        this.cargarHorasTrab();
+      },
+      err => {
+        console.log(err)
+      }
+    );
+  }
 
 }

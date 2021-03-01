@@ -1,154 +1,294 @@
-<div class="card">
-  <div class="card-header">
-      <strong>Agregar</strong> Empelado
-  </div>
-  <div class="card-body">
-      <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
+<div class="container">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header" style="background-color: #20a8d8; color: white;">
+          <strong>Cargar</strong> Imagen
+      </div>
+      <div class="card-body">
+          <div class="col-md-3">
+              <img #x src="../../../assets//img/avatars/perfil.png" class="img-avatar"
+              alt="admin@bootstrapmaster.com"/>
+          </div>
+          <br>
           <div class="form-group">
-              <div class="form-row">
-                <label for="horaL1">Fotografia:</label>
-              <div class="input-group mb-3">
-                
-                <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="fotografia" #imagenInputFile
-                  (change)="onFileChange($event)" accept="image/png, image/jpeg, image/gif">
-                  <label class="custom-file-label" for="fotografia">Elige una imagen</label>
-              </div>
-              <div *ngIf="fotografia" class="mt-5">
-                  <h5>Vista Previa:</h5>
-                  <div>
-                      <img class="image-thumbnail" style="max-width: 100px" [src]="imagenMin">
+              <div class="row">
+                  <div class="col-md-12">
+                      <label for="fotografia" class="form-label"><b>Carga una imagen:</b></label>
+                      <input id="fotografia" name="fotografia" type="file" class="form-control" accept="image/*" (change)="cargarImagen($event)">
                   </div>
               </div>
-              </div>
+          </div>
+      </div>
+  </div>
+</div>
 
-              <label for="horaL1">Nombre de Empleado:</label>
-                <div class="input-group mb-3">
-                  <input type="text" id="nombreEmpleado" name="nombreEmpleado" [(ngModel)]="this.empleado.nombreEmpleado" class="form-control" placeholder="nombreEmpleado" 
-                  required>
-                </div>
+<div class="row">
+  <div   class="col s12 m12">
+    <div *ngIf="form"  class="card" class="card blue-grey lighten-5">
+      <div  class="card-content">
+        <span class="card-title">{{editMode ? 'Editar' : 'Nuevo'}} Empleado</span>
 
-                <label for="horaL1">Titulo de Trabajo:</label>
-                <div class="input-group mb-3">
-                  <input type="text" id="tituloTrabajo" name="tituloTrabajo" [(ngModel)]="this.empleado.tituloTrabajo" class="form-control" placeholder="tituloTrabajo" 
-                  required>
-                </div>
+        
+      
+        <form [formGroup]="form" >
+          <div class="row">
+            
 
-                <label for="horaL1">Direccion Privada:</label>
-                <div class="input-group mb-3">
-                  <input type="text" id="direccionPrivada" name="direccionPrivada" [(ngModel)]="this.empleado.direccionPrivada" class="form-control" placeholder="direccionPrivada" 
-                  required>
-                </div>
-
-                <label for="horaL1">Contacto de Emergencia:</label>
-                <div class="input-group mb-3">
-                  <input type="text" id="contactoEmergencia" name="contactoEmergencia" [(ngModel)]="this.empleado.contactoEmergencia" class="form-control" placeholder="contactoEmergencia" 
-                  required>
-                </div>
-
-                <label for="horaL1">Telefono de Emergencia:</label>
-                <div class="input-group mb-3">
-                  <input type="tel" id="telefonoEmergencia" name="telefonoEmergencia" [(ngModel)]="this.empleado.telefonoEmergencia" class="form-control" placeholder="telefonoEmergencia" 
-                  required>
-                </div>
-
-                <label for="horaL1">Km Casa al Trabajo:</label>
-                <div class="input-group mb-3">
-                  <input type="number" id="kmCasaTrabajo" name="kmCasaTrabajo" [(ngModel)]="this.empleado.kmCasaTrabajo" class="form-control" placeholder="kmCasaTrabajo" 
-                  required>
-                </div>
-
-                <label for="horaL1">Sexo:</label>
-                <div class="input-group mb-3">
-                    <select class="form-control" [(ngModel)]="this.empleado.sexo" [ngModelOptions]="{standalone: true}">
-                      <option *ngIf="horarioT.horaLaboral==null" value=0 >Sexo...</option>
-                      <option value="Hombre">Hombre</option>
-                      <option value="Mujer"  >Mujer</option>
-                    </select>
+            <div class="input-field col s12">
+              <input type="text" id="nombreEmpleado" formControlName="nombreEmpleado">
+              <label for="nombreEmpleado" [class.active]="form.get('nombreEmpleado').value !== null" >Nombre Empleado</label>
+              <small class="red-text" *ngIf="form.get('nombreEmpleado').value == null && form.get('nombreEmpleado').touched">
+                Campo Invalido
+              </small>
             </div>
 
-            <label for="horaL1">Estado Civil:</label>
-              <div class="input-group mb-3">
-                <select class="form-control" [(ngModel)]="this.empleado.estadoCivil" [ngModelOptions]="{standalone: true}">
-                  <option *ngIf="empleado.estadoCivil==null" value=0 >Estado Civil...</option>
-                  <option value="Hombre">Hombre</option>
-                  <option value="Mujer"  >Mujer</option>
-                </select>
-              </div>
-
-              <label for="horaL1">Numero de Hijos:</label>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-              </div>
-              <input type="number" id="numeroHijos" name="numeroHijos" [(ngModel)]="this.empleado.numeroHijos" class="form-control" placeholder="numeroHijos" 
-              required>
+            <div class="input-field col s12">
+              <input type="text" id="direccionPrivada" formControlName="direccionPrivada">
+              <label for="direccionPrivada" [class.active]="form.get('direccionPrivada').value !== null">Direccion Privada</label>
+              <small class="red-text" *ngIf="form.get('direccionPrivada').value == null && form.get('direccionPrivada').touched" >
+                Campo Invalido
+              </small>
             </div>
 
-            <label for="horaL1">Fecha de Nacimiento:</label>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <input class="form-control" data-date-format="yyyy-mm-dd" id="fechaNacimiento" [(ngModel)]="this.empleado.fechaNacimiento" type="date" name="fechaNacimiento" placeholder="fechaNacimiento">
-                  </div>
-                </div>
+            <div class="input-field col s12"> 
+              <label for="idcategoria" [class.active]="form.get('categoria').value !== null">Categoria</label> 
+            <select class="form-control" name="categoria" formControlName="categoria">
+              <option value=0 selected *ngIf="categoria == null" hidden>--Seleccione--</option>
+              <option value=1 selected *ngIf="categoria != null && categoria == 1" hidden>1</option>
+              <option value=2 selected *ngIf="categoria != null && categoria == 2" hidden>2</option>
+              <option value=3 selected *ngIf="categoria != null && categoria == 3" hidden>3</option>
+              <option value=4 selected *ngIf="categoria != null && categoria == 4" hidden>4</option>
+              <option value=1>1</option>
+              <option value=2>2</option>   
+              <option value=3>3</option>
+              <option value=4>4</option>   
+              </select>
+          </div>
+          
+        </div>
+        
+        <div class="row">
+      <div class="input-field col s12">
+        <input type="text" id="tituloTrabajo" formControlName="tituloTrabajo">
+        <label for="tituloTrabajo" [class.active]="form.get('tituloTrabajo').value !== null">Titulo Trabajo</label>
+        <small class="red-text" *ngIf="form.get('tituloTrabajo').value == null && form.get('tituloTrabajo').touched" >
+          Campo Invalido
+        </small>
+      </div>
 
-                <label for="horaL1">Lugar de Nacimiento:</label>
-                <div class="input-group mb-3">
-                  <input type="text" id="lugarNacimiento" name="lugarNacimiento" [(ngModel)]="this.empleado.lugarNacimiento" class="form-control" placeholder="lugarNacimiento" 
-                  required>
-                </div>
+      <div class="input-field col s12">
+        <input type="text" id="contactoEmergencia" formControlName="contactoEmergencia">
+        <label for="contactoEmergencia" [class.active]="form.get('contactoEmergencia').value !== null">Contacto Emergencia</label>
+        <small class="red-text" *ngIf="form.get('contactoEmergencia').value == null && form.get('contactoEmergencia').touched" >
+          Campo Invalido
+        </small>
+      </div>
 
-                <label for="horaL1">Nivel de Certificación:</label>
-                  <div class="input-group mb-3">
-                    <select class="form-control" [(ngModel)]="this.empleado.nivelCertificado" [ngModelOptions]="{standalone: true}">
-                      <option *ngIf="empleado.nivelCertificado==null" value=0 >nivelCertificado...</option>
-                      <option value="Hombre">Hombre</option>
-                      <option value="Mujer"  >Mujer</option>
-                    </select>
-                  </div>
+      <div class="input-field col s12">
+        <input type="tel" id="telefonoEmergencia" formControlName="telefonoEmergencia">
+        <label for="telefonoEmergencia" [class.active]="form.get('telefonoEmergencia').value !== null">Telefono Emergencia</label>
+        <small class="red-text" *ngIf="form.get('telefonoEmergencia').value == null && form.get('telefonoEmergencia').touched" >
+          Campo Invalido
+        </small>
+      </div>
 
-                  <label for="horaL1">Escuela:</label>
-            <div class="input-group mb-3">
-              <input type="text" id="escuela" name="escuela" [(ngModel)]="this.empleado.escuela" class="form-control" placeholder="escuela" 
-              required>
-            </div>
+        
 
-            <label for="horaL1">Nota Adicional:</label>
-            <div class="input-group mb-3">
-              <input type="text" id="notaAdicional" name="notaAdicional" [(ngModel)]="this.empleado.notaAdicional" class="form-control" placeholder="notaAdicional" 
-              required>
-            </div>
+            
+<!--
+             <div class="input-field col s12" formGroupName="responsable"> 
+              <label for="responsable" [class.active]="form.get('responsable').value !== null">Estado</label> 
+            <select class="form-control" name="id" formControlName="id"  >
+              <option value=null selected *ngIf="responsable.id == null" hidden>Seleccione...</option>
+              <option value={responsable.id}} selected *ngIf="responsable.id != null" hidden>{{responsable.nombreEmpleado}}</option>
+              <option *ngFor="let responsable of responsables" value={{responsable.id}}>{{responsable.nombreEmpleado}}</option>    
+              </select>
+          </div> 
+          -->
+        </div>
+        <div class="row">
 
-            <label for="horaL1">Nota:</label>
-            <div class="input-group mb-3">
-              <input type="text" id="nota" name="nota" [(ngModel)]="this.empleado.nota" class="form-control" placeholder="nota" 
-              required>
-            </div>
+          <div class="input-field col s12">
+            <input type="number" id="kmCasaTrabajo" formControlName="kmCasaTrabajo">
+            <label for="kmCasaTrabajo" [class.active]="form.get('kmCasaTrabajo').value !== null">kmCasaT</label>
+            <small class="red-text" *ngIf="form.get('kmCasaTrabajo').value == null && form.get('kmCasaTrabajo').touched" >
+              Campo Invalido
+            </small>
+          </div>
 
-            <label for="horaL1">Estado:</label>
-            <div class="input-group mb-3">
-                <select class="form-control" [(ngModel)]="this.empleado.estado" [ngModelOptions]="{standalone: true}">
-                  <option *ngIf="empleado.estado==null" value=0 >estado...</option>
-                  <option value="Hombre">Hombre</option>
-                  <option value="Mujer"  >Mujer</option>
-                </select>
+          <div class="input-field col s12"> 
+            <label for="sexo" [class.active]="form.get('sexo').value !== null">Sexo</label> 
+          <select class="form-control" name="sexo" formControlName="sexo">
+            <option value=null selected *ngIf="empleado.sexo == null" hidden>--Seleccione--</option>
+            <option value=Masculino selected *ngIf="empleado.sexo != null && empleado.sexo == Masculino" hidden>Masculino</option>
+            <option value=Femenino selected *ngIf="empleado.sexo != null && empleado.sexo == Femenino" hidden>Femenino</option>
+            <option value=Masculino>Masculino</option>
+            <option value=Femenino>Femenino</option>  
+            </select>
         </div>
 
-        <label for="horaL1">Horario Laboral:</label>
-                <div class="input-group mb-3">
-                    <select class="form-control" [(ngModel)]="this.horaL1" [ngModelOptions]="{standalone: true}">
-                      <option *ngIf="horarioT.horaLaboral==null" value=0 >Seleccione un Horario...</option>
-                      <option *ngIf="horarioT.horaLaboral!=null" hidden="true" value={{this.horarioT.horaLaboral.id}} >{{this.horarioT.horaLaboral.nombreHoraL}}</option>
-                      <option *ngFor="let HoraL of HorasL" value={{this.HoraL.id}}  >{{HoraL.nombreHoraL}}</option>
-                    </select>
-            </div>
-                
-              </div>
-          </div>
-          <div class="card-footer">
-              <button type="submit" class="btn btn-sm btn-primary"> Guardar</button>
-              <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>Cancelar</button>
-          </div>
-      </form>
+
+        <div class="input-field col s12"> 
+          <label for="estadoCivil" [class.active]="form.get('estadoCivil').value !== null">Estado Civil</label> 
+        <select class="form-control" name="estadoCivil" formControlName="estadoCivil">
+          <option value=null selected *ngIf="empleado.estadoCivil == null" hidden>--Seleccione--</option>
+          <option value=Soltero selected *ngIf="empleado.estadoCivil != null && empleado.estadoCivil == Soltero" hidden>Soltero</option>
+          <option value=Casado selected *ngIf="empleado.estadoCivil != null && empleado.estadoCivil == Casado" hidden>Casado</option>
+          <option value=Viudo selected *ngIf="empleado.estadoCivil != null && empleado.estadoCivil == Viudo" hidden>Viudo</option>
+          <option value=Divorciado selected *ngIf="empleado.estadoCivil != null && empleado.estadoCivil == Divorciado" hidden>Divorciado</option>
+          <option value=Soltero>Soltero</option>
+          <option value=Casado>Casado</option>
+          <option value=Viudo>Viudo</option>
+          <option value=Divorciado>Divorciado</option>   
+          </select>
+      </div>
+      
+          <!--
+          <div class="input-field col s12" formGroupName="monitor"> 
+            <label for="monitor" [class.active]="form.get('monitor').value !== null">Monitor</label> 
+          <select class="form-control" name="id" formControlName="id"  >
+            <option value=null selected *ngIf="monitor.id == null" hidden>Seleccione...</option>
+            <option value={monitor.id}} selected *ngIf="monitor.id != null" hidden>{{monitor.nombreEstado}}</option>
+            <option *ngFor="let monitor of monitores" value={{monitor.id}}>{{monitor.nombreEstado}}</option>    
+            </select>
+        </div> 
+-->
+        
+    </div>
+    <div class="row">
+
+      <div class="input-field col s12">
+        <input type="number" id="numHijos" formControlName="numeroHijos">
+        <label for="numeroHijos" [class.active]="form.get('numeroHijos').value !== null">Numero de Hijos</label>
+        <small class="red-text" *ngIf="form.get('numeroHijos').value == null && form.get('numeroHijos').touched" >
+          Campo Invalido
+        </small>
+      </div>
+
+      <div class="input-field col s12">
+        <input class="form-control" data-date-format="yyyy-mm-dd" id="fechaNacimiento" formControlName="fechaNacimiento" type="date" name="fechaInicio" placeholder="Fecha de Inicio">
+        <label for="fechaNacimiento" [class.active]="form.get('fechaNacimiento').value !== null">Fecha de Nacimiento</label>
+        <small class="red-text" *ngIf="form.get('fechaNacimiento').value == null && form.get('fechaNacimiento').touched" >
+          Campo Invalido
+        </small>
+      </div>
+    
+      <div class="input-field col s12">
+        <input type="text" id="lugarNacimiento" formControlName="lugarNacimiento">
+        <label for="lugarNacimiento" [class.active]="form.get('lugarNacimiento').value !== null">Lugar de Nacimiento</label>
+        <small class="red-text" *ngIf="form.get('lugarNacimiento').value == null && form.get('lugarNacimiento').touched" >
+          Campo Invalido
+        </small>
+      </div>
+
+    
+</div>
+<div class="row">
+  
+  <div class="input-field col s12">
+    <input type="text" id="nivelCertificado" formControlName="nivelCertificado">
+    <label for="nivelCertificado" [class.active]="form.get('nivelCertificado').value !== null">Nivel de Certificación</label>
+    <small class="red-text" *ngIf="form.get('nivelCertificado').value == null && form.get('nivelCertificado').touched" >
+      Campo Invalido
+    </small>
+  </div>
+  
+  <div class="input-field col s12">
+    <input type="text" id="escuela" formControlName="escuela">
+    <label for="escuela" [class.active]="form.get('escuela').value !== null">Escuela</label>
+    <small class="red-text" *ngIf="form.get('escuela').value == null && form.get('escuela').touched" >
+      Campo Invalido
+    </small>
   </div>
 
+  <div class="input-field col s12">
+    <input type="text" id="notaAdicional" formControlName="notaAdicional">
+    <label for="notaAdicional" [class.active]="form.get('notaAdicional').value !== null">Nota Adicional</label>
+    <small class="red-text" *ngIf="form.get('notaAdicional').value == null && form.get('notaAdicional').touched" >
+      Campo Invalido
+    </small>
+  </div>
 </div>
+<div class="row">
+  
+
+  <div class="input-field col s12">
+    <input type="text" id="nota" formControlName="nota">
+    <label for="nota" [class.active]="form.get('nota').value !== null">Nota</label>
+    <small class="red-text" *ngIf="form.get('nota').value == null && form.get('nota').touched" >
+      Campo Invalido
+    </small>
+  </div> 
+
+  <div class="input-field col s12"> 
+    <label for="estado" [class.active]="form.get('estado').value !== null">Estado</label> 
+  <select class="form-control" name="estado" formControlName="estado">
+    <option value=null selected *ngIf="empleado.estado == null" hidden>--Seleccione--</option>
+    <option value=true selected *ngIf="empleado.estado != null && empleado.estado == true" hidden>Activo</option>
+    <option value=false selected *ngIf="empleado.estado != null && empleado.estado == false" hidden>Inactivo</option>
+    <option value=true>Activo</option>
+    <option value=false>Inactivo</option>  
+    </select>
+</div>
+
+<div class="input-field col s12" formGroupName="puesto"> 
+  
+  <select class="form-control" name="id" formControlName="id"  >
+  <option value=null selected *ngIf="puesto.id == null" hidden>Seleccione...</option>
+  <option value={puesto.id}} selected *ngIf="puesto.id != null" hidden>{{puesto.nombrePuesto}}</option>
+  <option *ngFor="let puesto of puestos" value={{puesto.id}}>{{puesto.nombrePuesto}}</option>    
+  </select>
+  </div>
+  <label for="puesto" [class.active]="form.get('puesto').value !== null">Puesto</label> 
+  </div>
+
+  <div class="row">
+    
+  <div class="input-field col s12" formGroupName="horasLaborales"> 
+    <label for="horasLaborales" [class.active]="form.get('horasLaborales').value !== null">Horario Laboral</label> 
+  <select class="form-control" name="id" formControlName="id"  >
+    <option value=null selected *ngIf="horasLaborales.id == null" hidden>Seleccione...</option>
+    <option value={horasLaborales.id}} selected *ngIf="horasLaborales.id != null" hidden>{{horaL.nombreHoraL}}</option>
+    <option *ngFor="let horaL of horasLaboraless" value={{horaL.id}}>{{horaL.nombreHoraL}}</option>    
+    </select>
+</div> 
+
+<div class="input-field col s12" formGroupName="usuario"> 
+  <label for="usuario" [class.active]="form.get('usuario').value !== null">Usuario</label> 
+<select class="form-control" name="id" formControlName="id"  >
+  <option value=null selected *ngIf="usuario.id == null" hidden>Seleccione...</option>
+  <option value={usuario.id}} selected *ngIf="usuario.id != null" hidden>{{usuario.nombreUsuario}}</option>
+  <option *ngFor="let usuario of usuarios" value={{usuario.id}}>{{usuario.nombreUsuario}}</option>    
+  </select>
+</div> 
+
+<div class="input-field col s12" formGroupName="direccionTrabajo"> 
+  <label for="direccionTrabajo" [class.active]="form.get('horasLaborales').value !== null">Contacto</label> 
+<select class="form-control" name="id" formControlName="id"  >
+  <option value=null selected *ngIf="direccionTrabajo.id == null" hidden>Seleccione...</option>
+  <option value={direccionTrabajo.id}} selected *ngIf="direccionTrabajo.id != null" hidden>{{direccionTrabajo.nombreContacto}}</option>
+  <option *ngFor="let direccionTrabajo of direccionesTrabajo" value={{direccionTrabajo.id}}>{{direccionTrabajo.nombreContacto}}</option>    
+  </select>
+</div> 
+</div>
+
+
+          
+        </form>
+      </div>
+
+      
+      <div class="card-action d-flex justify-content-flex-end">
+        <div class="p-1">
+          <button class="btn waves-effect cyan" routerLink="/empleado/empleado">Cancel</button>
+        </div>
+        <div class="p-1">
+          <button class="btn waves-effect green" [disabled]="form.invalid" (click)="submit()">
+            {{editMode ? 'Guardar Cambios' : 'Agregar Empleado'}}<i class="material-icons right">send</i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+

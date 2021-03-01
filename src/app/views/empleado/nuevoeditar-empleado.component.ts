@@ -1,11 +1,13 @@
-
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Contacto } from '../../models/contacto';
 import { Empleado } from '../../models/empleado';
 import { HoraLaboral } from '../../models/horaLaboral';
 import { Puesto } from '../../models/puesto';
 import { Usuario } from '../../models/usuario';
+import { ArchivosService } from '../../service/archivos';
 import { ContactoService } from '../../service/contacto.service';
 import { EmpleadoService } from '../../service/empleado.service';
 import { HorarioLabService } from '../../service/horario-lab.service';
@@ -16,37 +18,36 @@ import { UsuarioService } from '../../service/usuario.service';
   templateUrl: 'nuevoeditar-empleado.component.html'
 })
 
-export class NuevoEditarEmpleadoComponent implements OnInit{
-  empleado: Empleado = null;
-  fotografia: any;
-  imagenMin: File;
-
-  direccionesTrab: Contacto[] = [];
-  direccionTrab : string [] =[];
-  direccionTrab1 : number = 0; 
+export class NuevoEditarEmpleadoComponent implements OnInit, OnDestroy{
+  form: FormGroup;
+  editMode=false;
+  submitted=false;
+  empleado:Empleado = null;
+  @ViewChild("x", { static: true }) element2: ElementRef;
+  @Output() imagenEventChange = new EventEmitter<String>();
+  private fotografia: File;
 
   puestos: Puesto[] = [];
-  puesto : string [] =[];
-  puesto1 : number = 0;
+  puesto: string[] = [];
 
+  direccionesTrabajo: Contacto[] = [];
+  direccionTrabajo: string[] = [];
+/*
   responsables: Empleado[] = [];
-  responsable : string [] =[];
-  responsable1 : number = 0;
+  responsable: string[] = [];
 
   monitores: Empleado[] = [];
-  monitor : string [] =[];
-  monitor1 : number = 0;
-
-  horasLab: HoraLaboral[] = [];
-  horaLab : string [] =[];
-  horaLab1 : number = 0;
+  monitor: string[] = [];
+*/
+  horasLaboraless: HoraLaboral[] = [];
+  horasLaborales: string[] = [];
 
   usuarios: Usuario[] = [];
-  usuario : string [] =[];
-  usuario1 : number = 0;
-
-  id: number = this.activatedRoute.snapshot.params.id;
+  usuario: string[] = [];
   
+ id: number = this.activatedRoute.snapshot.params.id;
+  
+ finishObservable: Subscription;
   
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -55,72 +56,204 @@ export class NuevoEditarEmpleadoComponent implements OnInit{
     private contactoService: ContactoService,
     private puestoService: PuestoService,
     private horaLabService: HorarioLabService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private render: Renderer2,
+    private archivosService: ArchivosService,
     ) { }
   
   ngOnInit(): void {
     this.cargarContacto();
     this.cargarPuesto();
-    this.cargarResponsable();
+    //this.cargarResponsable();
     this.cargarHorasLab();
     this.cargarUsuario();
-    this.cargarMonitor();
-    if (this.id != null){
-      this.empleadoService.detail(this.id).subscribe(
-        data => {
-          this.empleado = data;
-          this.direccionTrab1 = data.direccionTrabajo.id;
-          this.puesto1 = data.idPuesto.id;
-          this.responsable1 = data.idResponsable.id;
-          this.monitor1 = data.idMonitor.id;
-          this.horaLab1 = data.horasLaborales.id;
-          this.usuario1 = data.idUsuario.id;
-        },
-        err => {
-          console.log(err);
-         
-        }
-      );
-      this.empleado = new Empleado(this.responsable);
-    }
-    else{
-      this.empleado = new Empleado(this.responsable);
-    }
-  }
-
-  onFileChange(event) {
-    this.fotografia = event.target.files[0];
-    const fr = new FileReader();
-    fr.onload = (evento: any) => {
-      this.imagenMin = evento.target.result;
-    };
-    fr.readAsDataURL(this.fotografia);
-  }
-
-  insertar(empleado: Empleado){
-    this.empleadoService.save(empleado).subscribe(
-      data => {
-      },
-      err => {
-        
+    //this.cargarMonitor();
+    this.activatedRoute.paramMap.subscribe(paramMap =>{
+      if (paramMap.has('id')) {
+        this.editMode=true;
+        const id = paramMap.get('id')
+        console.log(id);
+        this.empleadoService.detail(parseInt(paramMap.get('id'))).subscribe(emple =>{
+          this.empleado = emple;
+          if (this.empleado.fotografia != "Ninguna") {
+            this.archivosService.uploadImagen(this.empleado.fotografia).subscribe(model => {
+              let url = window.URL.createObjectURL(model);
+            }, err => {
+              console.log(err)
+            });
+          }
+          this.initForm();
+        });
+      }else{
+        this.empleado = new Empleado();
+        this.initForm();
       }
-    );
+    })
   }
 
-  actualizar(id: number,empleado: Empleado){
-    this.empleadoService.update(id,empleado).subscribe(
-      data => {
-      },
-      err => {
+  ngOnDestroy(): void {
+    if (this.finishObservable != null) {
+      this.finishObservable.unsubscribe();
+    }
+
+  }
+
+  cargarImagen(event) {
+
+    let imagen = event.target.files;
+
+    let url = window.URL.createObjectURL(imagen[0]);
+    this.render.setAttribute(this.element2.nativeElement, "src", url);
+
+    if (imagen.length > 0) {
+
+      this.fotografia = imagen[0];
+    } else {
+      this.fotografia = null;
+    }
+   this.changeNameServidor(this.fotografia);
+  }
+
+  initForm(){
+    this.form = new FormGroup({
+      nombreEmpleado: new FormControl(this.empleado ? this.empleado.nombreEmpleado : null, {
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$')]
+      }),
+
+      direccionPrivada: new FormControl(this.empleado ? this.empleado.direccionPrivada : null, {
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$')]
+      }),
+      
+      categoria: new FormControl(this.empleado ? this.empleado.categoria : null, {
+        updateOn: 'change',
+        validators: [Validators.required]
+      }),
+      
+      tituloTrabajo: new FormControl(this.empleado ? this.empleado.tituloTrabajo : null, {
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$')]
+      }),
+
+      contactoEmergencia: new FormControl(this.empleado ? this.empleado.contactoEmergencia : null, {
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$')]
+      }),
+
+      telefonoEmergencia: new FormControl(this.empleado ? this.empleado.telefonoEmergencia : null, {
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('[0-9]{10}')]
+      }),
+
+      kmCasaTrabajo: new FormControl(this.empleado ? this.empleado.kmCasaTrabajo : null, {
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('[0-9]')]
+      }),
+
+      sexo: new FormControl(this.empleado ? this.empleado.sexo: null,{
+        updateOn: 'change',
+        validators: [Validators.required]
+      }),
+
+      estadoCivil: new FormControl(this.empleado ? this.empleado.estadoCivil: null,{
+        updateOn: 'change',
+        validators: [Validators.required]
+      }),
+
+      numeroHijos: new FormControl(this.empleado ? this.empleado.numeroHijos : null, {
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('[0-9]')]
+      }),
+
+      fechaNacimiento: new FormControl(this.empleado ? this.empleado.fechaNacimiento : null, {
+        updateOn: 'change',
+        validators: [Validators.required]
+      }),
+
+      lugarNacimiento: new FormControl(this.empleado ? this.empleado.lugarNacimiento : null, {
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$')]
+      }),
+
+      nivelCertificado: new FormControl(this.empleado ? this.empleado.nivelCertificado : null, {
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$')]
+      }),
+
+      escuela: new FormControl(this.empleado ? this.empleado.escuela : null, {
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$')]
+      }),
+
+      notaAdicional: new FormControl(this.empleado ? this.empleado.notaAdicional : null, {
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$')]
+      }),
+
+      nota: new FormControl(this.empleado ? this.empleado.nota : null, {
+        updateOn: 'change',
+        validators: [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$')]
+      }),
+
+      estado: new FormControl(this.empleado ? this.empleado.estado: null,{
+        updateOn: 'change',
+        validators: [Validators.required]
+      }),
+
+      puesto: new FormGroup({
+        id: new FormControl(this.empleado ? this.empleado.puesto: null,{
+          updateOn: 'change',
+          validators: [Validators.required]
+        }),
         
-      }
-    );
+      }),
+
+      horasLaborales: new FormGroup({
+        id: new FormControl(this.empleado ? this.empleado.horasLaborales: null,{
+          updateOn: 'change',
+          validators: [Validators.required]
+        }),
+          
+      }),
+
+      usuario: new FormGroup({
+        id: new FormControl(this.empleado ? this.empleado.usuario: null,{
+          updateOn: 'change',
+          validators: [Validators.required]
+        }),
+        
+      }),
+             
+      direccionTrabajo: new FormGroup({
+        id: new FormControl(this.empleado ? this.empleado.direccionTrabajo: null,{
+          updateOn: 'change',
+          //validators: [Validators.required]
+        }),
+        
+         }),
+/*
+            responsable: new FormGroup({
+              id: new FormControl(this.empleado ? this.empleado.idResponsable.id: null,{
+                updateOn: 'change',
+              }),
+              
+               }),
+
+               monitor: new FormGroup({
+                id: new FormControl(this.empleado ? this.empleado.idMonitor.id: null,{
+                  updateOn: 'change',
+                }),
+                
+                 }),
+*/                   
+    });
   }
 
   cargarContacto(): void {
     this.contactoService.lista().subscribe(
       data => {
-        this.direccionesTrab = data;
+        this.direccionesTrabajo = data;
       },
       err => {
         console.log(err);
@@ -138,7 +271,7 @@ export class NuevoEditarEmpleadoComponent implements OnInit{
       }
     );
   }
-
+/*
   cargarResponsable(): void {
     this.empleadoService.lista().subscribe(
       data => {
@@ -160,11 +293,11 @@ export class NuevoEditarEmpleadoComponent implements OnInit{
       }
     );
   }
-
+*/
   cargarHorasLab(): void {
     this.horaLabService.lista().subscribe(
       data => {
-        this.horasLab = data;
+        this.horasLaboraless = data;
       },
       err => {
         console.log(err);
@@ -182,52 +315,94 @@ export class NuevoEditarEmpleadoComponent implements OnInit{
       }
     );
   }
+  
 
-  onCreate(): void {
-    this.direccionTrab.push(this.direccionTrab1.toString(),"");
-    this.puesto.push(this.puesto1.toString(),"");
-    this.responsable.push(this.responsable1.toString(),"");
-    this.monitor.push(this.monitor1.toString(),"");
-    this.horaLab.push(this.horaLab1.toString(),"");
-    this.usuario.push(this.usuario1.toString(),"");
-    if(this.id!=null){
-      this.empleado.direccionTrabajo.id = this.direccionTrab1;
-      this.empleado.idPuesto.id = this.puesto1;
-      this.empleado.idResponsable.id = this.responsable1;
-      this.empleado.idMonitor.id = this.monitor1;
-      this.empleado.horasLaborales.id = this.horaLab1;
-      this.empleado.idUsuario.id = this.usuario1;
-      this.empleadoService.upload(this.fotografia).subscribe(
-        data => {
-          this.empleado.fotografia = data;
-          setTimeout(() => {
-            this.actualizar(this.id,this.empleado);
-            this.router.navigate(['/']);
-          }, 1000);
-        },
-        err => {
-          alert(err.error.mensaje);
-        }
-      );
+  submit(){
+  
+    if (this.form.invalid) {
+      return alert("form inavalido")
+  
     }
-    else{
-      this.empleado.setResponsable(new Empleado(this.responsable));
-      this.empleado.setMonitor(new Empleado(this.monitor));
-      this.empleado.setHorasLaborales(new HoraLaboral(this.horaLab));
-      this.empleadoService.upload(this.fotografia).subscribe(
-        data => {
-          this.empleado.fotografia = data;
-          setTimeout(() => {
-            this.insertar(this.empleado);
-            this.router.navigate(['/']);
-          }, 1000);
-        },
-        err => {
+    
+    else if(this.id!= null){
+      if(this.fotografia !=null && this.fotografia.name != this.empleado.fotografia){
+        let formData1 = new FormData();
+        formData1.append("imagenU", this.fotografia,this.changeNameServidor(this.fotografia));
+         this.archivosService.updateImagen(this.empleado.fotografia, formData1).subscribe(model => {
+           this.empleado = this.form.value;
+          this.empleado.fotografia = model.mensaje
+
+          this.empleadoService.update(this.id, this.empleado).subscribe(model => {
+            this.changeImagenUpdate(this.empleado.fotografia);
+            alert(model.mensaje);
+            this.router.navigate(['/empleado/empleado']);
+          }, err => {
+            alert(err.error.mensaje);
+          }); 
+        }, err => {
+          console.log(err.error.mensaje);
+        });
+      }else{
+        this.empleado = this.form.value
+        this.empleadoService.update(this.id, this.empleado).subscribe(model => {
+          alert(model.mensaje);
+          this.router.navigate(['/empleado/empleado']);
+        }, err => {
           alert(err.error.mensaje);
+        });
+      }
+    } else {
+      if (this.fotografia != null) {
+        let formData1 = new FormData();
+
+        formData1.append("imagen", this.fotografia,this.changeNameServidor(this.fotografia));
+
+        this.finishObservable = this.archivosService.saveImagen(formData1).subscribe(model => {
+
+          let path = model.mensaje;
+
+          if (this.empleado != null) {
+            this.empleado = this.form.value;
+            this.empleado.fotografia = path;
+            this.empleadoService.save(this.empleado).subscribe(model => {
+              alert(model.mensaje);
+              this.router.navigate(['/empleado/empleado']);
+            }, err => {
+              alert(err.error.mensaje);
+            });
+          }
+        });
+      } else {
+        if (this.empleado != null) {
+          this.empleado = this.form.value;
+          this.empleado.fotografia = "Ninguna";
+          this.empleadoService.save(this.empleado).subscribe(model => {
+            alert(model.mensaje);
+            this.router.navigate(['/empleado/empleado']);
+          }, err => {
+            alert(err.error.mensaje);
+          });
         }
-      );
+      }
     }
-    this.router.navigate(['/empleado/horarioT/listarHorarioT']);
+    } 
+    
+    changeNameServidor(nombreArchivo : File): string{
+
+      let modificador = nombreArchivo.name.split('.');
+  
+      let nR = Math.round(Math.random() * 100);
+      
+      let nuevoNombre = modificador[0]+nR+new Date().getHours()+new Date().getMinutes()+new Date().getSeconds()+"."+modificador[1];
+  
+      return nuevoNombre;
+    }
+
+    changeImagenUpdate(nombrePath : String){
+      let idUserActive = parseInt(window.sessionStorage.getItem("ValueUs"));
+    if(this.id == idUserActive){
+      this.imagenEventChange.emit(window.URL.createObjectURL(nombrePath));
+    }
+    }
   }
 
-}
