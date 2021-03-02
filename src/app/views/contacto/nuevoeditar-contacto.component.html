@@ -1,219 +1,271 @@
-<div class="row">
-  <div class="col s12 m12">
-    <div *ngIf="ferm" class="card" class="card blue-grey lighten-5">
-      <div class="card-content">
-        <span class="card-title">{{editMode ? 'Editar' : 'Nuevo'}} Contacto</span>
-        <form [formGroup]="ferm">
-          <div class="row">
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-header" style="background-color: #20a8d8; color: white;">
+          <strong>Cargar</strong> Imagen
+        </div>
+        <div class="card-body">
+          <div class="col-md-12">
+            <img #imagenI src="../../../assets//img/avatars/perfil.png" class="imagenes1 img-avatar"
+              alt="admin@bootstrapmaster.com" title="imagen" />
+          </div>
+          <br>
+          <div class="form-group">
             <div class="row">
-
-              <div class="input-field col s6">
-                <input type="text" id="nombreContacto" formControlName="nombreContacto">
-                <label for="nombreContacto"
-                  [class.active]="ferm.get('nombreContacto').value !== null">NombreContacto</label>
-                <small class="red-text"
-                  *ngIf="ferm.get('nombreContacto').value == null && ferm.get('nombreContacto').touched && ferm.get('nombreContacto').errors?.required">
-                  *Campo Invalido
-                </small>
-                <small class="red-text"
-                  *ngIf="ferm.get('nombreContacto').dirty && ferm.get('nombreContacto').errors?.required">
-                  *Campo no debe estar vacio
-                </small>
-                <small class="red-text" *ngIf="ferm.get('nombreContacto').errors?.pattern">
-                  *El campo solo debe llevar letras
-                </small>
-                <div class="input-field col s6">
-                  <input type="text" id="calle" formControlName="calle">
-                  <label for="calle" [class.active]="ferm.get('calle').value !== null">Calle</label>
-                  <small class="red-text"
-                    *ngIf="ferm.get('calle').value == null && ferm.get('calle').touched && ferm.get('calle').errors?.required">
-                    *Campo Invalido
-                  </small>
-                  <small class="red-text" *ngIf="ferm.get('calle').dirty && ferm.get('calle').errors?.required">
-                    *Campo no debe estar vacio
-                  </small>
-                  <small class="red-text" *ngIf="ferm.get('calle').errors?.pattern">
-                    *El campo solo debe llevar letras
-                  </small>
-                </div>
-                <div class="input-field col s6">
-                  <input type="text" id="calleSecundaria" formControlName="calleSecundaria">
-                  <label for="calleSecundaria"
-                    [class.active]="ferm.get('calleSecundaria').value !== null">calleSecundaria</label>
-                  <small class="red-text"
-                    *ngIf="ferm.get('calleSecundaria').value == null && ferm.get('calleSecundaria').touched && ferm.get('calleSecundaria').errors?.required">
-                    *Campo Invalido
-                  </small>
-                  <small class="red-text"
-                    *ngIf="ferm.get('calleSecundaria').dirty && ferm.get('calleSecundaria').errors?.required">
-                    *Campo no debe estar vacio
-                  </small>
-                  <small class="red-text" *ngIf="ferm.get('calleSecundaria').errors?.pattern">
-                    *El campo solo debe llevar letras
-                  </small>
-                </div>
-                <div class="input-field col s3">
-                  <input type="text" id="ciudad" formControlName="ciudad">
-                  <label for="ciudad" [class.active]="ferm.get('ciudad').value !== null">ciudad</label>
-                  <small class="red-text"
-                    *ngIf="ferm.get('ciudad').value == null && ferm.get('ciudad').touched && ferm.get('ciudad').errors?.required">
-                    *Campo Invalido
-                  </small>
-                  <small class="red-text" *ngIf="ferm.get('ciudad').dirty && ferm.get('ciudad').errors?.required">
-                    *Campo no debe estar vacio
-                  </small>
-                  <small class="red-text" *ngIf="ferm.get('ciudad').errors?.pattern">
-                    *El campo solo debe llevar letras
-                  </small>
-                </div>
-                <div class="input-field col s3">
-                  <input type="text" id="codigoPostal" formControlName="codigoPostal">
-                  <label for="codigoPostal"
-                    [class.active]="ferm.get('codigoPostal').value !== null">codigoPostal</label>
-                  <small class="red-text"
-                    *ngIf="ferm.get('codigoPostal').value == null && ferm.get('codigoPostal').touched && ferm.get('codigoPostal').errors?.required">
-                    *Campo Invalido
-                  </small>
-                  <small class="red-text"
-                    *ngIf="ferm.get('codigoPostal').dirty && ferm.get('codigoPostal').errors?.required">
-                    *Campo no debe estar vacio
-                  </small>
-                  <small class="red-text" *ngIf="ferm.get('codigoPostal').errors?.pattern">
-                    *El campo solo debe llevar numeros y deben ser solo 5
-                  </small>
-                </div>
-                <div class="input-field col s3">
-                  <input type="text" id="nif" formControlName="nif">
-                  <label for="nif" [class.active]="ferm.get('nif').value !== null">Nif</label>
-                  <small class="red-text"
-                    *ngIf="ferm.get('nif').value == null && ferm.get('nif').touched && ferm.get('nif').errors?.required">
-                    *Campo Invalido
-                  </small>
-                  <small class="red-text" *ngIf="ferm.get('nif').dirty && ferm.get('nif').errors?.required">
-                    *Campo no debe estar vacio
-                  </small>
-                  <small class="red-text" *ngIf="ferm.get('nif').errors?.pattern">
-                    *El campo solo debe llevar numeros y deben ser solo 13
-                  </small>
-                </div>
-                <div class="input-field col s3">
-                  <input type="text" id="puestoTrabajo" formControlName="puestoTrabajo">
-                  <label for="puestoTrabajo"
-                    [class.active]="ferm.get('puestoTrabajo').value !== null">puestoTrabajo</label>
-                  <small class="red-text"
-                    *ngIf="ferm.get('puestoTrabajo').value == null && ferm.get('puestoTrabajo').touched && ferm.get('puestoTrabajo').errors?.required">
-                    *Campo Invalido
-                  </small>
-                  <small class="red-text"
-                    *ngIf="ferm.get('puestoTrabajo').dirty && ferm.get('puestoTrabajo').errors?.required">
-                    *Campo no debe estar vacio
-                  </small>
-                  <small class="red-text" *ngIf="ferm.get('puestoTrabajo').errors?.pattern">
-                    *El campo solo debe llevar letras
-                  </small>
-                </div>
-                <div class="input-field col s3">
-                  <input type="text" id="telefono" formControlName="telefono">
-                  <label for="telefono" [class.active]="ferm.get('telefono').value !== null">telefono</label>
-                  <small class="red-text"
-                    *ngIf="ferm.get('telefono').value == null && ferm.get('telefono').touched && ferm.get('telefono').errors?.required">
-                    *Campo Invalido
-                  </small>
-                  <small class="red-text" *ngIf="ferm.get('telefono').dirty && ferm.get('telefono').errors?.required">
-                    *Campo no debe estar vacio
-                  </small>
-                  <small class="red-text" *ngIf="ferm.get('telefono').errors?.pattern">
-                    *El campo solo debe llevar numeros y deben ser solo 10
-                  </small>
-                </div>
-                <div class="input-field col s3">
-                  <input type="text" id="movil" formControlName="movil">
-                  <label for="movil" [class.active]="ferm.get('movil').value !== null">movil</label>
-                  <small class="red-text"
-                    *ngIf="ferm.get('movil').value == null && ferm.get('movil').touched && ferm.get('movil').errors?.required">
-                    *Campo Invalido
-                  </small>
-                  <small class="red-text" *ngIf="ferm.get('movil').dirty && ferm.get('movil').errors?.required">
-                    *Campo no debe estar vacio
-                  </small>
-                  <small class="red-text" *ngIf="ferm.get('movil').errors?.pattern">
-                    *El campo solo debe llevar numeros y deben ser solo 10
-                  </small>
-                </div>
-                <div class="input-field col s3">
-                  <input type="text" id="correoElectronico" formControlName="correoElectronico">
-                  <label for="correoElectronico"
-                    [class.active]="ferm.get('correoElectronico').value !== null">correoElectronico</label>
-                  <small class="red-text"
-                    *ngIf="ferm.get('correoElectronico').value == null && ferm.get('correoElectronico').touched && ferm.get('correoElectronico').errors?.required">
-                    *Campo Invalido
-                  </small>
-                  <small class="red-text"
-                    *ngIf="ferm.get('correoElectronico').dirty && ferm.get('correoElectronico').errors?.required">
-                    *Campo no debe estar vacio
-                  </small>
-                  <small class="red-text" *ngIf="ferm.get('correoElectronico').errors?.pattern">
-                    *Escribe un correo valido
-                  </small>
-                </div>
-                <div class="input-field col s3">
-                  <input type="text" id="sitioWeb" formControlName="sitioWeb">
-                  <label for="sitioWeb" [class.active]="ferm.get('sitioWeb').value !== null">sitioWeb</label>
-                  <small class="red-text"
-                    *ngIf="ferm.get('sitioWeb').value == null && ferm.get('correoElectronico').touched && ferm.get('sitioWeb').errors?.required">
-                    *Campo Invalido
-                  </small>
-                  <small class="red-text" *ngIf="ferm.get('sitioWeb').dirty && ferm.get('sitioWeb').errors?.required">
-                    *Campo no debe estar vacio
-                  </small>
-                  <small class="red-text" *ngIf="ferm.get('sitioWeb').errors?.pattern">
-                    *Escribe una direccion valida
-                  </small>
-                </div>
-              </div>
-           
-            </div>
-            <div class="input-field col s6">
-              <input type="text" id="notas" formControlName="notas">
-              <label for="notas" [class.active]="ferm.get('notas').value !== null">notas</label>
-              <small class="red-text"
-                *ngIf="ferm.get('notas').value == null && ferm.get('notas').touched && ferm.get('notas').errors?.required">
-                *Campo Invalido
-              </small>
-              <small class="red-text" *ngIf="ferm.get('notas').dirty && ferm.get('notas').errors?.required">
-                *Campo no debe estar vacio
-              </small>
-            </div>
-            <div class="row">
-              <div class="input-field col s6" formGroupName="estado">
-                <label for="estado" [class.active]="ferm.get('estado').value !== null">Estado</label>
-                <select class="form-control" name="id" formControlName="id">
-                  <option value=null selected *ngIf="estado.id == null" hidden>Seleccione...</option>
-                  <option value={estado.id}} selected *ngIf="estado.id != null" hidden>{{estado.nombreEstado}}</option>
-                  <option *ngFor="let estado of estados" value={{estado.id}}>{{estado.nombreEstado}}</option>
-                </select>
-              </div>
-              <div class="input-field col s6" formGroupName="titulo">
-                <label for="titulo" [class.active]="ferm.get('titulo').value !== null">titulo</label>
-                <select class="form-control" name="id" formControlName="id">
-                  <option value=null selected *ngIf="titulo.id == null" hidden>Seleccione...</option>
-                  <option value={titulo.id}} selected *ngIf="titulo.id != null" hidden>{{titulo.titulo}}</option>
-                  <option *ngFor="let titulo of titulos" value={{titulo.id}}>{{titulo.titulo}}</option>
-                </select>
+              <div class="col-md-12">
+                <label for="formFileSm" class="form-label"><b>Carga una imagen:</b></label>
+                <input id="formFileSm" name="cargarImagen" type="file" class="form-control" accept="image/*"
+                  (change)="cargarImagen($event)">
               </div>
             </div>
           </div>
-        </form>
-      </div>
-      <div class="card-action d-flex justify-content-flex-end">
-        <div class="p-1">
-          <button class="btn waves-effect cyan" routerLink="/contacto/contacto">Cancel</button>
         </div>
-        <div class="p-1">
-          <button class="btn waves-effect green" [disabled]="ferm.invalid" (click)="submit()">
-            {{editMode ? 'Guardar Cambios' : 'Agregar Contacto'}}<i class="material-icons right">send</i></button>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div *ngIf="ferm" class="card">
+        <div class="card-header" style="background-color: #20a8d8; color: white;">
+          <h5><span class="card-title">{{editMode ? 'Editar' : 'Nuevo'}} Contacto</span></h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="ferm">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-4">
+                  <label for="nombreContacto" [class.active]="ferm.get('nombreContacto').value !== null"><b>Nombre
+                      Contacto:</b></label>
+                  <input type="text" formControlName="nombreContacto" name="nombreContacto" placeholder="nombreContacto"
+                    class="form-control" required>
+                  <small class="text-danger"
+                    *ngIf="ferm.get('nombreContacto').value == null && ferm.get('nombreContacto').touched && ferm.get('nombreContacto').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="text-danger"
+                    *ngIf="ferm.get('nombreContacto').dirty && ferm.get('nombreContacto').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('nombreContacto').errors?.pattern">
+                    *El campo solo debe llevar letras
+                  </small>
+                </div>
+                <div class="col-md-4">
+                  <label for="calle"><b>calle:</b></label>
+                  <input type="text" formControlName="calle" name="calle" placeholder="calle" class="form-control"
+                    required>
+                  <small class="text-danger"
+                    *ngIf="ferm.get('calle').value == null && ferm.get('calle').touched && ferm.get('calle').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('calle').dirty && ferm.get('calle').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('calle').errors?.pattern">
+                    *El campo solo debe llevar letras
+                  </small>
+                </div>
+                <div class="col-md-4">
+                  <label for="calleSecundaria"><b>calleSecundaria:</b></label>
+                  <input type="text" formControlName="calleSecundaria" name="calleSecundaria"
+                    placeholder="calleSecundaria" class="form-control" required>
+                  <small class="text-danger"
+                    *ngIf="ferm.get('calleSecundaria').value == null && ferm.get('calleSecundaria').touched && ferm.get('calleSecundaria').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="text-danger"
+                    *ngIf="ferm.get('calleSecundaria').dirty && ferm.get('calleSecundaria').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('calleSecundaria').errors?.pattern">
+                    *El campo solo debe llevar letras
+                  </small>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <div class="col-md-3">
+                  <label for="puestoTrabajo" [class.active]="ferm.get('puestoTrabajo').value !== null"><b>puesto
+                      Trabajo:</b></label>
+                  <input type="text" formControlName="puestoTrabajo" name="puestoTrabajo" placeholder="puestoTrabajo"
+                    class="form-control" required>
+                  <small class="text-danger"
+                    *ngIf="ferm.get('puestoTrabajo').value == null && ferm.get('puestoTrabajo').touched && ferm.get('puestoTrabajo').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="text-danger"
+                    *ngIf="ferm.get('puestoTrabajo').dirty && ferm.get('puestoTrabajo').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('puestoTrabajo').errors?.pattern">
+                    *El campo solo debe llevar letras
+                  </small>
+                </div>
+                <div class="col-md-3">
+                  <label for="codigoPostal"><b>codigoPostal:</b></label>
+                  <input type="text" formControlName="codigoPostal" name="codigoPostal" placeholder="codigoPostal"
+                    class="form-control" required>
+                  <small class="text-danger"
+                    *ngIf="ferm.get('codigoPostal').value == null && ferm.get('codigoPostal').touched && ferm.get('codigoPostal').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="text-danger"
+                    *ngIf="ferm.get('codigoPostal').dirty && ferm.get('codigoPostal').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('codigoPostal').errors?.pattern">
+                    *El campo solo debe llevar numeros y deben ser solo 5
+                  </small>
+                </div>
+                <div class="col-md-3">
+                  <label for="ciudad"><b>ciudad:</b></label>
+                  <input type="text" formControlName="ciudad" name="ciudad" placeholder="ciudad" class="form-control"
+                    required>
+                  <small class="text-danger"
+                    *ngIf="ferm.get('ciudad').value == null && ferm.get('ciudad').touched && ferm.get('ciudad').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('ciudad').dirty && ferm.get('ciudad').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('ciudad').errors?.pattern">
+                    *El campo solo debe llevar letras
+                  </small>
+                </div>
+                <div class="col-md-3" formGroupName="estado">
+                  <label for="estado" [class.active]="ferm.get('estado').value !== null"><b>Estado</b></label>
+                  <select class="form-control" name="id" formControlName="id">
+                    <option value=null selected *ngIf="estado.id == null" hidden>Seleccione...</option>
+                    <option value={estado.id}} selected *ngIf="estado.id != null" hidden>{{estado.nombreEstado}}
+                    </option>
+                    <option *ngFor="let estado of estados" value={{estado.id}}>{{estado.nombreEstado}}</option>
+                  </select>
+                </div>
+              </div>
+
+            
+              <div class="row">
+                <div class="col-md-5" formGroupName="titulo">
+                  <label for="titulo" [class.active]="ferm.get('titulo').value !== null"><b>titulo</b></label>
+                  <select class="form-control" name="id" formControlName="id">
+                    <option value=null selected *ngIf="titulo.id == null" hidden>Seleccione...</option>
+                    <option value={titulo.id}} selected *ngIf="titulo.id != null" hidden>{{titulo.titulo}}</option>
+                    <option *ngFor="let titulo of titulos" value={{titulo.id}}>{{titulo.titulo}}</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label for="nif" [class.active]="ferm.get('nif').value !== null"><b>nif
+                      Trabajo:</b></label>
+                  <input type="text" formControlName="nif" name="nif" placeholder="nif"
+                    class="form-control" required>
+                    <small class="text-danger"
+                    *ngIf="ferm.get('nif').value == null && ferm.get('nif').touched && ferm.get('nif').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('nif').dirty && ferm.get('nif').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('nif').errors?.pattern">
+                    *El campo solo debe llevar numeros y deben ser solo 13
+                  </small>
+                </div>
+                <div class="col-md-2">
+                  <label for="telefono"><b>telefono:</b></label>
+                  <input type="text" formControlName="telefono" name="telefono" placeholder="telefono"
+                    class="form-control" required>
+                    <small class="text-danger"
+                    *ngIf="ferm.get('telefono').value == null && ferm.get('telefono').touched && ferm.get('telefono').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('telefono').dirty && ferm.get('telefono').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('telefono').errors?.pattern">
+                    *El campo solo debe llevar numeros y deben ser solo 10
+                  </small>
+                </div>
+                <div class="col-md-2">
+                  <label for="movil"><b>movil:</b></label>
+                  <input type="text" formControlName="movil" name="movil" placeholder="movil" class="form-control"
+                    required>
+                    <small class="text-danger"
+                    *ngIf="ferm.get('movil').value == null && ferm.get('movil').touched && ferm.get('movil').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('movil').dirty && ferm.get('movil').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('movil').errors?.pattern">
+                    *El campo solo debe llevar numeros y deben ser solo 10
+                  </small>
+                </div>
+              </div>
+
+
+              <div class="row">
+                
+                <div class="col-md-4">
+                  <label for="correoElectronico" [class.active]="ferm.get('correoElectronico').value !== null"><b>correoElectronico
+                      Trabajo:</b></label>
+                  <input type="email" formControlName="correoElectronico" name="correoElectronico" placeholder="correoElectronico"
+                    class="form-control" required>
+                    <small class="text-danger"
+                    *ngIf="ferm.get('correoElectronico').value == null && ferm.get('correoElectronico').touched && ferm.get('correoElectronico').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="text-danger"
+                    *ngIf="ferm.get('correoElectronico').dirty && ferm.get('correoElectronico').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('correoElectronico').errors?.pattern">
+                    *Escribe un correo valido
+                  </small>
+                </div>
+                <div class="col-md-4">
+                  <label for="sitioWeb"><b>sitioWeb:</b></label>
+                  <input type="url" formControlName="sitioWeb" name="sitioWeb" placeholder="sitioWeb"
+                    class="form-control" required>
+                    <small class="text-danger"
+                    *ngIf="ferm.get('sitioWeb').value == null && ferm.get('correoElectronico').touched && ferm.get('sitioWeb').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('sitioWeb').dirty && ferm.get('sitioWeb').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('sitioWeb').errors?.pattern">
+                    *Escribe una direccion valida
+                  </small>
+                </div>
+                <div class="col-md-4">
+                  <label for="notas"><b>notas:</b></label>
+                  <input type="text" formControlName="notas" name="notas" placeholder="notas" class="form-control"
+                    required>
+                    <small class="text-danger"
+                    *ngIf="ferm.get('notas').value == null && ferm.get('notas').touched && ferm.get('notas').errors?.required">
+                    *Campo Invalido
+                  </small>
+                  <small class="text-danger" *ngIf="ferm.get('notas').dirty && ferm.get('notas').errors?.required">
+                    *Campo no debe estar vacio
+                  </small>
+                </div>
+              </div>
+
+
+
+            </div>
+          </form>
+          <div class="card-action d-flex justify-content-flex-end">
+            <div class="p-1">
+              <button class="btn btn-danger btn-outline-dark" routerLink="/contacto/contacto">Cancel</button>
+            </div>
+            <div class="p-1">
+              <button class="btn  btn-success btn-outline-dark" [disabled]="ferm.invalid" (click)="submit()">
+                {{editMode ? 'Guardar Cambios' : 'Agregar Contacto'}}<i class="material-icons right"></i></button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+
+  

@@ -1,120 +1,44 @@
-<div class="row">
-  <div   class="col s12 m12">
-    <div *ngIf="ferm"  class="card" class="card blue-grey lighten-5">
-      <div  class="card-content">
-        <span class="card-title">{{editMode ? 'Editar' : 'Nuevo'}} Titulo</span>
-        <form [formGroup]="ferm" >
-          <div class="row">
-
-            <div class="input-field col s12">
-              <input type="text" id="titulo" formControlName="titulo">
-              <label for="titulo" [class.active]="ferm.get('titulo').value !== null" >Titulo</label>
-              <small class="red-text" *ngIf="ferm.get('titulo').value == null && ferm.get('titulo').touched">
-                Campo Invalido
-              </small>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <div *ngIf="ferm" class="card">
+        <div class="card-header" style="background-color: #20a8d8; color: white;">
+          <h5><span class="card-title">{{editMode ? 'Editar' : 'Nuevo'}} Titulo</span></h5>    
+        </div>
+        <div class="card-body">
+          <form [formGroup]="ferm">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="titulo"><b>Nombre titulo:</b></label>
+                  <input type="text" formControlName="titulo" name="titulo" placeholder="titulo" class="form-control"
+                    required>
+                  <small class="text-danger" *ngIf="ferm.get('titulo').value == null && ferm.get('titulo').touched">
+                    Campo Invalido
+                  </small>
+                </div>
+                <div class="col-md-6">
+                  <label for="abreviatura"><b>Abreviatura:</b></label>
+                  <input type="text" formControlName="abreviatura" name="abreviatura" placeholder="abreviatura"
+                    class="form-control" required>
+                  <small class="text-danger"
+                    *ngIf="ferm.get('abreviatura').value == null && ferm.get('abreviatura').touched">
+                    Campo Invalido
+                  </small>
+                </div>
+              </div>
             </div>
-
-            <div class="input-field col s12">
-              <input type="text" id="abreviatura" formControlName="abreviatura">
-              <label for="abreviatura" [class.active]="ferm.get('abreviatura').value !== null">Abreviatura</label>
-              <small class="red-text" *ngIf="ferm.get('abreviatura').value == null && ferm.get('abreviatura').touched" >
-                Campo Invalido
-              </small>
+          </form>
+          <div class="card-action d-flex justify-content-flex-end">
+            <div class="p-1">
+              <button class="btn  btn-danger btn-outline" routerLink="/contacto/titulo/listaTitulo">Cancel</button>
+            </div>
+            <div class="p-1">
+              <button class="btn btn-primary btn-outline" [disabled]="ferm.invalid" (click)="submit()">
+                {{editMode ? 'Guardar Cambios' : 'Agregar Titulo'}}<i class="material-icons right"></i></button>
             </div>
           </div>
-        </form>
-      </div>
-      <div class="card-action d-flex justify-content-flex-end">
-        <div class="p-1">
-          <button class="btn waves-effect cyan" routerLink="/contacto/titulo/listaTitulo">Cancel</button>
-        </div>
-        <div class="p-1">
-          <button class="btn waves-effect green" [disabled]="ferm.invalid" (click)="submit()">
-            {{editMode ? 'Guardar Cambios' : 'Agregar Titulo'}}<i class="material-icons right">send</i></button>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-
-
-
-
-
-<!-- <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand">Titulos</a>
-    <form class="form-inline" (ngSubmit)="onSearch()">
-        <input class="form-control mr-sm-2" type="search" name="busqueda" [(ngModel)]="busqueda" placeholder="Buscar" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-      </form>
-  </nav>
-
-<button class="btn btn-outline-success" routerLink="/contacto/titulo/agregarTitulo">Agregar</button>
-
-<table class="table table-light table-responsive-sm table-hover mb-0">
-    <thead class="table-dark">
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Titulo</th>
-        <th scope="col">Abreviatura</th>
-        <th scope="col">Detalles</th>
-        <th scope="col">Editar</th>
-        <th scope="col">Eliminar</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let titu of titulos">
-        <td>{{titu.id}}</td>
-        <td>{{titu.titulo}}</td>
-        <td>{{titu.abreviatura}}</td>
-        <td><button class="btn btn-outline-primary" routerLink="/detalle/{{titu.id}}"><i class="far fa-eye"></i> Ver</button></td> -->
-<!--   <td><button class="btn btn-outline-warning" routerLink="/contacto/titulo/agregarTitulo/{{titu.id}}"><i class="far fa-edit"></i> Editar</button></td>
-        <td><button class="btn btn-outline-danger" (click)="borrar(titu.id)"><i class="far fa-trash"></i> Eliminar</button></td> 
-    </tr>
-    </tbody>
-</table>  -->
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div class="card">
-  <div class="card-header">
-      <strong>Agregar</strong> Titulo
-  </div>
-  <div class="card-body">
-      <form [formGroup]="tituloss" (ngSubmit)="onCreate()" novalidate #f="ngForm"  >
-
-          <div class="form-group">
-              <label for="titulo">Titulo</label>
-              <input type="text" formControlName="titulo" class="form-control" [(ngModel)]="titu.titulo" [ngClass]="{
-                'is-invalid': submitted && f.titulo?.errors}">
-              <div *ngIf="submitted && f.titulo?.errors" class="invalid-feedback"></div>
-              <div *ngIf="f.titulo?.errors.required">Ingresa nombre de Titulo</div> 
-          </div>
-
-          <div class="form-group">
-            <label>Abreviatura</label>
-            <input type="text"  formControlName="abreviatura"  class="form-control" [(ngModel)]="titu.abreviatura" [ngClass]="{'is-invalid': 
-            submitted && f.abreviatura?.errors}">
-            <div *ngIf="submitted && f.abreviatura?.errors" class="invalid-feedback"></div>
-            <div *ngIf="f.abreviatura?.errors.required">Ingresa abreviatura</div>
-        </div> 
-
-           <div class="card-footer">
-              <button  type="submit" class="btn btn-sm btn-primary" > Aceptar</button>
-            <!--   <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button> -->
-<!--      </div>
-
-  </form>
-</div>
-
-</div> --> -->

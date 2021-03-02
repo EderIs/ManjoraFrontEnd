@@ -25,6 +25,8 @@ export class Contacto {
     rol: boolean;
     usuario: Usuario;
     referenciaInterna: string;
+    pathImagen: String;
+    fechaCreacion: Date;
     
 
      constructor(
@@ -47,8 +49,12 @@ export class Contacto {
         notas: string,
         rol: boolean,
         usuario: Usuario,
-        referenciaInterna: string
-    ) {
+        referenciaInterna: string,
+        nombreImagen: String,
+        fechaCreacion: Date
+      
+    ) 
+    {
         this.nombreContacto = nombreContacto;
         this.tipoContacto = tipoContacto;
         this.fotografia = fotografia;
@@ -69,6 +75,8 @@ export class Contacto {
         this.rol = rol;
         this.usuario = usuario;
         this.referenciaInterna = referenciaInterna;
+        this.pathImagen = nombreImagen;
+        this.fechaCreacion = fechaCreacion;
 
     }
     

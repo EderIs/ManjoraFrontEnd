@@ -327,7 +327,7 @@ export class CalendarioCrear implements OnInit {
           for (let index = 0; index < this.ids.length; index++) {
 
             let contacto = new Contacto(this.contactosSel.get(parseInt(this.ids[index].toString())), false, "",
-              null, "", "", "", null, null, "", "", "", "", "", "", null, "", false, null, "");
+              null, "", "", "", null, null, "", "", "", "", "", "", null, "", false, null, "","",null);
 
             contacto.id = this.ids[index];
 

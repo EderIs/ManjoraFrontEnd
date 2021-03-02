@@ -5,7 +5,8 @@ import { ContactoService } from '../../service/contacto.service';
 
 @Component({
   selector: 'app-lista-contacto',
-  templateUrl: 'lista-contacto.component.html'
+  templateUrl: 'lista-contacto.component.html',
+  styleUrls: ['nuevoeditar-contacto.component.scss'],
 })
 
 export class listaContactoComponent implements OnInit, OnDestroy{
