@@ -118,5 +118,10 @@ children:[
       name:'Calendario',
       url:'calendario/calendario',
       icon:'fa fa-calendar'
+    },
+    {
+      name:'Proyecto',
+      url:'proyecto/proyecto',
+      icon:'fa fa-calendar'
     }  
 ];
