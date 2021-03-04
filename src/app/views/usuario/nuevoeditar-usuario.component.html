@@ -16,7 +16,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="usuario.nombreUsuario"><b>Usuario:</b></label>
-                                    <input type="text" [(ngModel)]="this.usuario.nombreUsuario" name="usuario.nombreUsuario"  placeholder="Usuario" class="form-control" required>
+                                    <input type="text" *ngIf="this.editarNombreUser" [(ngModel)]="this.usuario.nombreUsuario" name="usuario?.nombreUsuario"  placeholder="Usuario" class="form-control" required>
+                                    <input type="text" *ngIf="!this.editarNombreUser" [(ngModel)]="this.usuario.nombreUsuario" name="usuario?.nombreUsuario"  placeholder="Usuario" class="form-control" disabled>
                                 </div>
                             </div>
                         </div>

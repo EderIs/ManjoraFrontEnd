@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Usuario } from '../../models/usuario';
 import { ArchivosService } from '../../service/archivos';
+import { OutputsService } from '../../service/outputs.service';
 import { TokenService } from '../../service/token.service';
 import { UsuarioService } from '../../service/usuario.service';
 import { navItems, navItemsUser } from '../../_nav';
@@ -32,14 +33,19 @@ export class DefaultLayoutComponent implements OnInit , OnDestroy {
     private tokenService: TokenService,
     private usuarioService : UsuarioService,
     private archivoService : ArchivosService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private outputsService : OutputsService
   ) {
 
   }
   
   ngOnInit(): void {
 
-    let id : number =0;
+   this.outputsService.disparador.subscribe(model=>{
+
+    this.changeI(model);
+
+   });
     if (this.tokenService.getToken != null) {
       this.nombreUsuarioFont =this.tokenService.getUserName();
       this.getUserData(this.nombreUsuarioFont);

@@ -97,7 +97,11 @@ export const routes: Routes = [
       },
       {
         path:'calendario',
-        loadChildren: () => import('./views/calendario/calendario.module').then(c => c.EmpleadoModule)
+        loadChildren: () => import('./views/calendario/calendario.module').then(c => c.CalendarioModule)
+      },
+      {
+        path:'proyecto',
+        loadChildren: () => import('./views/proyecto/proyecto.module').then(p => p.ProyectoModule)
       }
     ]
   },
