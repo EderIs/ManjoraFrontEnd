@@ -19,6 +19,10 @@ export class UsuarioService {
     return this.HttpClient.get<String[]>(this.usuarioURL + 'listByEstado');
   }
 
+  public listUsuarios():Observable<Usuario[]>{
+    return this.HttpClient.get<Usuario[]>(this.usuarioURL+"listUser");
+  }
+
   public detail(id: number): Observable <Usuario> {
     return this.HttpClient.get<Usuario>(this.usuarioURL + `detail/${id}`);
   }

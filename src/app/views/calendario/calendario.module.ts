@@ -21,4 +21,4 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     CalendarioCrear
   ]
 })
-export class EmpleadoModule { }
+export class CalendarioModule { }

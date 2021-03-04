@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Usuario } from '../../models/usuario';
 import { ArchivosService } from '../../service/archivos';
+import { OutputsService } from '../../service/outputs.service';
 import { UsuarioService } from '../../service/usuario.service';
 
 @Component({
@@ -15,20 +16,21 @@ import { UsuarioService } from '../../service/usuario.service';
 
 export class NuevoEditarUsuarioComponent implements OnInit, OnDestroy {
 
-  @Output() imagenEventChange = new EventEmitter<String>();
   repContrasena: String = "";
-  usuario: Usuario = null;
+  usuario: Usuario=new Usuario("", "", "", "", null, null, false, "");
   @ViewChild("imagenI", { static: true }) element2: ElementRef;
   finishObservable: Subscription;
   private imagenCargar: File;
   idUsuario: number = (this.activateRoute.snapshot.params.id > 0) ? this.activateRoute.snapshot.params.id : 0;
-
+  perfil : boolean = (this.activateRoute.snapshot.params.perfil == "true")?true : false;
+  editarNombreUser :Boolean;
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
     private render: Renderer2,
     private archivosService: ArchivosService,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private outputsService : OutputsService
   ) { }
 
 
@@ -38,6 +40,7 @@ export class NuevoEditarUsuarioComponent implements OnInit, OnDestroy {
       this.usuarioService.detail(this.idUsuario).subscribe(model => {
         this.usuario = model;
         this.usuario.password = "";
+        this.editarNombreUser = false;
         if (this.usuario.pathImagen != "Ninguna") {
           this.archivosService.uploadImagen(this.usuario.pathImagen).subscribe(model => {
             let url = window.URL.createObjectURL(model);
@@ -50,6 +53,7 @@ export class NuevoEditarUsuarioComponent implements OnInit, OnDestroy {
         alert(err.error.mensaje);
       });
     } else {
+      this.editarNombreUser = true;
       this.usuario = new Usuario("", "", "", "", null, null, false, "");
     }
   }
@@ -89,9 +93,9 @@ export class NuevoEditarUsuarioComponent implements OnInit, OnDestroy {
             this.usuario.pathImagen = model.mensaje
 
             this.usuarioService.update(this.idUsuario, this.usuario).subscribe(model => {
-              this.changeImagenUpdate(this.usuario.pathImagen);
+              this.changeImagenUpdate(true);
               alert(model.mensaje);
-              this.router.navigate(['/usuario/listaUsuario']);
+              this.navigatePages();
             }, err => {
               alert(err.error.mensaje);
             }); 
@@ -101,7 +105,7 @@ export class NuevoEditarUsuarioComponent implements OnInit, OnDestroy {
         }else{
           this.usuarioService.update(this.idUsuario, this.usuario).subscribe(model => {
             alert(model.mensaje);
-            this.router.navigate(['/usuario/listaUsuario']);
+            this.navigatePages();
           }, err => {
             alert(err.error.mensaje);
           });
@@ -113,9 +117,7 @@ export class NuevoEditarUsuarioComponent implements OnInit, OnDestroy {
           formData1.append("imagen", this.imagenCargar,this.changeNameServidor(this.imagenCargar));
   
           this.finishObservable = this.archivosService.saveImagen(formData1).subscribe(model => {
-  
             let path = model.mensaje;
-  
             if (this.usuario != null) {
               this.usuario.fechaCreacion = new Date();
               this.usuario.pathImagen = path;
@@ -146,21 +148,33 @@ alert("La contraseña debe ser la misma");
     
   }
 
+navigatePages(){
+  if(!this.perfil){
+    this.router.navigate(['/usuario/listaUsuario']);
+  }else{
+    this.router.navigate(['/dashboard']);
+  }
+  
+}
+
   changeNameServidor(nombreArchivo : File): string{
 
     let modificador = nombreArchivo.name.split('.');
 
     let nR = Math.round(Math.random() * 100);
     
-    let nuevoNombre = modificador[0]+nR+new Date().getHours()+new Date().getMinutes()+new Date().getSeconds()+"."+modificador[1];
+    let extension = modificador[modificador.length - 1];
+
+    let nuevoNombre = modificador[0]+nR+new Date().getHours()+new Date().getMinutes()+new Date().getSeconds()+"."+extension;
 
     return nuevoNombre;
   }
 
-  changeImagenUpdate(nombrePath : String){
+  changeImagenUpdate(cierto : boolean){
     let idUserActive = parseInt(window.sessionStorage.getItem("ValueUs"));
-    if(this.idUsuario == idUserActive){
-      this.imagenEventChange.emit(window.URL.createObjectURL(nombrePath));
+    if(this.idUsuario == idUserActive && cierto == true){
+      let urlI = window.URL.createObjectURL(this.imagenCargar);
+      this.outputsService.disparador.emit(urlI);
     }
   }
 }

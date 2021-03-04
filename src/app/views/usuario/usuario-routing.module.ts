@@ -33,7 +33,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'agregarNuevo/:id',
+        path: 'agregarNuevo/:id/:perfil',
         component: NuevoEditarUsuarioComponent,
         data: {
           title: 'Usuario / Editar'
