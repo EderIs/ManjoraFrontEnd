@@ -1,0 +1,279 @@
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="card">
+            <div class="card-header head">
+                <strong style="font-size: 30px; color: white;">{{this.nota.nombre}}&nbsp;</strong>
+
+                <div class="float-right"><button class="btn btn-primary" (click)="this.openModalEditar()">Editar</button></div>
+
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12"><strong>Asignado a:</strong>
+                                    <p class="badge badge-pill badge-primary">{{this.nota.usuario.nombre}}</p>
+
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong> Notas:</strong>
+                                    <span style="font-size: 12px;"
+                                        class="badge badge-pill badge-danger">{{this.nota?.categoria?.notas?.nombreNotas}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <strong> Fecha Inicio:</strong>
+                                    <p class="badge badge-pill badge-success">{{this.nota.fechaInicio}}</p>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>Fecha Final:</strong>
+                                    <p class="badge badge-pill badge-success">{{this.nota.fechaFinal}}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="float-right">
+                    <a (click)="OpenModalActividad()" class="click"><i class="nav-icon fa fa-calendar"></i> Planificar
+                        Actividades</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Actividades pendientes -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-12 text-center ">
+                        <div class="separator">
+                            <span class="date">
+                                Actividades por realizar
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row scroll">
+                    <div class="col-md-12">
+                        <div class="list-group">
+                            <div  class="row">
+                            <a *ngFor="let actividad of this.actividadRes"
+                                class="col-md-6 list-group-item list-group-item-action colorR">
+                                <div class="d-flex w-100 justify-content-between">
+
+                                    <h5 class="mb-1">
+                                        - {{actividad.actividad}} -</h5>
+                                        <small>
+                                            <a  class="click" (click)="this.borrarActividad(actividad.id)"><i class="fa fa-times-circle fa-lg"></i></a>
+                                    </small>
+                                </div>
+                                <p class="mb-1">{{actividad.resumen}}</p>
+                                <a><i class="fa fa-user"></i>&nbsp;{{actividad.usuario.nombre}}</a>&nbsp;&nbsp;
+                                <a  class="click" (click)="moverRealizado(actividad)"><i class="fa fa-check-circle"></i>
+                                    <small>Marcar como relizado</small></a>
+                            </a>
+                        </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ---- -->
+<!-- Historial de actividades -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-12 text-center ">
+                        <div class="separator">
+                            <span class="date">
+                                Historial de actividades
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row scroll">
+                    <div class="col-md-12">
+                        <div class="list-group">
+                            <a *ngFor="let historial of this.historialAct"
+                                class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">
+                                        - {{historial.actividad}} -
+                                    </h5>
+                                    <small>{{historial.fechaEntrega}}
+                                    </small>
+
+                                </div>
+                                <p class="mb-1">{{historial.resumen}}</p>
+                                <a><i class="fa fa-user"></i>&nbsp;{{historial.usuario.nombre}}</a>&nbsp;&nbsp;
+                                <a><i class="fa fa-clock-o"></i>&nbsp;Fecha a entregar: {{historial.fechaFinal}}</a>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Seccion de modales -->
+
+<!-- Modal para editar Tarea -->
+<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{this.nota.nombre}}</h4>
+          <button type="button" class="close" (click)="myModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form id="formNota" (ngSubmit)="onCreate()"  novalidate>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="nota.nombre">Nota: </label>
+                        <input type="text" [(ngModel)]="this.nota.nombre" name="nota.nombre" class="form-control" placeholder="Nota">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="nota.nombre">Fecha final: </label>
+                        <input type="date" [(ngModel)]="this.nota.fechaFinal" name="nota.fechaFinal" class="form-control" placeholder="Fecha final">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Usuario:</label>
+                        <select class="form-control" [(ngModel)]="this.idUsuario" [ngModelOptions]="{standalone: true}" >
+                            <option value="0" >--Selecciona un Usuario--</option>
+                             <option *ngFor="let user of this.usuarios" value={{user.id}} >{{user.nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="nota.nombre">Estatus: </label>
+                      <label  class="switch switch-label switch-pill switch-success switch-sm float-right">
+                        <input type="checkbox" [(ngModel)]="this.nota.estatus"  name="checked" class="switch-input" checked>
+                        <span data-checked="On" data-unchecked="Off" class="switch-slider"></span>
+                      </label>
+                    </div>
+                </div>
+            </div>
+        </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="myModal.hide()">Cerrar</button>
+          <button type="submit"  class="btn btn-primary" form="formNota">Actualizar Nota</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <!-- Modal para crear actividades -->
+  <div bsModal #myModalA="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Actividades</h4>
+          <button type="button" class="close" (click)="myModalA.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form id="formActividad" (ngSubmit)="onCreate2()"  novalidate>
+            <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Actividad: </label>
+                            <input  type="text"  [(ngModel)]="this.actividad.actividad" name="actividad.actividad" class="form-control" placeholder="Actvidad"  required>
+
+                        </div>
+                    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Resumen: </label>
+                        <textarea [(ngModel)]="this.actividad.resumen" name="actividad.resumen" class="form-control" placeholder="Resumen"  cols="30" rows="7"></textarea>
+                    </div>
+                </div>
+        </div>
+        <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                    <label>Fecha Final: </label>
+                   <input  type="date"  [(ngModel)]="this.actividad.fechaFinal" name="actividad.fechaFinal" class="form-control"  required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-7">
+                <div class="form-group">
+                    <label>Usuario: </label>
+                    <select class="form-control" [(ngModel)]="this.idUsuario2" name="ddlActividad">
+                        <option value="0" >--Selecciona un Usuario--</option>
+                         <option  *ngFor="let user of this.usuarios" value="{{user.id}}-{{user.email}}-{{user.nombre}}" >{{user.nombre}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>Marcar como: </label>
+
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button id="1" type="button" class="btn btn-primary" (click)="cambiarRealizado($event)">Realizado</button>
+                        <button id="0" type="button" class="btn btn-primary" (click)="cambiarRealizado($event)">Por realizar</button>
+                      </div>
+
+                </div>
+            </div>
+    </div>
+</form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="myModalA.hide()">Cerrar</button>
+          <button type="submit" form="formActividad" class="btn btn-primary">Guardar Actividad</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->

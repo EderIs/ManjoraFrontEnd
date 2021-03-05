@@ -15,6 +15,7 @@ export const navItemsUser : INavData[] =[
     url:'calendario/calendario',
     icon:'fa fa-calendar'
   }
+ 
 ]
 
 
@@ -123,5 +124,10 @@ children:[
       name:'Proyecto',
       url:'proyecto/proyecto',
       icon:'fa fa-calendar'
-    }  
+    }, 
+    {
+      name:'Notas',
+      url:'notas/notas',
+      icon:'icon-speedometer'
+    } 
 ];

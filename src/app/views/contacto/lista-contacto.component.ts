@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { Contacto } from '../../models/contacto';
 import { ContactoService } from '../../service/contacto.service';
 
@@ -9,47 +9,81 @@ import { ContactoService } from '../../service/contacto.service';
   styleUrls: ['nuevoeditar-contacto.component.scss'],
 })
 
-export class listaContactoComponent implements OnInit, OnDestroy{
+export class listaContactoComponent implements OnInit, OnDestroy {
 
+  unsubcription: Subscription;
+  listDesSuscrib: Subscription[] = [];
   contactos: Contacto[] = [];
   dtTrigger = new Subject();
 
 
   constructor(
     private contactoService: ContactoService
-    ) { }
+  ) { }
 
 
   ngOnInit() {
-      this.contactoService.lista().subscribe(contactos => {
-       this.contactos=contactos;
-       this.dtTrigger.next();
-     });
-    this.contactoService.lista().subscribe();
+    this.cargarUsuarios();
   }
 
 
-  delete( id: number){
-    try {
-      this.contactoService.delete(id).subscribe(res => {
-        this.contactos = this.contactos.filter(contacto => contacto.id !== res.id);
-        alert("registro borrado!!")
+  cargarUsuarios(): void {
+
+    this.unsubcription = this.contactoService.lista().subscribe(model => {
+
+      this.contactos = model;
+      this.dtTrigger.next();
+
+    }, err => {
+
+    });
+    this.listDestruct(this.unsubcription);
+
+  }
+
+
+
+
+  delete(id: number): void {
+    this.unsubcription = this.contactoService.delete(id).subscribe(res => {
+      this.contactos = this.contactos.filter(contacto => contacto.id !== res.id);
+
+      alert("Usuario eliminado");
+      this.dtTrigger.unsubscribe();
+      this.cargarUsuarios();
+
+    }, err => {
+      console.log(err.error.mensaje);
+    });
+
+    this.listDestruct(this.unsubcription);
+
+  }
+
+
+  ngOnDestroy() {
+    this.dtTrigger.unsubscribe()
+
+    if (this.listDesSuscrib.length > 0) {
+
+      this.listDesSuscrib.forEach(subs => {
+        subs.unsubscribe();
       });
-    } catch (error) {
-       alert("error al eliminar")
-      console.error(error);
     }
-      
+
+
+  }
+
+  listDestruct(suscripcion) {
+    if (suscripcion != null) {
+      this.listDesSuscrib.push(suscripcion);
+    }
+  }
+
+
 }
 
 
-  ngOnDestroy(){
-      this.dtTrigger.unsubscribe()
-    }
-    
-  
-
-}
 
 
 
@@ -64,76 +98,3 @@ export class listaContactoComponent implements OnInit, OnDestroy{
 
 
 
-
-
-
-
-
-/* import { Component, OnInit } from '@angular/core';
-import { Contacto } from '../../models/contacto';
-import { ContactoService } from '../../service/contacto.service';
-
-@Component({
-  selector: 'app-lista-contacto',
-  templateUrl: 'lista-contacto.component.html'
-})
-
-export class listaContactoComponent implements OnInit{
-  
-  contactos: Contacto[] = [];
-  busqueda:string="";
-  
-  constructor(private contactoService: ContactoService) { }
-  
-
-
-  ngOnInit(): void {
-    this.cargarContactos();
-  }
-  cargarContactos(): void{
-    this.contactoService.lista().subscribe(
-      data => {
-        this.contactos = data;
-      },
-      err =>{
-        console.log(err);
-      }
-    )
-  }
-
-  borrar(id: number) {
-    this.contactoService.delete(id).subscribe(
-      data => {
-       console.log(data);
-        this.cargarContactos();
-      },
-      err => {
-        console.log(err)
-      }
-    );
-  }
-
-  onSearch(){
-
-    if(this.busqueda != " "){
-  
-  this.contactoService.listaByNombre(this.busqueda).subscribe(model=>{
-  
-  this.contactos=model;
-  
-  },err=>{
-  
-    alert('No existen contactos');
-  })
-  
-  
-    }else{
-  
-  alert('No se realizo la busqueda correctamente');
-  
-    }
-  
-  
-  }
-
-} */

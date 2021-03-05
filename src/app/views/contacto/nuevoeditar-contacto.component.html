@@ -250,6 +250,20 @@
                 </div>
               </div>
 
+              <div class="row">
+                
+                <div class="col-md-5" formGroupName="usuario">
+                  <label for="usuario" [class.active]="ferm.get('usuario').value !== null"><b>usuario</b></label>
+                  <select class="form-control" name="id" formControlName="id">
+                    <option value=null selected *ngIf="usuario.id == null" hidden>Seleccione...</option>
+                    <option value={usuario.id}} selected *ngIf="usuario.id != null" hidden>{{usuario.nombreUsuario}}</option>
+                    <option *ngFor="let usuario of usuarios" value={{usuario.id}}>{{usuario.nombreUsuario}}</option>
+                  </select>
+                </div>
+              
+
+
+              </div>
 
 
             </div>
