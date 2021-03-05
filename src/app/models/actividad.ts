@@ -3,6 +3,7 @@ import { Usuario } from "./usuario";
 
 export class Actividad{
 
+    id?:number;
     actividad: String;
 	resumen: String;
 	fechaInicio: Date;
@@ -10,6 +11,7 @@ export class Actividad{
 	usuario: Usuario;
 	estadoT: boolean;
     tarea: Tarea;
+    fechaEntrega : String;
 
 constructor(actividad: String, resumen: String, fechaInicio : Date,
      fechaFinal: Date, usuario: Usuario, estadoT : boolean ){

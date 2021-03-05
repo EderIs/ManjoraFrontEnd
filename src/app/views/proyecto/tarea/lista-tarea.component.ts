@@ -119,12 +119,12 @@ export class ListaTareaComponent implements OnInit {
       this.actividad.fechaFinal = new Date(this.actividad.fechaFinal.toString().replace('-', '/'));
       this.actividadService.saveActividad(this.actividad).subscribe(model =>{
 
-        alert(model.mensaje);
+        console.log(model);
 
-        if(this.actividad.estadoT)
-        this.historialAct.push(this.actividad);
+        if(model.estadoT)
+        this.historialAct.push(model);
         else
-        this.actividadRes.push(this.actividad);
+        this.actividadRes.push(model);
 
         this.actividad = new Actividad("", "", 
         new Date(), null, new Usuario("", "", "", "", null, null, null, ""), null);
@@ -134,4 +134,38 @@ export class ListaTareaComponent implements OnInit {
 
 
   }
+
+  moverRealizado(actividadM: Actividad){
+
+    if(actividadM!=null){
+     
+      actividadM.estadoT=true;
+
+      this.actividadService.updateActividad(actividadM.id,actividadM).subscribe(model=>{
+
+        let a = this.actividadRes.findIndex(a => a.id == actividadM.id && a.actividad == actividadM.actividad);
+    
+        this.actividadRes.splice(a,1);
+   
+        this.historialAct.push(model);
+      }, err=>{
+             alert(err.error.mensaje);
+      });
+    }
+
+  }
+
+  borrarActividad(idActividad){
+
+  this.actividadService.deleteActividad(idActividad).subscribe(model => 
+    {
+      let a = this.actividadRes.findIndex(a => a.id == idActividad);
+    
+      this.actividadRes.splice(a,1);
+    }, err =>{
+      alert(err.error.mensaje);
+    });
+    
+  }
+
 }
