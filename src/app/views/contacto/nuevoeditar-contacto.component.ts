@@ -3,12 +3,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EstadoService } from '../../service/estado.service';
 import { ContactoService } from '../../service/contacto.service';
 import { Contacto } from '../../models/contacto';
+import { Usuario } from '../../models/usuario';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Estado } from '../../models/estado';
 import { TituloService } from '../../service/titulo.service';
 import { Titulo } from '../../models/titulo';
 import { Subscription } from 'rxjs';
 import { ArchivosService } from '../../service/archivos';
+import { UsuarioService } from '../../service/usuario.service';
 
 @Component({
   templateUrl: 'nuevoeditar-contacto.component.html',
@@ -23,20 +25,23 @@ export class nuevoEditarContactoComponent implements OnInit, OnDestroy {
   private imagenCargar: File;
   ferm: FormGroup;
   editMode = false;
-  selectedImage: File;
+  //selectedImage: File;
   contactos: Contacto ;
   contac: Contacto = null;
   titulos: Titulo[] = [];
   titulo: string[] = [];
   estados: Estado[] = [];
   estado: string[] = [];
+  usuarios: Usuario[] = [];
+  usuario: string[] = [];
 
-   id: number = (this.activatedRoute.snapshot.params.id > 0) ? this.activatedRoute.snapshot.params.id : 0;
-  //id: number = this.activatedRoute.snapshot.params.id;
+   //id: number = (this.activatedRoute.snapshot.params.id > 0) ? this.activatedRoute.snapshot.params.id : 0;
+  id: number = this.activatedRoute.snapshot.params.id;
 
   constructor(
     private estadoService: EstadoService,
     private tituloService: TituloService,
+    private usuarioService: UsuarioService,
     private contactoService: ContactoService,
     private archivosService: ArchivosService,
     private activatedRoute: ActivatedRoute,
@@ -47,9 +52,10 @@ export class nuevoEditarContactoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.cargarEstado();
     this.cargarTitulo();
+    this.cargarUsuario();
 
     this.activatedRoute.paramMap.subscribe(paramMap => {
-      if (paramMap.has('id')) {
+      if (paramMap.has('id') && this.id > 0) {
         this.editMode = true;
 
 
@@ -109,6 +115,15 @@ export class nuevoEditarContactoComponent implements OnInit, OnDestroy {
   cargarEstado(): void {
     this.estadoService.lista().subscribe(model => {
       this.estados = model;
+    }, err => {
+      console.log(err.err.mensaje);
+    })
+  }
+
+
+  cargarUsuario(): void {
+    this.usuarioService.lista().subscribe(model => {
+      this.usuarios = model;
     }, err => {
       console.log(err.err.mensaje);
     })
@@ -213,14 +228,22 @@ export class nuevoEditarContactoComponent implements OnInit, OnDestroy {
           validators: [Validators.required]
         }
         ),
+      }),
 
+      usuario: new FormGroup({
+        id: new FormControl(
+          this.contactos ? this.contactos.usuario.id : null, {
+          updateOn: 'change',
+          validators: [Validators.required]
+        }
+        ),
       }),
     });
   }
 
-  onFileChanged(event: Event) {
+/*   onFileChanged(event: Event) {
     this.selectedImage = (event.target as HTMLInputElement).files[0];
-  }
+  } */
 
   submit() {
 
@@ -228,7 +251,7 @@ export class nuevoEditarContactoComponent implements OnInit, OnDestroy {
       return alert("form inavalido")
     }
     else if (this.id > 0 && this.id !=null) {
-      if (this.imagenCargar != null  ) {
+      if (this.imagenCargar !=null && this.imagenCargar.name != this.contactos.pathImagen  ) {
         let formData1 = new FormData();
         formData1.append("imagenU", this.imagenCargar, this.changeNameServidor(this.imagenCargar));
         this.archivosService.updateImagen(this.contactos.pathImagen, formData1).subscribe(model => {
@@ -238,7 +261,7 @@ export class nuevoEditarContactoComponent implements OnInit, OnDestroy {
           this.contactoService.update(this.id, this.contactos).subscribe(data => {
             this.changeImagenUpdate(this.contactos.pathImagen);
             alert(data.mensaje);
-            this.contac = data;
+            this.contactos = data;
             alert('Se actualizo correctamente');
             this.router.navigate(['/contacto/contacto']);
           }, err => {
@@ -250,8 +273,14 @@ export class nuevoEditarContactoComponent implements OnInit, OnDestroy {
         });
 
       } else {
-        this.contactos= this.ferm.value;
-        this.contactoService.update(this.id, this.contactos).subscribe(model => {
+       
+        const value: Contacto = {
+          pathImagen: this.contactos ? this.contactos.pathImagen : null,
+            ...this.ferm.value
+          };
+
+
+        this.contactoService.update(this.id, value).subscribe(model => {
           alert(model.mensaje);
           this.router.navigate(['/contacto/contacto']);
         }, err => {
@@ -262,6 +291,7 @@ export class nuevoEditarContactoComponent implements OnInit, OnDestroy {
       if (this.imagenCargar != null) {
         let formData1 = new FormData();
 
+        this.contactos = this.ferm.value;
         formData1.append("imagen", this.imagenCargar, this.changeNameServidor(this.imagenCargar));
 
         this.archivosService.saveImagen(formData1).subscribe(model => {
@@ -283,6 +313,7 @@ export class nuevoEditarContactoComponent implements OnInit, OnDestroy {
           }
         });
       } else {
+        this.contactos = this.ferm.value;
         if (this.contactos != null) {
           this.contactos.fechaCreacion = new Date();
           this.contactos= this.ferm.value;

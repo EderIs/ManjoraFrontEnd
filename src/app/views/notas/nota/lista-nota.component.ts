@@ -4,47 +4,47 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Actividad } from '../../../models/actividad';
 import { Etapa } from '../../../models/Etapa';
 import { Proyecto } from '../../../models/proyecto';
-import { Tarea } from '../../../models/tarea';
+import { Nota } from '../../../models/nota';
 import { Usuario } from '../../../models/usuario';
 import { ActividadService } from '../../../service/actividad.service';
-import { TareaService } from '../../../service/tarea.service';
+import { NotaService } from '../../../service/nota.service';
 import { UsuarioService } from '../../../service/usuario.service';
 
 @Component({
-  selector: 'app-lista-tarea',
-  templateUrl: 'lista-tarea.component.html',
-  styleUrls: ['lista-tarea.scss']
+  selector: 'app-lista-nota',
+  templateUrl: 'lista-nota.component.html',
+  styleUrls: ['lista-nota.scss']
 })
 
-export class ListaTareaComponent implements OnInit {
+export class ListaNotaComponent implements OnInit {
 
   @ViewChild('myModal') public mymodal: ModalDirective;
   @ViewChild('myModalA') public myModalA: ModalDirective;
   actividadRes: Actividad[] = [];
   historialAct: Actividad[] = [];
-  tarea: Tarea = new Tarea("",
+  nota: Nota = new Nota("",
     new Usuario("", "", "", "", null, null, null, ""), null, null, null, null);
   usuarios: Usuario[] = []
   idUsuario: number;
   idUsuario2: number;
   actividad: Actividad = new Actividad("", "", new Date(), null, new Usuario("", "", "", "", null, null, null, ""), null);
-  idTarea: number = this.activatedRoute.snapshot.params.id;
+  idNota: number = this.activatedRoute.snapshot.params.id;
 
   constructor(private activatedRoute: ActivatedRoute,
-    private tareaService: TareaService,
+    private notaService: NotaService,
     private actividadService: ActividadService,
     private UsuarioService: UsuarioService) { }
 
   ngOnInit() {
 
-    if (this.idTarea > 0) {
+    if (this.idNota > 0) {
 
-      this.tareaService.getTareasByIdTarea(this.idTarea).subscribe(model => {
+      this.notaService.getNotasByIdNota(this.idNota).subscribe(model => {
 
-        this.tarea = model;
-        this.idUsuario = this.tarea.usuario.id;
-        if (this.tarea != null) {
-          this.actividadService.getActividadByTarea(this.tarea.id).subscribe(
+        this.nota = model;
+        this.idUsuario = this.nota.usuario.id;
+       /*  if (this.nota != null) {
+          this.actividadService.getActividadBy(this.tarea.id).subscribe(
             model => {
               model.forEach(actividad => {
 
@@ -56,7 +56,7 @@ export class ListaTareaComponent implements OnInit {
             }
           );
           this.cargarUsuarios();
-        }
+        } */
       });
     }
 
@@ -86,15 +86,15 @@ export class ListaTareaComponent implements OnInit {
 
   onCreate() {
 
-    if (this.tarea.fechaFinal >= this.tarea.fechaInicio) {
-      this.tarea.usuario.id = this.idUsuario;
-      this.tarea.fechaFinal = new Date(this.tarea.fechaFinal.toString().replace('-', '/'));
-      this.tareaService.updateTarea(this.tarea.id, this.tarea).subscribe(model => {
+    if (this.nota.fechaFinal >= this.nota.fechaInicio) {
+      this.nota.usuario.id = this.idUsuario;
+      this.nota.fechaFinal = new Date(this.nota.fechaFinal.toString().replace('-', '/'));
+      this.notaService.updateNota(this.nota.id, this.nota).subscribe(model => {
 
 
-        this.tareaService.getTareasByIdTarea(this.idTarea).subscribe(model => {
-          this.tarea = model;
-          this.idUsuario = this.tarea.usuario.id;
+        this.notaService.getNotasByIdNota(this.idNota).subscribe(model => {
+          this.nota = model;
+          this.idUsuario = this.nota.usuario.id;
         });
         this.mymodal.hide();
         alert(model.mensaje);
@@ -106,7 +106,7 @@ export class ListaTareaComponent implements OnInit {
 
   }
 
-  onCreate2() {
+ /*  onCreate2() {
     
     if(this.actividad !=null){
 
@@ -133,7 +133,7 @@ export class ListaTareaComponent implements OnInit {
     }
 
 
-  }
+  } */
 
   moverRealizado(actividadM: Actividad){
 

@@ -23,5 +23,13 @@ public saveActividad(actividad : Actividad):Observable<any>{
 return this.httpClient.post<any>(this.actividadURL+"create",actividad);
 }
 
+public updateActividad(idActividad : number, actividad: Actividad):Observable<any>{
+  return this.httpClient.put<any>(this.actividadURL+"updateA/"+idActividad,actividad);
+}
+
+public deleteActividad(idActividad : number):Observable<any>{
+  return this.httpClient.delete<any>(this.actividadURL+"delete/"+idActividad);
+}
+
 
 }
