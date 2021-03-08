@@ -5,7 +5,7 @@
             <div class="card-header head">
                 <strong style="font-size: 30px; color: white;">{{this.nota.nombre}}&nbsp;</strong>
 
-                <div class="float-right"><button class="btn btn-primary" (click)="this.openModalEditar()">Editar</button></div>
+                <div class="float-right"><button class="btn btn-primary" (click)="this.openModalEditar()">Guardar</button></div>
 
             </div>
             <div class="card-body">
@@ -174,10 +174,19 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                      <label for="nota.nombre">Fecha final: </label>
-                        <input type="date" [(ngModel)]="this.nota.fechaFinal" name="nota.fechaFinal" class="form-control" placeholder="Fecha final">
+                      <label for="nota.nombre">Fecha Inicio: </label>
+                        <input type="date" [(ngModel)]="this.nota.fechaInicio" name="nota.fechaInicio" class="form-control" placeholder="Fecha fechaInicio">
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="nota.nombre">Fecha Final: </label>
+                        <input type="date" [(ngModel)]="this.nota.fechaFinal" name="nota.fechaFinal" class="form-control" placeholder="Fecha Final">
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Usuario:</label>
@@ -187,8 +196,6 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                       <label for="nota.nombre">Estatus: </label>

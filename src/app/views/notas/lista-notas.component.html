@@ -2,10 +2,10 @@
 <br>
 <div class="animated fadeIn">
     <div class="row">
-        <div class="col-sm-6 col-md-4" *ngFor="let nota of this.notas">
+        <div class="col-sm-6 col-md-4" *ngFor="let not of this.notas">
             <div class="card">
-                <div class="card-header" (click)="this.navigate(this.nota.id)">
-                    {{nota.nombreNotas}}
+                <div class="card-header" (click)="this.navigate(this.not.id)">
+                    {{not.nombreNotas}}
                 </div>
                 <div class="card-body">
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
@@ -27,7 +27,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">{{this.nota.nombreNotas}}</h4>
+                <h4 class="modal-title">{{this.nott.nombreNotas}}</h4>
                 <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -37,7 +37,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label>Nombre de Notas: </label>
-                            <input type="text" [(ngModel)]="this.nota.nombreNotas" name="nota.nombreNotas" class="form-control" placeholder="Nombre de notas" required>
+                            <input type="text" [(ngModel)]="this.nott.nombreNotas" name="nott.nombreNotas" class="form-control" placeholder="Nombre de notas" required>
                         </div>
                     </div>
                 </div>

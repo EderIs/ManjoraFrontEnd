@@ -73,7 +73,8 @@ export class nuevoEditarContactoComponent implements OnInit, OnDestroy {
         });
       }
       else {
- 
+        this.contactos = new Contacto("",null,"",null, "", "", "", new Estado(),null,"","","","","",
+        "",new Titulo(),"",null,new Usuario("","","","",null,null,null,""), "", "",null);
         this.initForm();
       }
     })

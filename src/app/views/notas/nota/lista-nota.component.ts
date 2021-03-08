@@ -9,6 +9,8 @@ import { Usuario } from '../../../models/usuario';
 import { ActividadService } from '../../../service/actividad.service';
 import { NotaService } from '../../../service/nota.service';
 import { UsuarioService } from '../../../service/usuario.service';
+import { CategoriaService } from '../../../service/categoria.service';
+import { Categoria } from '../../../models/Categoria';
 
 @Component({
   selector: 'app-lista-nota',
@@ -29,14 +31,17 @@ export class ListaNotaComponent implements OnInit {
   idUsuario2: number;
   actividad: Actividad = new Actividad("", "", new Date(), null, new Usuario("", "", "", "", null, null, null, ""), null);
   idNota: number = this.activatedRoute.snapshot.params.id;
+  categoria: any;
 
   constructor(private activatedRoute: ActivatedRoute,
     private notaService: NotaService,
     private actividadService: ActividadService,
-    private UsuarioService: UsuarioService) { }
+    private UsuarioService: UsuarioService,
+    private categoriaService: CategoriaService,
+    private router : Router) { }
 
   ngOnInit() {
-
+    this.cargarUsuarios();
     if (this.idNota > 0) {
 
       this.notaService.getNotasByIdNota(this.idNota).subscribe(model => {
@@ -84,26 +89,50 @@ export class ListaNotaComponent implements OnInit {
     });
   }
 
+  navigate(idP : number){
+
+    //alert(idP);
+    this.router.navigate(['/notas/categoria/'+idP]);
+
+  }
+
   onCreate() {
 
-    if (this.nota.fechaFinal >= this.nota.fechaInicio) {
-      this.nota.usuario.id = this.idUsuario;
-      this.nota.fechaFinal = new Date(this.nota.fechaFinal.toString().replace('-', '/'));
-      this.notaService.updateNota(this.nota.id, this.nota).subscribe(model => {
-
-
-        this.notaService.getNotasByIdNota(this.idNota).subscribe(model => {
-          this.nota = model;
-          this.idUsuario = this.nota.usuario.id;
+    if (this.nota.id != null) {
+      if (this.nota.fechaFinal >= this.nota.fechaInicio) {
+        this.nota.usuario.id = this.idUsuario;
+        this.nota.fechaFinal = new Date(this.nota.fechaFinal.toString().replace('-', '/'));
+        this.notaService.updateNota(this.nota.id, this.nota).subscribe(model => {
+  
+  
+          this.notaService.getNotasByIdNota(this.idNota).subscribe(model => {
+            this.nota = model;
+            this.idUsuario = this.nota.usuario.id;
+          });
+          this.mymodal.hide();
+          this.navigate(this.nota.categoria.id);
+          alert(model.mensaje);
         });
-        this.mymodal.hide();
-        alert(model.mensaje);
-      });
+      } else {
+        alert("No se puede guardar una fecha anterior al inicio");
+      }
     } else {
-      alert("No se puede guardar una fecha anterior al inicio");
+      if (this.nota.fechaFinal >= this.nota.fechaInicio) {
+        this.nota.usuario.id = this.idUsuario;
+        this.categoria = this.categoriaService.getCategorias(this.idNota);
+        this.nota.categoria = this.categoria;
+        this.nota.fechaFinal = new Date(this.nota.fechaFinal.toString().replace('-', '/'));
+        this.notaService.createNota(this.nota).subscribe(model => {
+  
+            this.nota = model;
+          this.mymodal.hide();
+          this.navigate(this.nota.categoria.id);
+          alert(model.mensaje);
+        });
+      } else {
+        alert("No se puede guardar una fecha anterior al inicio");
+      }
     }
-
-
   }
 
  /*  onCreate2() {

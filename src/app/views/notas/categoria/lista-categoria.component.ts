@@ -40,6 +40,13 @@ export class ListaCategoriaComponent implements OnInit {
         }
     }
 
+    navigate(idP : number){
+
+        //alert(idP);
+        this.router.navigate(['/notas/nota/'+idP]);
+    
+      }
+
     reloadCategoriasWithNotas() {
         this.categoriaService.getCategorias(this.idNotas).subscribe(model => {
 
