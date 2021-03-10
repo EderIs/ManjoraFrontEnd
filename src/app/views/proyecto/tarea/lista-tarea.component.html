@@ -50,6 +50,7 @@
                 </div>
             </div>
             <div class="card-footer">
+                
                 <div class="float-right">
                     <a (click)="OpenModalActividad()" class="click"><i class="nav-icon fa fa-calendar"></i> Planificar
                         Actividades</a>
@@ -162,12 +163,12 @@
           </button>
         </div>
         <div class="modal-body">
-            <form id="formTarea" (ngSubmit)="onCreate()"  novalidate>
+            <form id="formTarea" (ngSubmit)="onCreate()"  #f="ngForm" novalidate>
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
                       <label for="tarea.nombre">Tarea: </label>
-                        <input type="text" [(ngModel)]="this.tarea.nombre" name="tarea.nombre" class="form-control" placeholder="Tarea">
+                        <input type="text" [(ngModel)]="this.tarea.nombre" name="tarea.nombre" class="form-control" placeholder="Tarea" required>
                     </div>
                 </div>
             </div>
@@ -175,7 +176,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                       <label for="tarea.nombre">Fecha final: </label>
-                        <input type="date" [(ngModel)]="this.tarea.fechaFinal" name="tarea.fechaFinal" class="form-control" placeholder="Fecha final">
+                        <input type="date" [(ngModel)]="this.tarea.fechaFinal" name="tarea.fechaFinal" class="form-control" placeholder="Fecha final" required>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -193,7 +194,7 @@
                     <div class="form-group">
                       <label for="tarea.nombre">Estatus: </label>
                       <label  class="switch switch-label switch-pill switch-success switch-sm float-right">
-                        <input type="checkbox" [(ngModel)]="this.tarea.estatus"  name="checked" class="switch-input" checked>
+                        <input type="checkbox" [(ngModel)]="this.tarea.estatus"  name="checked" class="switch-input" checked >
                         <span data-checked="On" data-unchecked="Off" class="switch-slider"></span>
                       </label>
                     </div>
@@ -203,7 +204,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="myModal.hide()">Cerrar</button>
-          <button type="submit"  class="btn btn-primary" form="formTarea">Actualizar Tarea</button>
+          <button type="submit"  class="btn btn-primary" form="formTarea" [disabled]="f.form.invalid" >Actualizar Tarea</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -220,7 +221,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <form id="formActividad" (ngSubmit)="onCreate2()"  novalidate>
+            <form id="formActividad" (ngSubmit)="onCreate2()" #f2="ngForm" novalidate>
             <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
@@ -234,7 +235,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Resumen: </label>
-                        <textarea [(ngModel)]="this.actividad.resumen" name="actividad.resumen" class="form-control" placeholder="Resumen"  cols="30" rows="7"></textarea>
+                        <textarea [(ngModel)]="this.actividad.resumen" name="actividad.resumen" class="form-control" placeholder="Resumen"  cols="30" rows="7" required></textarea>
                     </div>
                 </div>
         </div>
@@ -272,7 +273,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="myModalA.hide()">Cerrar</button>
-          <button type="submit" form="formActividad" class="btn btn-primary">Guardar Actividad</button>
+          <button type="submit" form="formActividad" class="btn btn-primary" [disabled]="f2.form.invalid" >Guardar Actividad</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
