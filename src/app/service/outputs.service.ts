@@ -10,6 +10,8 @@ export class OutputsService {
 
 @Output() disparadorNot : EventEmitter<any> = new EventEmitter<any>();
 
+@Output() diparadorLogin : EventEmitter<any>  = new EventEmitter<any>();
+
 constructor(){}
 
 }

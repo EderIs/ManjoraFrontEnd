@@ -319,8 +319,6 @@ export class CalendarioCrear implements OnInit {
           this.ids.push(this.idContacto);
         
           this.contactosSel.set(this.idContacto, "Yo");
-        
-         
 
         if (this.ids.length > 0) {
 

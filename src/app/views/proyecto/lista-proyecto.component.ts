@@ -21,12 +21,9 @@ export class ListaProyectoComponent implements OnInit {
   @ViewChild('largeModal') public largeModal: ModalDirective;
 
   constructor(private proyectoService: ProyectoService,
-    private router : Router) {
-
-  }
+    private router : Router) {}
 
   ngOnInit(): void {
-
 
     this.proyectoService.listProyectos(this.idUsuario).subscribe(model => {
 
@@ -45,14 +42,13 @@ export class ListaProyectoComponent implements OnInit {
   }
   onCreate() {
 
-    let usuario = new Usuario("", "", "", "", null, null, true, "");
+    let usuario = new Usuario("Yo", "", "", "", null, null, true, "");
     usuario.id = this.idUsuario;
 
     this.proyecto.usuario = usuario;
     this.proyectoService.save(this.proyecto).subscribe(model => {
-
-      alert(model.mensaje);
-      this.proyectos.push(this.proyecto);
+      alert("Se guardo el proyecto");
+      this.proyectos.push(model);
       this.largeModal.hide();
     }, err => {
       alert("No se pudo insertar");

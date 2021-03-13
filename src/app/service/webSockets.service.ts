@@ -12,7 +12,8 @@ declare var SockJS;
 export class WebSocketsService{
 
     public stompClient;
-    notificacion : Notificacion ;
+    notificacion : Notificacion;
+  
 
 constructor(private ouput: OutputsService
   ,private HttpClient: HttpClient){
@@ -26,14 +27,20 @@ initializeWebSocketConnection () {
 
     this.stompClient.connect({}, function (frame) { 
       that.stompClient.subscribe('/message', (message) => {  
-        if (message.body) { 
-       that.notificacion =JSON.parse(message.body);
+      if (message.body) { 
+       that.notificacion = JSON.parse(message.body);
        that.ouput.disparadorNot.emit(that.notificacion);     
-        } 
-      }); 
+      } 
+      });   
     }); 
   } 
   
+ disconnect(){
+   this.stompClient.disconnect(function(){
+  console.log('Desconectado');
+   });
+ }
+
 sendMessage (notificacion : Notificacion) { 
     this.stompClient.send('/app/send/message',{}, JSON.stringify(notificacion)); 
   }
