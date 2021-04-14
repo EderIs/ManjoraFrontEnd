@@ -8,6 +8,7 @@ export class OutputsService {
 
 @Output() disparador : EventEmitter<any> = new EventEmitter<any>();
 
+@Output() disparadorNot : EventEmitter<any> = new EventEmitter<any>();
 
 constructor(){}
 

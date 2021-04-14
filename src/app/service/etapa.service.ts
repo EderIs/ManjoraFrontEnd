@@ -16,16 +16,19 @@ constructor(private httpClient : HttpClient){
 }
 
 
-public getEtapas(idUser : number): Observable<Etapa[]>{
-
-return this.httpClient.get<Etapa []>(this.etapaURL+"getEtapas/"+idUser);
-
-}
-
 public saveEtapa(etapa : Etapa):Observable<any>{
   return this.httpClient.post(this.etapaURL+"create",etapa);
 }
 
 
+public updateEtapa(idEtapa : number, etapa: Etapa):Observable<any>{
+  return this.httpClient.put<any>(this.etapaURL+"updateE/"+idEtapa,etapa);
+}
+
+public getEtapas(idUser : number): Observable<Etapa[]>{
+
+  return this.httpClient.get<Etapa []>(this.etapaURL+"getEtapas/"+idUser);
+  
+  }
 
 }

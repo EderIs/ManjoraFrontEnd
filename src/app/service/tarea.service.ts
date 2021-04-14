@@ -35,4 +35,10 @@ public updateTarea(idTarea : number , tarea: Tarea):Observable<any>{
   return this.httpClient.put<any>(this.tareaURL+"updateTareaA/"+idTarea,tarea);
 }
 
+public saveTarea(tarea: Tarea):Observable<any>{
+  
+  return this.httpClient.post<any>(this.tareaURL+"create",tarea);
+
+}
+
 }

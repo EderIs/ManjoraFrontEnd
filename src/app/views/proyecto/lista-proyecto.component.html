@@ -1,22 +1,23 @@
-<button class="btn btn-info" (click)="this.largeModal.show()">Crear nuevo proyecto</button>
-<br>
+<button class="btn btn-primary" (click)="this.largeModal.show()">Crear nuevo proyecto</button>
+<hr>
 <div class="animated fadeIn">
     <div class="row">
         <div class="col-sm-6 col-md-4" *ngFor="let proyecto of this.proyectos">
             <div class="card">
-                <div class="card-header" (click)="this.navigate(this.proyecto.id)">
-                    {{proyecto.nombreTarea}}
+                <div class="card-body p-3 clearfix">
+                <i class="fa fa-bell bg-primary p-3 font-2xl mr-3 float-left"></i>
+                  <div class="h5 text-primary mb-0 mt-2">{{proyecto.nombreTarea}}</div>
+                  <div class="text-muted text-uppercase font-weight-bold font-xs">Encargado: <span class="badge badge-pill badge-primary">{{proyecto.usuario.nombre}}</span></div>
+                  <div class="text-muted text-uppercase font-weight-bold font-xs"></div>
                 </div>
-                <div class="card-body">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-                    laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-                    ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                <div class="card-footer px-3 py-2">
+                  <a (click)="this.navigate(this.proyecto.id)" 
+                  class="font-weight-bold font-xs btn-block text-muted">Mostrar Etapas <i class="fa fa-angle-right float-right font-lg"></i></a>
                 </div>
-            </div>
+              </div>
         </div>
     </div>
 </div>
-
 
 <!-- Modal para craer un nuevo Proyecto -->
 

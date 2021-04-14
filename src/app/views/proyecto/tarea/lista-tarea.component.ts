@@ -1,14 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { Observable, Subscription } from 'rxjs';
 import { Actividad } from '../../../models/actividad';
 import { Etapa } from '../../../models/Etapa';
+import { Notificacion } from '../../../models/Notificacion';
 import { Proyecto } from '../../../models/proyecto';
 import { Tarea } from '../../../models/tarea';
 import { Usuario } from '../../../models/usuario';
 import { ActividadService } from '../../../service/actividad.service';
 import { TareaService } from '../../../service/tarea.service';
 import { UsuarioService } from '../../../service/usuario.service';
+import { WebSocketsService } from '../../../service/webSockets.service';
 
 @Component({
   selector: 'app-lista-tarea',
@@ -16,30 +19,36 @@ import { UsuarioService } from '../../../service/usuario.service';
   styleUrls: ['lista-tarea.scss']
 })
 
-export class ListaTareaComponent implements OnInit {
+export class ListaTareaComponent implements OnInit, OnDestroy {
 
   @ViewChild('myModal') public mymodal: ModalDirective;
   @ViewChild('myModalA') public myModalA: ModalDirective;
   actividadRes: Actividad[] = [];
   historialAct: Actividad[] = [];
+  etapas : Etapa[]=[];
   tarea: Tarea = new Tarea("",
     new Usuario("", "", "", "", null, null, null, ""), null, null, null, null);
   usuarios: Usuario[] = []
   idUsuario: number;
   idUsuario2: number;
+  notificacion: Notificacion = new Notificacion(0,"","","",null,true,"");
   actividad: Actividad = new Actividad("", "", new Date(), null, new Usuario("", "", "", "", null, null, null, ""), null);
   idTarea: number = this.activatedRoute.snapshot.params.id;
+  subscripciones : Subscription []= [];
 
   constructor(private activatedRoute: ActivatedRoute,
     private tareaService: TareaService,
     private actividadService: ActividadService,
-    private UsuarioService: UsuarioService) { }
+    private UsuarioService: UsuarioService,
+    private webSocketsService : WebSocketsService
+    ) { }
+ 
 
   ngOnInit() {
 
     if (this.idTarea > 0) {
 
-      this.tareaService.getTareasByIdTarea(this.idTarea).subscribe(model => {
+     let tareaSub = this.tareaService.getTareasByIdTarea(this.idTarea).subscribe(model => {
 
         this.tarea = model;
         this.idUsuario = this.tarea.usuario.id;
@@ -58,10 +67,18 @@ export class ListaTareaComponent implements OnInit {
           this.cargarUsuarios();
         }
       });
+      this.subscripciones.push(tareaSub);
     }
-
+    
   }
 
+  ngOnDestroy(): void {
+    if(this.subscripciones.length > 0){
+      this.subscripciones.forEach(susb =>{
+          susb.unsubscribe;
+      })
+    }
+  }
   openModalEditar() {
     this.mymodal.show();
   }
@@ -79,28 +96,32 @@ export class ListaTareaComponent implements OnInit {
 
   cargarUsuarios() {
 
-    this.UsuarioService.listUsuarios().subscribe(model => {
+    let usuarios =this.UsuarioService.listUsuarios().subscribe(model => {
       this.usuarios = model
     });
+    this.subscripciones.push(usuarios);
   }
 
   onCreate() {
 
-    if (this.tarea.fechaFinal >= this.tarea.fechaInicio) {
+    if (this.tarea.fechaFinal >= this.tarea.fechaInicio || this.tarea.usuario.id < 1) {
       this.tarea.usuario.id = this.idUsuario;
       this.tarea.fechaFinal = new Date(this.tarea.fechaFinal.toString().replace('-', '/'));
-      this.tareaService.updateTarea(this.tarea.id, this.tarea).subscribe(model => {
+      let tareaSave = this.tareaService.updateTarea(this.tarea.id, this.tarea).subscribe(model => {
 
-
-        this.tareaService.getTareasByIdTarea(this.idTarea).subscribe(model => {
+        let tareas =this.tareaService.getTareasByIdTarea(this.idTarea).subscribe(model => {
           this.tarea = model;
           this.idUsuario = this.tarea.usuario.id;
         });
         this.mymodal.hide();
         alert(model.mensaje);
+        this.subscripciones.push(tareas);
+      }, err=>{
+        alert(err.error.mensaje);
       });
+      this.subscripciones.push(tareaSave);
     } else {
-      alert("No se puede guardar una fecha anterior al inicio");
+      alert("Ocurrio un problema al guardar");
     }
 
 
@@ -117,7 +138,7 @@ export class ListaTareaComponent implements OnInit {
       this.actividad.usuario.nombre = valores[2];
       this.actividad.tarea = this.tarea;
       this.actividad.fechaFinal = new Date(this.actividad.fechaFinal.toString().replace('-', '/'));
-      this.actividadService.saveActividad(this.actividad).subscribe(model =>{
+     let actividadS = this.actividadService.saveActividad(this.actividad).subscribe(model =>{
 
         console.log(model);
 
@@ -125,15 +146,22 @@ export class ListaTareaComponent implements OnInit {
         this.historialAct.push(model);
         else
         this.actividadRes.push(model);
-
+        this.mandarNotificacion(model);
         this.actividad = new Actividad("", "", 
         new Date(), null, new Usuario("", "", "", "", null, null, null, ""), null);
         this.myModalA.hide();
       });
+      this.subscripciones.push(actividadS);
     }
-
-
   }
+
+  mandarNotificacion(actividad: Actividad){
+    this.notificacion.titulo="Te han asignado una actividad: "+actividad.actividad;
+    this.notificacion.usuarioDestino = actividad.usuario;
+    this.notificacion.resumen="La fecha de entrega: "+actividad.fechaFinal;
+    this.notificacion.ruta ="proyecto/tarea/"+actividad.tarea.id;
+    this.webSocketsService.sendMessage(this.notificacion);
+}
 
   moverRealizado(actividadM: Actividad){
 
@@ -141,7 +169,7 @@ export class ListaTareaComponent implements OnInit {
      
       actividadM.estadoT=true;
 
-      this.actividadService.updateActividad(actividadM.id,actividadM).subscribe(model=>{
+      let actvidadS = this.actividadService.updateActividad(actividadM.id,actividadM).subscribe(model=>{
 
         let a = this.actividadRes.findIndex(a => a.id == actividadM.id && a.actividad == actividadM.actividad);
     
@@ -151,13 +179,14 @@ export class ListaTareaComponent implements OnInit {
       }, err=>{
              alert(err.error.mensaje);
       });
+    this.subscripciones.push(actvidadS);
     }
 
   }
 
   borrarActividad(idActividad){
 
-  this.actividadService.deleteActividad(idActividad).subscribe(model => 
+  let borrarA = this.actividadService.deleteActividad(idActividad).subscribe(model => 
     {
       let a = this.actividadRes.findIndex(a => a.id == idActividad);
     
@@ -166,6 +195,8 @@ export class ListaTareaComponent implements OnInit {
       alert(err.error.mensaje);
     });
     
+    this.subscripciones.push(borrarA);
   }
+
 
 }

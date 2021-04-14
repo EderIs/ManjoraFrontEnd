@@ -49,7 +49,7 @@ export const routes: Routes = [
     canActivate: [guard],
     data: {
       expectedRol: ['admin','user'],
-      title: 'Home'
+      title: 'Inicio'
     },
     children: [
       {

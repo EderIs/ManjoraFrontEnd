@@ -17,7 +17,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'Proyecto'
+        redirectTo: 'proyecto'
       },
       {
         path: 'proyecto',
@@ -37,7 +37,7 @@ const routes: Routes = [
         path:'tarea/:id',
         component:ListaTareaComponent,
         data:{
-          title:'Tarea'
+          title:'Tarea',          
         }
       }  
     ]
