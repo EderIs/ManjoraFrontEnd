@@ -8,14 +8,17 @@ import { Notificacion } from '../models/Notificacion';
 })
 
 export class NotificacionService{
-
-    archivoURL = "http://localhost:8090/archivo/";
     
 
     notificacionUrl ='http://localhost:8090/notificacion';
 
     constructor(private httpClient: HttpClient) {
 
+    }
+
+
+    public updateNotificacion(id : number, notificacion : Notificacion ):Observable<any>{
+        return this.httpClient.get<any>(this.notificacionUrl+"/NotEstatus/"+id);
     }
 
     getNotifications(idUser:Number):Observable<Notificacion[]>{

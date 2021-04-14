@@ -15,7 +15,8 @@ import { navItems, navItemsUser } from '../../_nav';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './default-layout.component.html'
+  templateUrl: './default-layout.component.html',
+  styleUrls: ['default-layout.scss']
 })
 export class DefaultLayoutComponent implements OnInit, OnDestroy {
   public sidebarMinimized = false;
@@ -28,7 +29,7 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
   usuarioObservable: Subscription;
   webSocketSub: Subscription;
   notificaciones: Notificacion[] = [];
-  idUsuario: number = parseInt(window.sessionStorage.getItem("ValueUs"));
+  idUsuario: number = 0;
   contador: number = 0;
 
   toggleMinimize(e) {
@@ -49,13 +50,13 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
+    this.idUsuario = parseInt(window.sessionStorage.getItem("ValueUs"));
     this.outputsService.disparador.subscribe(model => {
 
       this.changeI(model);
 
     });
-    
+
     if (this.tokenService.getToken != null) {
       this.nombreUsuarioFont = this.tokenService.getUserName();
       this.getUserData(this.nombreUsuarioFont);
@@ -71,7 +72,7 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
 
       }
     }
-   
+
     this.connectionNotification();
     this.reviewConnection();
   }
@@ -83,22 +84,30 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
     if (this.usuarioObservable != null) {
       this.usuarioObservable.unsubscribe();
     }
-    if(this.webSocketSub !=null){
-      this.webSocketSub.unsubscribe();
+    if (this.webSocketSub != null) {
+      this.webSocketSub.unsubscribe()
+      this.webSocketsService.stompClient.unsubscribe();
+      this.webSocketsService.disconnect();
     }
   }
 
   connectionNotification() {
+
     this.webSocketsService.initializeWebSocketConnection();
   }
 
   reviewConnection() {
+
     this.webSocketSub = this.outputsService.disparadorNot.subscribe(model => {
-      if (this.idUsuario == model.usuarioDestino.id) {
+      let idUsuar1 = parseInt(window.sessionStorage.getItem("ValueUs"));
+      if (idUsuar1 == model.usuarioDestino.id) {
         this.notificaciones.push(model);
         this.contador++;
       }
+    }, err => {
+      console.log(err);
     });
+
   }
 
   getUserData(nameUser) {
@@ -117,10 +126,12 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
       } else {
         this.imagen = this.sanitizer.bypassSecurityTrustUrl("assets/img/avatars/perfil.png");
       }
-  
+
       this.notificacionService.getNotifications(this.usuario.id).subscribe(model => {
         this.notificaciones = model;
-        this.contador = this.notificaciones.length;
+        this.notificaciones.forEach(noti=>{
+          this.contador +=(noti.estatus==true)?1:0;
+        });
       }, err => {
         this.notificaciones = [];
       });
@@ -140,12 +151,20 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
 
   }
 
-  navegar(ruta) {
-    
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-    this.router.navigate([ruta]));
+  navegar(ruta : Notificacion) {
    
-    if (this.contador > 0)
+    if(ruta.estatus ==true){
+  this.notificacionService.updateNotificacion(ruta.id,ruta).subscribe(model=>{
+    let index = this.notificaciones.findIndex(i=> i == this.notificaciones.find(n=> n.id ==ruta.id));
+    this.notificaciones[index] = model; 
+  },err=>{
+    console.log(err);
+  });
+}
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([ruta.ruta]));
+
+    if (this.contador > 0 && ruta.estatus==true)
       this.contador -= 1;
   }
 }

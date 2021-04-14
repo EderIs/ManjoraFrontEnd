@@ -184,6 +184,13 @@ editarEtapa(etapa : Etapa){
         this.largeModal.show();
     }
 
+nuevaEtapa(){
+    let proyectoE = new Proyecto("", null);
+    proyectoE.id = this.idProyecto;
+    this.etapaS = new Etapa("",proyectoE,true);
+    this.largeModal.show();
+} 
+
 cargarUsuarios() {
 
         this.usuarioService.listUsuarios().subscribe(model => {
