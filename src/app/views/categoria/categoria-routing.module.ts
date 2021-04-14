@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // import components childrens
-import  {ListaNotasComponent} from './lista-notas.component';
-import {ListaCategoriaComponent} from  './categoria/lista-categoria.component';
-import {ListaNotaComponent} from './nota/lista-nota.component';
+import  {ListaCategoriaComponent} from './lista-categoria.component';
+import {ListaNotaComponent} from  './nota/lista-nota.component';
 
 const routes: Routes = [
   
@@ -12,32 +11,25 @@ const routes: Routes = [
     
     path: '',
     data: {
-      title: 'Notas'
+      title: 'categoria'
     },
     children: [
       {
         path: '',
-        redirectTo: 'Notas'
+        redirectTo: 'categoria'
       },
       {
-        path: 'notas',
-        component: ListaNotasComponent,
-        data: {
-          title: 'Notas'
-        }
-      },
-      {
-        path:'categoria/:id',
+        path: 'categoria',
         component: ListaCategoriaComponent,
-        data:{
-          title:'Categoria'
+        data: {
+          title: 'Categorias'
         }
       },
       {
         path:'nota/:id',
         component:ListaNotaComponent,
         data:{
-          title:'Nota'
+          title:'Nota',          
         }
       }  
     ]
@@ -48,4 +40,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class NotasRoutingModule {}
+export class CategoriaRoutingModule {}

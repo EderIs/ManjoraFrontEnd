@@ -5,7 +5,6 @@ import { Observable, Subscription } from 'rxjs';
 import { Actividad } from '../../../models/actividad';
 import { Etapa } from '../../../models/Etapa';
 import { Notificacion } from '../../../models/Notificacion';
-import { Proyecto } from '../../../models/proyecto';
 import { Tarea } from '../../../models/tarea';
 import { Usuario } from '../../../models/usuario';
 import { ActividadService } from '../../../service/actividad.service';

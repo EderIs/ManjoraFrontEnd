@@ -1,0 +1,31 @@
+.headC {
+background-color: #20a8d8;
+color: white;
+}
+
+.non-selectable {
+    pointer-events: none;
+    }
+
+input[seleccionar="seleccionar"] :focus{
+
+color:red;
+
+}   
+
+.move :hover{
+   border-color: blue;
+}
+
+[cdkDrag] {
+   
+    content: "";
+    cursor: move;
+    clear: both;
+}
+
+[cdkDrag]::after{
+    display: block;
+    content: "";
+    clear: both;
+}

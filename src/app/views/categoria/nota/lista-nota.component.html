@@ -5,8 +5,7 @@
             <div class="card-header head">
                 <strong style="font-size: 30px; color: white;">{{this.nota.nombre}}&nbsp;</strong>
 
-                <div class="float-right"><button class="btn btn-primary" (click)="this.openModalEditar()">Guardar</button></div>
-
+                <div class="float-right"><button class="btn btn-primary" (click)="this.openModalEditar()">{{editMode ? 'Editar' : 'Nueva'}} Nota</button></div>
             </div>
             <div class="card-body">
                 <div class="form-group">
@@ -210,7 +209,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="myModal.hide()">Cerrar</button>
-          <button type="submit"  class="btn btn-primary" form="formNota">Actualizar Nota</button>
+          <button type="submit"  class="btn btn-primary" form="formNota">Guardar</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

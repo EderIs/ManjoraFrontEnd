@@ -2,15 +2,15 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Actividad } from '../../../models/actividad';
-import { Etapa } from '../../../models/Etapa';
-import { Proyecto } from '../../../models/proyecto';
 import { Nota } from '../../../models/nota';
 import { Usuario } from '../../../models/usuario';
+import { Notificacion } from '../../../models/Notificacion';
 import { ActividadService } from '../../../service/actividad.service';
 import { NotaService } from '../../../service/nota.service';
 import { UsuarioService } from '../../../service/usuario.service';
 import { CategoriaService } from '../../../service/categoria.service';
 import { Categoria } from '../../../models/Categoria';
+import { WebSocketsService } from '../../../service/webSockets.service';
 
 @Component({
   selector: 'app-lista-nota',
@@ -25,27 +25,28 @@ export class ListaNotaComponent implements OnInit {
   actividadRes: Actividad[] = [];
   historialAct: Actividad[] = [];
   nota: Nota = new Nota("",
-    new Usuario("", "", "", "", null, null, null, ""), null, null, null, null);
+  new Usuario("", "", "", "", null, null, null, ""), new Categoria("",null,false), null, null, null);
   usuarios: Usuario[] = []
   idUsuario: number;
   idUsuario2: number;
+  notificacion: Notificacion = new Notificacion(0,"","","",null,true,"");
+  editMode = false;
   actividad: Actividad = new Actividad("", "", new Date(), null, new Usuario("", "", "", "", null, null, null, ""), null);
   idNota: number = this.activatedRoute.snapshot.params.id;
-  categoria: any;
 
   constructor(private activatedRoute: ActivatedRoute,
     private notaService: NotaService,
     private actividadService: ActividadService,
     private UsuarioService: UsuarioService,
-    private categoriaService: CategoriaService,
+    private webSocketsService : WebSocketsService,
     private router : Router) { }
 
   ngOnInit() {
     this.cargarUsuarios();
     if (this.idNota > 0) {
-
+      this.editMode = true;
       this.notaService.getNotasByIdNota(this.idNota).subscribe(model => {
-
+        
         this.nota = model;
         this.idUsuario = this.nota.usuario.id;
        /*  if (this.nota != null) {
@@ -89,13 +90,6 @@ export class ListaNotaComponent implements OnInit {
     });
   }
 
-  navigate(idP : number){
-
-    //alert(idP);
-    this.router.navigate(['/notas/categoria/'+idP]);
-
-  }
-
   onCreate() {
 
     if (this.nota.id != null) {
@@ -103,37 +97,50 @@ export class ListaNotaComponent implements OnInit {
         this.nota.usuario.id = this.idUsuario;
         this.nota.fechaFinal = new Date(this.nota.fechaFinal.toString().replace('-', '/'));
         this.notaService.updateNota(this.nota.id, this.nota).subscribe(model => {
-  
+          this.mandarNotificacion(model);
   
           this.notaService.getNotasByIdNota(this.idNota).subscribe(model => {
             this.nota = model;
             this.idUsuario = this.nota.usuario.id;
           });
           this.mymodal.hide();
-          this.navigate(this.nota.categoria.id);
-          alert(model.mensaje);
+          this.router.navigate(['/categoria/categoria/']);
         });
       } else {
         alert("No se puede guardar una fecha anterior al inicio");
       }
     } else {
+      this.nota.categoria.id = this.idNota;
       if (this.nota.fechaFinal >= this.nota.fechaInicio) {
         this.nota.usuario.id = this.idUsuario;
-        this.categoria = this.categoriaService.getCategorias(this.idNota);
-        this.nota.categoria = this.categoria;
         this.nota.fechaFinal = new Date(this.nota.fechaFinal.toString().replace('-', '/'));
         this.notaService.createNota(this.nota).subscribe(model => {
-  
-            this.nota = model;
-          this.mymodal.hide();
-          this.navigate(this.nota.categoria.id);
-          alert(model.mensaje);
+          this.mandarNotificacion(model);
         });
+        this.mymodal.hide();
+          this.router.navigate(['/categoria/categoria']);
       } else {
         alert("No se puede guardar una fecha anterior al inicio");
       }
     }
   }
+
+  ////Packs
+
+  //asdddasd
+
+  mandarNotificacion(nota: Nota){
+    if (this.nota.id != null) {
+      this.notificacion.titulo="Nota Actualizada: "+nota.nombre;
+    }else{
+      this.notificacion.titulo="Nota Creada: "+nota.nombre;
+    }
+    
+    this.notificacion.usuarioDestino = nota.usuario;
+    this.notificacion.resumen="La fecha de entrega: "+nota.fechaFinal;
+    this.notificacion.ruta ="categoria/nota/"+nota.id;
+    this.webSocketsService.sendMessage(this.notificacion);
+}
 
  /*  onCreate2() {
     

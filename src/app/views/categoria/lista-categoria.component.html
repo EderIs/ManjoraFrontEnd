@@ -1,0 +1,135 @@
+<div class="row" cdkDropListGroup>
+    <div class="col-lg-3 col-md-4" cdkDropList [cdkDropListData]="this.listArrayDin.get(this.categoria.id)"
+        (cdkDropListDropped)="drop($event)" *ngFor="let categoria of this.categorias" id="{{categoria.id}}">
+        <div class="card">
+            <div class="card-header headC">
+                    <strong>{{categoria.nombre}}</strong>       
+                    <ul class="float-right" style="border: 0; padding: 0;">
+                        <ul class="nav navbar-nav ml-auto ">
+                        <li class="nav-item dropdown" dropdown placement="bottom right">
+                            <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
+                              <li class="fa fa-ellipsis-h" style="color: white;"></li>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown" style="position: absolute;">
+                                <a class="dropdown-item"  (click)="this.editarCategoria(categoria)"><i class="fa fa-pencil"></i><span class="non-selectable">Editar Categoria</span></a>
+                                <a class="dropdown-item" (click)="this.crearActividad(categoria)"><i class="fa fa-plus"></i><span class="non-selectable">Agregar Nota</span></a>
+                                <a class="dropdown-item" (click)="this.eliminarCategoria(categoria)"><i class="fa fa-trash"></i><span class="non-selectable">Eliminar Categoria</span></a>
+                            </div>
+                          </li>
+                        </ul>
+                    </ul>      
+            </div>
+            <div class="card-body">
+                <div *ngFor="let nota of this.stopCount(categoria.id)" cdkDrag  cdkScrollable>
+                    <div class="card">
+                        <div class="card-body p-0 clearfix move" routerLink="/categoria/nota/{{this.nota.id}}">
+                            <div class="text-primary mb-0 pt-3" style="text-align: center; border: 0px;"> <strong>{{nota.nombre}}</strong></div>
+                           <hr>
+                            
+                        </div>
+                        <div class="card-footer">
+                            <div class="text-muted text-uppercase font-weight-bold font-xs">
+                                <small class="text-muted mr-3">
+                                    <i class="icon-calendar"></i>&nbsp;{{this.nota.fechaFinal}}</small>
+                                    <small class="text-muted mr-3">
+                                        <i class="fa fa-user"></i>&nbsp;{{this.nota.usuario.nombre}}</small>
+                                        <small class="text-muted mr-3" (click)="this.eliminarNota(nota)">
+                                            <i class="fa fa-trash">&nbsp;</i>Drop</small>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card">
+            <div class="card-header headC" (click)="this.largeModal.show()">
+                <strong class="non-selectable">Agregar Categoria +</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Mostrar modal para crear etapa -->
+
+<!-- Inicio de Modal -->
+<div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{this.categoria.nombre}}</h4>
+                <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formEta" (ngSubmit)="onCreate()" novalidate autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Nombre de la Categoria: </label>
+                            <input type="text" [(ngModel)]="this.categoria.nombre" name="categoria.nombre"
+                                class="form-control" placeholder="Categoria" required>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" (click)="largeModal.hide()">Cancelar</button>
+                <button type="submit" class="btn btn-primary" form="formEta">Guardar Categoria</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Mostrar modal para crear Tarea -->
+<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{this.nota.nombre}}</h4>
+          <button type="button" class="close" (click)="myModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form  id="formNota" (ngSubmit)="onCreateNota()"  #f="ngForm" novalidate>
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Nota:</label>
+                    <input type="text" [(ngModel)]="this.nota.nombre" name="nota.nombre" seleccionar="seleccionar"
+                     class="form-control" name="nota.nombre" placeholder="Nueva Nota">
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                  <label>Fecha de Finalizacion:</label>
+                  <input type="date" [(ngModel)]="this.nota.fechaFinal" name="nota.fechaFinal" class="form-control"  required>  
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Asignado a:</label>
+                    <select class="form-control" [(ngModel)]="this.idUsuario2" name="ddlnota" >
+                        <option value="0" >--Selecciona un Usuario--</option>
+                         <option  *ngFor="let user of this.usuarios" value="{{user.id}}-{{user.nombre}}" >{{user.nombre}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>  
+    </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="myModal.hide()">Cerrar</button>
+          <button type="submit" class="btn btn-primary" form="formNota" [disabled]="f.form.invalid">Guardar actividad</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+

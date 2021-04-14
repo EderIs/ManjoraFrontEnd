@@ -127,7 +127,7 @@ children:[
     }, 
     {
       name:'Notas',
-      url:'notas/notas',
+      url:'categoria/categoria',
       icon:'icon-speedometer'
     } 
 ];

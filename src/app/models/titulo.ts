@@ -14,10 +14,7 @@ export class Titulo{
         this.abreviatura = abreviatura;
     }
 
-    constructor(titulo : string []){
-        this.id= parseInt(titulo[0]);
-        this.titulo= titulo[1];
-        this.abreviatura= titulo[2];
+    constructor(){
     }
 
 

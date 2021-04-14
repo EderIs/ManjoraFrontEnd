@@ -1,17 +1,18 @@
-import { Notas } from "./notas";
+import { Usuario } from "./usuario";
+
 
 export class Categoria{
 
 	id?:number;
      nombre: String;
-	 notas : Notas;
+	 usuario : Usuario;
 	 estatus: boolean;
 
-constructor(nombre : String, notas: Notas , estatus : boolean){
-this.nombre = nombre;
-this.notas = notas;
-this.estatus = estatus;
-}
+	constructor(nombre : String, usuario: Usuario , estatus : boolean){
+	this.nombre = nombre;
+	this.usuario = usuario;
+	this.estatus = estatus;
+	}
 
 
 }

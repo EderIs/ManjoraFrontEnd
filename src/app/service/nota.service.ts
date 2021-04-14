@@ -32,7 +32,16 @@ public updateNotaByCategoria(idNota  : number, nota : Nota):Observable<any>{
 
 public updateNota(idNota : number , nota: Nota):Observable<any>{
 
-  return this.httpClient.put<any>(this.notaURL+"updateNota2/"+idNota,nota);
+  return this.httpClient.put<any>(this.notaURL+"updateNotaA/"+idNota,nota);
+}
+
+public createNota(nota: Nota):Observable<any>{
+
+  return this.httpClient.post<any>(this.notaURL+'createNota',nota);
+}
+
+public delete(id: number): Observable<any> {
+  return this.httpClient.delete<any>(this.notaURL + `delete/${id}`);
 }
 
 }

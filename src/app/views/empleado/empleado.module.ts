@@ -18,15 +18,13 @@ import { NuevoEditarHorarioTrabajoComponent } from './horarioT/nuevoeditar-horar
 import {EmpleadoRoutingModule} from './empleado-routing.module'
 import{ FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { DataTablesModule } from 'angular-datatables';
 @NgModule({
   imports: [
     CommonModule,
     EmpleadoRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule,  
-    DataTablesModule
+    ReactiveFormsModule, 
   ],
   declarations: [
     ListaEmpleadoComponent,

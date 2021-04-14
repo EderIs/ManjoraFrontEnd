@@ -19,14 +19,12 @@ import {NuevoEditarPaisComponent} from './pais/nuevoeditar-pais.component';
 // Theme Routing
 import {ContactoRoutingModule} from './contacto-routing.module'
 import{ FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { DataTablesModule } from 'angular-datatables';
 @NgModule({
   imports: [
     CommonModule,
     ContactoRoutingModule,
     FormsModule,  
     ReactiveFormsModule,
-    DataTablesModule,
     
   ],
   declarations: [

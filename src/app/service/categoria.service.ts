@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {Categoria}  from '../models/categoria';
+import {Categoria}  from '../models/Categoria';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ import {Categoria}  from '../models/categoria';
 
 export class CategoriaService{
 
-    categoriaURL = 'http://localhost:8090/categorias/'
+    categoriaURL = 'http://localhost:8090/categoria/'
 constructor(private httpClient : HttpClient){
 
 }
@@ -25,6 +25,12 @@ public saveCategorias(categoria : Categoria):Observable<any>{
   return this.httpClient.post(this.categoriaURL+"create",categoria);
 }
 
+public delete(id: number): Observable<any> {
+  return this.httpClient.delete<any>(this.categoriaURL + `delete/${id}`);
+}
 
+public updateCategoria(idCategoria : number, categoria: Categoria):Observable<any>{
+  return this.httpClient.put<any>(this.categoriaURL+"updateC/"+idCategoria,categoria);
+}
 
 }

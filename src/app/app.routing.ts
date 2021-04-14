@@ -104,8 +104,8 @@ export const routes: Routes = [
         loadChildren: () => import('./views/proyecto/proyecto.module').then(p => p.ProyectoModule)
       },
       {
-        path:'notas',
-        loadChildren: () => import('./views/notas/notas.module').then(p => p.NotasModule)
+        path:'categoria',
+        loadChildren: () => import('./views/categoria/categoria.module').then(p => p.CategoriaModule)
       }
     ]
   },

@@ -23,10 +23,7 @@ export class Estado {
     }
      
 
-        constructor(estado : string []){
-            this.id= parseInt(estado[0]);
-            this.nombreEstado= estado[1];
-            this.codigo= parseInt(estado[2]);
+        constructor(){
         }
 
 }
