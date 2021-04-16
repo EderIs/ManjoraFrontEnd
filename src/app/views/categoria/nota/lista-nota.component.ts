@@ -127,6 +127,8 @@ export class ListaNotaComponent implements OnInit {
 
   ////Packs
 
+  //pacsc 2
+
   //asdddasd
 
   mandarNotificacion(nota: Nota){
